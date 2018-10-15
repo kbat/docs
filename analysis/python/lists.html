@@ -389,9 +389,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.10" data-path="../best_prac.html">
+        <li class="chapter " data-level="1.10" data-path="../bestprac/best_prac.html">
             
-                <a href="../best_prac.html">
+                <a href="../bestprac/best_prac.html">
             
                     
                     Part 9 - Best Practices
@@ -399,6 +399,64 @@
                 </a>
             
 
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../bestprac/preparing.html">
+            
+                <a href="../bestprac/preparing.html">
+            
+                    
+                    Preparing your code for debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../bestprac/general.html">
+            
+                <a href="../bestprac/general.html">
+            
+                    
+                    Some general programming tips
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../bestprac/crash.html">
+            
+                <a href="../bestprac/crash.html">
+            
+                    
+                    Where does my code crash
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../bestprac/memory.html">
+            
+                <a href="../bestprac/memory.html">
+            
+                    
+                    Finding memory leaks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -493,7 +551,7 @@ specific indices from the list.</p>
 <span class="hljs-meta">&gt;&gt;&gt; </span>a
 [<span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">9</span>, <span class="hljs-number">45</span>]
 </code></pre>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9188482044);" id="functions-and-keywords"><i class="fa fa-info-circle"></i> Functions and keywords<span id="heading-9188482044"></span></h3></div><div class="panel-body" id="panel-9188482044"><p><code>del</code> is a language keyword representing an action, and not a function. The
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4077412837);" id="functions-and-keywords"><i class="fa fa-info-circle"></i> Functions and keywords<span id="heading-4077412837"></span></h3></div><div class="panel-body" id="panel-4077412837"><p><code>del</code> is a language keyword representing an action, and not a function. The
 syntactic difference is that functions take their arguments between parentheses,
 such as <code>my_function(1, 2, 3)</code>, whereas <code>del</code> does not.</p>
 </div></div></p>
@@ -542,8 +600,8 @@ the number 6 between the 2 and the 78 in the list above, we would use:</p>
 </code></pre>
 <p>meaning <em>take out 0 elements from the list starting a position 2 and insert the
 content of the list <code>[6]</code> in that position</em>.</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5026606333);" id="copying-a-list"><i class="fa fa-square-o"></i> Copying a list<span id="heading-5026606333"></span></h3></div><div class="panel-body" id="panel-5026606333"><p>Slicing creates a copy, so what notation could you use to copy the full list?</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7991928806);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-7991928806">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-7991928806"><p>You need to slice from the very beginning to the very end of the list.</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5044848511);" id="copying-a-list"><i class="fa fa-square-o"></i> Copying a list<span id="heading-5044848511"></span></h3></div><div class="panel-body" id="panel-5044848511"><p>Slicing creates a copy, so what notation could you use to copy the full list?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9738608779);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-9738608779">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-9738608779"><p>You need to slice from the very beginning to the very end of the list.</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>a[:]
 [<span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">9</span>, <span class="hljs-number">45</span>]
 </code></pre>
@@ -565,7 +623,7 @@ each one sequentially. This is called looping, or iterating, and is super easy.<
 </code></pre>
 <p>We have to indent the code inside the <code>for</code> loop to tell Python that these
 lines should be run for every iteration.</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1244653258);" id="indentation-in-python"><i class="fa fa-info-circle"></i> Indentation in Python<span id="heading-1244653258"></span></h3></div><div class="panel-body" id="panel-1244653258"><p>The <code>for</code> loop is a block, and every Python block requires indentation, unlike
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9795094164);" id="indentation-in-python"><i class="fa fa-info-circle"></i> Indentation in Python<span id="heading-9795094164"></span></h3></div><div class="panel-body" id="panel-9795094164"><p>The <code>for</code> loop is a block, and every Python block requires indentation, unlike
 other &quot;free-form&quot; languages such as C++ or Java. This means that Python will
 throw an error if you don&apos;t indent:</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> b:
@@ -773,14 +831,14 @@ earlier when we used <code>enumerate</code>.</p>
 [(<span class="hljs-number">0</span>, <span class="hljs-number">4</span>), (<span class="hljs-number">1</span>, <span class="hljs-number">9</span>)]
 </code></pre>
 <p>Each element of the list is a tuple.</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9825276831);" id="write-a-list-comprehension-yourself"><i class="fa fa-square-o"></i> Write a list comprehension yourself<span id="heading-9825276831"></span></h3></div><div class="panel-body" id="panel-9825276831"><p>Compute the square of the magnitude of the sum of the following two 
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7706543573);" id="write-a-list-comprehension-yourself"><i class="fa fa-square-o"></i> Write a list comprehension yourself<span id="heading-7706543573"></span></h3></div><div class="panel-body" id="panel-7706543573"><p>Compute the square of the magnitude of the sum of the following two 
 three-vectors, using a single list comprehension and the global <code>sum</code> method.</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>kaon = [<span class="hljs-number">3.4</span>, <span class="hljs-number">4.3</span>, <span class="hljs-number">20.0</span>]
 <span class="hljs-meta">&gt;&gt;&gt; </span>pion = [<span class="hljs-number">1.4</span>, <span class="hljs-number">0.9</span>, <span class="hljs-number">19.8</span>]
 </code></pre>
 <p>It might help to first think about how you&#x2019;d compute the quantity for a single 
 vector.</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3035371832);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-3035371832">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-3035371832"><p>Not sure what the <code>sum</code> method does? Ask for <code>help</code>!</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2578919677);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-2578919677">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2578919677"><p>Not sure what the <code>sum</code> method does? Ask for <code>help</code>!</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>help(sum)
 </code></pre>
 <p>The square magnitude is the sum of the squares of the components, where the 
@@ -832,7 +890,7 @@ components are the sum of the two input vectors.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Lists and looping","level":"1.9.5","depth":2,"next":{"title":"Dictionaries","level":"1.9.6","depth":2,"path":"analysis/python/dictionaries.md","ref":"analysis/python/dictionaries.md","articles":[]},"previous":{"title":"Strings","level":"1.9.4","depth":2,"path":"analysis/python/strings.md","ref":"analysis/python/strings.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align","page-toc"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","showByDefault":true},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"ALICE Analysis Tutorial","gitbook":"*","description":"Introduction to the common analysis techniques and tools of ALICE"},"file":{"path":"analysis/python/lists.md","mtime":"2018-10-11T18:37:11.106Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-15T11:15:14.533Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Lists and looping","level":"1.9.5","depth":2,"next":{"title":"Dictionaries","level":"1.9.6","depth":2,"path":"analysis/python/dictionaries.md","ref":"analysis/python/dictionaries.md","articles":[]},"previous":{"title":"Strings","level":"1.9.4","depth":2,"path":"analysis/python/strings.md","ref":"analysis/python/strings.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align","page-toc"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","showByDefault":true},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"ALICE Analysis Tutorial","gitbook":"*","description":"Introduction to the common analysis techniques and tools of ALICE"},"file":{"path":"analysis/python/lists.md","mtime":"2018-10-15T11:17:50.286Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-15T11:33:24.841Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

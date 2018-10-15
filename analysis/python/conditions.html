@@ -389,9 +389,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.10" data-path="../best_prac.html">
+        <li class="chapter " data-level="1.10" data-path="../bestprac/best_prac.html">
             
-                <a href="../best_prac.html">
+                <a href="../bestprac/best_prac.html">
             
                     
                     Part 9 - Best Practices
@@ -399,6 +399,64 @@
                 </a>
             
 
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../bestprac/preparing.html">
+            
+                <a href="../bestprac/preparing.html">
+            
+                    
+                    Preparing your code for debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../bestprac/general.html">
+            
+                <a href="../bestprac/general.html">
+            
+                    
+                    Some general programming tips
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../bestprac/crash.html">
+            
+                <a href="../bestprac/crash.html">
+            
+                    
+                    Where does my code crash
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../bestprac/memory.html">
+            
+                <a href="../bestprac/memory.html">
+            
+                    
+                    Finding memory leaks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -471,7 +529,7 @@ use four spaces for indentation.</p>
 If this condition isn&#x2019;t met, the next <code>elif</code> (for &quot;else-if&quot;) condition is
 evaluated. If this also isn&#x2019;t met, the <code>else</code> block is run. You can use as many
 <code>elif</code> conditions as you like, or none at all, and the <code>else</code> block is optional.</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5649953928);" id="ternary-conditional-operator"><i class="fa fa-info-circle"></i> Ternary conditional operator<span id="heading-5649953928"></span></h3></div><div class="panel-body" id="panel-5649953928"><p>You can use a succinct one-line syntax for conditional assignments like this:</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4124769238);" id="ternary-conditional-operator"><i class="fa fa-info-circle"></i> Ternary conditional operator<span id="heading-4124769238"></span></h3></div><div class="panel-body" id="panel-4124769238"><p>You can use a succinct one-line syntax for conditional assignments like this:</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>x = <span class="hljs-string">&apos;ok&apos;</span> <span class="hljs-keyword">if</span> pizzas[<span class="hljs-number">0</span>] == <span class="hljs-string">&apos;Cheese&apos;</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&apos;not ok&apos;</span>
 <span class="hljs-meta">&gt;&gt;&gt; </span>x
 <span class="hljs-string">&apos;not ok&apos;</span>
@@ -565,9 +623,9 @@ level.</p>
 <span class="hljs-meta">&gt;&gt;&gt; </span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>] <span class="hljs-keyword">in</span> [[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]]
 <span class="hljs-keyword">True</span>
 </code></pre>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2805217127);" id="the-in-operator"><i class="fa fa-square-o"></i> The `in` operator<span id="heading-2805217127"></span></h3></div><div class="panel-body" id="panel-2805217127"><p>Find the double-underscore method on lists and dictionaries that corresponds to
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9307479342);" id="the-in-operator"><i class="fa fa-square-o"></i> The `in` operator<span id="heading-9307479342"></span></h3></div><div class="panel-body" id="panel-9307479342"><p>Find the double-underscore method on lists and dictionaries that corresponds to
 the <code>in</code> operator, and check that it does the same thing as the operator.</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8644279742);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-8644279742">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-8644279742"><p>Taking lists as an example, the <code>dir</code> method can tell us what methods are
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2865224752);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-2865224752">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2865224752"><p>Taking lists as an example, the <code>dir</code> method can tell us what methods are
 available. The <code>__contains__</code> method sounds promising.</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>x= [<span class="hljs-number">1</span>]
 <span class="hljs-meta">&gt;&gt;&gt; </span>x.__contains__(<span class="hljs-number">1</span>)
@@ -725,7 +783,7 @@ collection, and <code>break</code> to stop looping.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Conditions","level":"1.9.7","depth":2,"next":{"title":"Methods","level":"1.9.8","depth":2,"path":"analysis/python/methods.md","ref":"analysis/python/methods.md","articles":[]},"previous":{"title":"Dictionaries","level":"1.9.6","depth":2,"path":"analysis/python/dictionaries.md","ref":"analysis/python/dictionaries.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align","page-toc"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","showByDefault":true},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"ALICE Analysis Tutorial","gitbook":"*","description":"Introduction to the common analysis techniques and tools of ALICE"},"file":{"path":"analysis/python/conditions.md","mtime":"2018-10-11T18:37:11.105Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-15T11:15:14.533Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Conditions","level":"1.9.7","depth":2,"next":{"title":"Methods","level":"1.9.8","depth":2,"path":"analysis/python/methods.md","ref":"analysis/python/methods.md","articles":[]},"previous":{"title":"Dictionaries","level":"1.9.6","depth":2,"path":"analysis/python/dictionaries.md","ref":"analysis/python/dictionaries.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align","page-toc"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","showByDefault":true},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"ALICE Analysis Tutorial","gitbook":"*","description":"Introduction to the common analysis techniques and tools of ALICE"},"file":{"path":"analysis/python/conditions.md","mtime":"2018-10-15T11:17:50.283Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-15T11:33:24.841Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
