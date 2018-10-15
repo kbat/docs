@@ -389,6 +389,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.10" data-path="../best_prac.html">
+            
+                <a href="../best_prac.html">
+            
+                    
+                    Part 9 - Best Practices
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
 
@@ -444,7 +457,7 @@ B2HHH_MagnetDown.root
 B2HHH_MagnetUp.root
 PhaseSpaceSimulation.root
 </code></pre>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(856606562);" id="installing-python-packages"><i class="fa fa-info-circle"></i> Installing python packages<span id="heading-856606562"></span></h3></div><div class="panel-body" id="panel-856606562"><p>One of the best things about Python is the huge number of packages available,
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3861149403);" id="installing-python-packages"><i class="fa fa-info-circle"></i> Installing python packages<span id="heading-3861149403"></span></h3></div><div class="panel-body" id="panel-3861149403"><p>One of the best things about Python is the huge number of packages available,
 for everything from art to machine learning to web development. While LCG
 provides a lot of useful packages, there are sometimes things missing.
 Fortunately, most packages can be easily installed into <code>~/.local/</code> using <code>pip</code>
@@ -533,9 +546,9 @@ can also create a new column with this information by assigning to the name we
 want to create and doing the action &quot;inplace&quot;:</p>
 <pre><code class="lang-python">In [<span class="hljs-number">11</span>]: df.eval(<span class="hljs-string">&apos;H2_PT = sqrt(H2_PX**2 + H2_PY**2)&apos;</span>, inplace=<span class="hljs-keyword">True</span>)
 </code></pre>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3204956687);" id="adding-the-total-b-meson-momentum"><i class="fa fa-square-o"></i> Adding the total B+ meson momentum<span id="heading-3204956687"></span></h3></div><div class="panel-body" id="panel-3204956687"><p>Create a new column in the dataframe called <code>B_P</code> for the total momentum of the
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4530825638);" id="adding-the-total-b-meson-momentum"><i class="fa fa-square-o"></i> Adding the total B+ meson momentum<span id="heading-4530825638"></span></h3></div><div class="panel-body" id="panel-4530825638"><p>Create a new column in the dataframe called <code>B_P</code> for the total momentum of the
 B+ meson.</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3542504795);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-3542504795">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-3542504795"><pre><code class="lang-python">df.eval(<span class="hljs-string">&apos;B_P = sqrt(&apos;</span>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4848633250);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-4848633250">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-4848633250"><pre><code class="lang-python">df.eval(<span class="hljs-string">&apos;B_P = sqrt(&apos;</span>
         <span class="hljs-string">&apos;(H1_PX + H2_PX + H3_PX)**2 + &apos;</span>
         <span class="hljs-string">&apos;(H1_PY + H2_PY + H3_PY)**2 + &apos;</span>
         <span class="hljs-string">&apos;(H1_PZ + H2_PZ + H3_PZ)**2&apos;</span>
@@ -555,7 +568,7 @@ In [<span class="hljs-number">15</span>]: plt.hist(df[<span class="hljs-string">
 In [<span class="hljs-number">16</span>]: plt.savefig(<span class="hljs-string">&apos;B_flight_distance.pdf&apos;</span>)
 </code></pre>
 <p><img src="figs/B_flight_distance.png" alt="B flight distance"></p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8325195636);" id="interactive-plotting"><i class="fa fa-info-circle"></i> Interactive plotting<span id="heading-8325195636"></span></h3></div><div class="panel-body" id="panel-8325195636"><p>There are various ways of viewing plots interactively such as:</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3190446248);" id="interactive-plotting"><i class="fa fa-info-circle"></i> Interactive plotting<span id="heading-3190446248"></span></h3></div><div class="panel-body" id="panel-3190446248"><p>There are various ways of viewing plots interactively such as:</p>
 <ul>
 <li><code>plt.show()</code> Opens a window with the current plot and pauses the Python
 interpreter until the window is closed</li>
@@ -596,10 +609,10 @@ example to make a new DataFrame containing <span class="katex"><span class="kate
 of more than 15 mm we can use:</p>
 <pre><code class="lang-python">In [<span class="hljs-number">27</span>]: df_with_cut = df.query(<span class="hljs-string">&apos;B_FlightDistance &gt; 15&apos;</span>)
 </code></pre>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2663858347);" id="comparing-momentum-distributions"><i class="fa fa-square-o"></i> Comparing momentum distributions<span id="heading-2663858347"></span></h3></div><div class="panel-body" id="panel-2663858347"><p>It is often useful to compare the effect of a cut on the distribution of another
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7314539680);" id="comparing-momentum-distributions"><i class="fa fa-square-o"></i> Comparing momentum distributions<span id="heading-7314539680"></span></h3></div><div class="panel-body" id="panel-7314539680"><p>It is often useful to compare the effect of a cut on the distribution of another
 variable. Try to plot a histogram showing the B+ lifetime distribution with and
 without a total B+ momentum cut of 100000 MeV.</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5737425557);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-5737425557">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-5737425557"><pre><code class="lang-python">bins = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">150</span>, <span class="hljs-number">100</span>)
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5943019157);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-5943019157">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-5943019157"><pre><code class="lang-python">bins = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">150</span>, <span class="hljs-number">100</span>)
 df_with_cut = df.query(<span class="hljs-string">&apos;B_P &gt; 100000&apos;</span>)
 
 plt.figure()
@@ -617,7 +630,7 @@ distributions as it make it easier to see differences in the shape without the
 independently of the total number of events.</p>
 <p><img src="figs/B_flight_distance_with_cut_compare.png" alt="B flight distance (v3)"></p>
 </div></div></div></div></p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4042075623);" id="comparing-momentum-distributions"><i class="fa fa-square-o"></i> Comparing momentum distributions<span id="heading-4042075623"></span></h3></div><div class="panel-body" id="panel-4042075623"><p>Calculate and plot the B+ meson mass assuming that all three of the child
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4028720166);" id="comparing-momentum-distributions"><i class="fa fa-square-o"></i> Comparing momentum distributions<span id="heading-4028720166"></span></h3></div><div class="panel-body" id="panel-4028720166"><p>Calculate and plot the B+ meson mass assuming that all three of the child
 hadrons are kaons.</p>
 </div></div></p>
 
@@ -663,7 +676,7 @@ hadrons are kaons.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Making your first histogram","level":"1.9.12","depth":2,"next":{"title":"Further reading","level":"1.9.13","depth":2,"path":"analysis/python/further_reading.md","ref":"analysis/python/further_reading.md","articles":[]},"previous":{"title":"Learning more","level":"1.9.11","depth":2,"path":"analysis/python/learning.md","ref":"analysis/python/learning.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align","page-toc"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","showByDefault":true},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"ALICE Analysis Tutorial","gitbook":"*","description":"Introduction to the common analysis techniques and tools of ALICE"},"file":{"path":"analysis/python/first_histogram.md","mtime":"2018-10-11T18:22:26.865Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-11T18:36:53.145Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Making your first histogram","level":"1.9.12","depth":2,"next":{"title":"Further reading","level":"1.9.13","depth":2,"path":"analysis/python/further_reading.md","ref":"analysis/python/further_reading.md","articles":[]},"previous":{"title":"Learning more","level":"1.9.11","depth":2,"path":"analysis/python/learning.md","ref":"analysis/python/learning.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align","page-toc"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","showByDefault":true},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"ALICE Analysis Tutorial","gitbook":"*","description":"Introduction to the common analysis techniques and tools of ALICE"},"file":{"path":"analysis/python/first_histogram.md","mtime":"2018-10-11T18:37:11.105Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-15T11:17:41.205Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
