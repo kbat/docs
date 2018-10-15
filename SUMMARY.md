@@ -21,3 +21,4 @@
   * [Learning more](analysis/python/learning.md)
   * [Making your first histogram](analysis/python/first_histogram.md)
   * [Further reading](analysis/python/further_reading.md)
+* [Part 9 - Best Practices](analysis/best_prac.md) 
