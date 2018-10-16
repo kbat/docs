@@ -1,53 +1,51 @@
-[Outline]{}
+# Introduction
 
-Introduction
-============
+## What is a pointer?
 
-[What is a Pointer?]{}
-
-[img/Pointers]{} (70,22)
+![Pointer](Pointers.png)
 
 A pointer is an object whose value “points to” another value stored
 somewhere else in memory
 
 -   it contains a **memory address**
 
--   : obtaining the stored at the pointed location
+-   obtaining the stored at the pointed location
 
 -   very flexible and powerful tool
 
-[Using a Pointer]{}
+## Using a pointer
 
-``` {style="base" gobble="4"}
+```cpp
     /* Defining a pointer */
     int* a; // declares a pointer that can point to an integer value
-    (*@ \onslide<2-> @*)//DANGER: the pointer points to a random memory portion!
+    //DANGER: the pointer points to a random memory portion!
     
-    (*@ \onslide<3-> @*)int* b = nullptr; // OK, pointer is initialised to a null memory address
+    int* b = nullptr; // OK, pointer is initialised to a null memory address
 
-    (*@ \onslide<4-> @*)int* c = new int; // allocate memory for an integer value in the heap
+    int* c = new int; // allocate memory for an integer value in the heap
     //and assign its memory address to this pointer
     
-    (*@ \onslide<5-> @*)int** d = &a; // this pointer points to a pointer to an integer value
+    int** d = &a; // this pointer points to a pointer to an integer value
     
-    (*@ \onslide<6-> @*)MyObject* e = new MyObject(); // allocate memory for MyObject
+    MyObject* e = new MyObject(); // allocate memory for MyObject
     // and assign its memory address to the pointer e
     
-    (*@ \onslide<7-> @*)/* Using a pointer */
+    /* Using a pointer */
     int f = *c; // dereferencing a pointer and assigning the pointed
     // value to another integer variable
     
-    (*@ \onslide<8-> @*)e->DoSomething(); // dereferencing a pointer and calling
+    e->DoSomething(); // dereferencing a pointer and calling
     // the method DoSomething() of the instance of MyObject
     // pointed by e
 ```
 
-Why a raw pointer is hard to love
-=================================
+# Why a raw pointer is hard to love
 
-[Memory leak]{}
+## Memory leaks
 
-``` {style="base" gobble="4"}
+{% challenge " What is the problem with this code?" %}
+Below is a snippet of analysis code. What is wrong with it ? 
+```cpp
     void MyAnalysisTask::UserExec()
     {
       TLorentzVector* v = nullptr;
@@ -65,17 +63,14 @@ Why a raw pointer is hard to love
     }
 ```
 
-What is the problem with this code?
-
-[Array or single value?]{}
-
--   A pointer can point to a single value or to an array $\rightarrow$
+{% solution "Solution" %}
+Array or single value?
+-   A pointer can point to a single value or to an array, there is 
     no way to infer it from its declaration
-
 -   Different syntax to destroy (= deallocate, free) the pointed object
     for arrays and single objects
 
-``` {style="base" gobble="4"}
+```cpp
     AliVTrack* FilterTracks();
 
     void UserExec()
@@ -92,7 +87,7 @@ What is the problem with this code?
     }
 ```
 
-[Double deletes]{}
+Double deletes
 
 -   Each memory allocation should match a corresponding deallocation
 
@@ -102,7 +97,7 @@ What is the problem with this code?
 -   **Ownership** of the pointed memory is ambiguous: multiple deletes
     of the same object may occur
 
-``` {style="base" gobble="4"}
+```cpp
     AliVTrack* FilterTracks();
     void AnalyzeTracks(AliVTrack* tracks);
 
@@ -117,20 +112,20 @@ What is the problem with this code?
     }
 ```
 
-Smart Pointers
-==============
+{% endchallenge %}
 
-[Smart Pointers]{}
+# Smart Pointers
+
 
 -   Clear (*shared* or *exclusive*) **ownership** of the pointed object
 
--   : memory is deallocated when the last pointer goes out of scope
+-   memory is deallocated when the last pointer goes out of scope
 
 -   Available since C++11
 
-[Exclusive-Ownership Pointers: `unique_ptr`]{}
+## Exclusive-Ownership Pointers: `unique_ptr`
 
--   Automatic garbage collection with **** (i.e. it uses the same
+-   Automatic garbage collection with (i.e. it uses the same
     resources as a raw pointer)
 
 -   `unique_ptr` **owns** the object it points
@@ -140,9 +135,11 @@ Smart Pointers
 
 -   Only one `unique_ptr` can point to the same memory address
 
-[`unique_ptr` example / 1]{}
+{% callout "Unique pointers in the wild" %}
 
-``` {style="base" gobble="4"}
+Example 1
+
+```cpp
     void MyFunction() {
       std::unique_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
       std::unique_ptr<TLorentzVector> vector2(new TLorentzVector(0,0,0,0));
@@ -165,9 +162,9 @@ Smart Pointers
     }
 ```
 
-[`unique_ptr` example / 2]{}
+Example 2
 
-``` {style="base" gobble="4"}
+```cpp
     void MyAnalysisTask::UserExec()
     {
       for (int i = 0; i < InputEvent()->GetNumberOfTracks(); i++) {
@@ -186,7 +183,13 @@ Smart Pointers
 
 No memory leak here! :)
 
-[Shared-Ownership Pointers: `shared_ptr`]{}
+{% endcallout %}
+
+
+
+
+
+## Shared-Ownership Pointers: `shared_ptr`
 
 -   Automatic garbage collection with some CPU and memory overhead
 
@@ -196,11 +199,13 @@ No memory leak here! :)
 -   Memory automatically released the last `shared_ptr` goes out of
     scope or when it is re-assigned
 
-[img/Sharedptr]{}
+![SharedPtr]{Sharedptr.png}
 
-[`shared_ptr` example / 1]{}
+{% callout "Shared pointers in the wild" %}
 
-``` {style="base" gobble="4"}
+Example 1
+
+```cpp
     void MyFunction() {
       std::shared_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
       std::shared_ptr<TLorentzVector> vector2(new TLorentzVector(0,0,0,0));
@@ -217,9 +222,9 @@ No memory leak here! :)
     }
 ```
 
-[`shared_ptr` example / 2]{}
+Example 2
 
-``` {style="base" gobble="4"}
+```cpp
     class MyClass {
       public:
         MyClass();
@@ -242,10 +247,14 @@ No memory leak here! :)
       // is deleted (and therefore fVector goes out-of-scope) :)
     }
 ```
+{% endcallout %}
 
-[Some word of caution on `shared_ptr`]{}
+## Some word of caution on `shared_ptr'
 
-``` {style="base" gobble="4"}
+
+{% challenge "What is the problem in this case?" %}
+You have crated smart code, using smart pointers. It looks like this
+```cpp
     void MyClass::MyFunction() {
       auto ptr = new TLorentzVector(0,0,0,0);
   
@@ -255,12 +264,12 @@ No memory leak here! :)
       // a double delete occurs here!
     }
 ```
+still, something is wrong with it, do you know what ?
 
-What is the problem with the code above?
+{% solution "Solution" %}
+Some word of caution on `shared_ptr`
 
-[Some word of caution on `shared_ptr`]{}
-
-``` {style="base" gobble="4"}
+```cpp
     void MyFunction() {
       auto ptr = new TLorentzVector(0,0,0,0);
   
@@ -275,9 +284,9 @@ What is the problem with the code above?
 
 -   Two control blocks have been created for the same pointed objects
 
-[Some word of caution on `shared_ptr`]{}
+Some word of caution on `shared_ptr`
 
-``` {style="base" gobble="4"}
+```cpp
     void MyFunction() {
       std::shared_ptr<TLorentzVector> v1 (new TLorentzVector(0,0,0,0));
       std::shared_ptr<TLorentzVector> v2 (v1);
@@ -288,7 +297,9 @@ What is the problem with the code above?
 
 -   Solution: use raw pointers only when absolutely needed (if at all)
 
-[Usage Notes for ALICE Software]{}
+{% endchallenge %}
+
+Usage Notes for ALICE Software
 
 -   -   (therefore cannot be used as non-transient class members)\
 
@@ -300,10 +311,9 @@ What is the problem with the code above?
 
 -   
 
-Conclusions
-===========
+# Conclusions
 
-[Final remarks]{}
+Final remarks
 
 -   When the extra-flexibility of a pointer is not needed, do not use it
 
@@ -313,7 +323,3 @@ Conclusions
 
 -   Smart pointers (`unique_ptr` and `shared_ptr`) should cover most use
     cases and provide a much more robust and safe memory management
-
-References\
-Effective modern C++, Scott Meyers (O’Reilly 2015)\
-<http://en.cppreference.com/>

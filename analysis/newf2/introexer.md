@@ -1,4 +1,6 @@
-# welcome to the exercise part
+# Exercises
+
+These are some very basic exercises to refresh you on the basics of pointers
 
 {% challenge " Question " %}
 Considering only performance, when should you pass small objects by value, reference and pointer?
@@ -23,24 +25,24 @@ struct LargeStruct { std::vector<int> i };
 void foo(LargeStruct s);
 void foo(LargeStruct& s);
 void foo(LargeStruct* s);
-{% solution " Solution " %}
-
 ```
+{% solution " Solution " %}
 Passing by value is the slowest since Foo's copy constructor is invoked for each call. Passing by reference or by pointer essentially copy a machine word — there's no significant difference.
 {% endchallenge %}
 
 {% challenge " Question " %}
 Are there reasons to prefer one argument-passing mechanism to another?
+
 {% solution " Solution " %}
 The difference between writing `->` versus `.` is trivial. More important to writing clear code is the semantic difference between them.  Consider the following code:
-    ```c++
+```c++
 void foo(MyLargObj* p)
 {
     p->bar();
 }
 ```
 Perhaps when you first wrote `foo`, it was called in one place, and you knew that `p` would always be valid.  Maybe you even wrote a comment for `foo` inidcating the precondition that `p` should never be `NULL`.  Inevitably, someone (maybe you) will pass `NULL`.  You might then feel the need to check `p` after all.
-    ```c++
+```c++
 void foo(MyLargObj* p)
 {
     if (!p)
@@ -51,7 +53,7 @@ void foo(MyLargObj* p)
 This can lead to other problems -- what if a post condition of `foo()` is that the postcondition of `MyLargObj::bar` hold?  Code executed later might still fail.  You might decide that throwing an exception is more appropriate.  You could get concerned about throwing an exception when checking a precondition and check on the internet for when it's appropriate.  You could be reading differing viewpoints on it for years, and if you don't immediately agree that you should `assert`, you'll probably do the wrong thing ;).
 
 No matter what you choose, that choice was necessitated by the fact that pointers may assume invalid values. So, if passing in a value is truly optional, passing by pointer may be appropriate. If a precondition of the function requires no invalid values, consider pass-by-reference or pass-by-value — this more explicitly declares the domain of a given function.  Foo becomes:
-    ```c++
+```c++
 void foo(MyLargObj& p)
 {
     p.bar();
@@ -96,7 +98,7 @@ All calls do not produce identical output — when a derived object is passed by
 
 {% challenge " Question " %}
 What are the performance implications of returning large objects by value, reference and pointer?
-    ```c++
+```c++
 Foo return_by_value()
 { return Foo(); }
 Foo& return_by_reference()
@@ -128,7 +130,7 @@ The details mentioned here aren't particularly important. The point of this exer
 
 {% challenge " Question " %}
 What are the correctness concerns of using a local static to return by reference?
-    ```c++
+```c++
 Foo& return_by_reference()
 {
     //KLUDGE: We can't return a reference to an object whose lifetime ends

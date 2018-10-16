@@ -5,7 +5,7 @@ Introduction
 
 [What is a Pointer?]{}
 
-[img/Pointers]{} (70,22)
+[Pointers.pdf]{} (70,22)
 
 A pointer is an object whose value “points to” another value stored
 somewhere else in memory
@@ -196,7 +196,7 @@ No memory leak here! :)
 -   Memory automatically released the last `shared_ptr` goes out of
     scope or when it is re-assigned
 
-[img/Sharedptr]{}
+[Sharedptr.pdf]{}
 
 [`shared_ptr` example / 1]{}
 
