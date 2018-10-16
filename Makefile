@@ -1,6 +1,6 @@
-.PHONY: all serve test clean publish
+.PHONY: all serve clean publish
 
-all: test node_modules
+all: node_modules
 	gitbook build
 
 serve: all
@@ -8,9 +8,6 @@ serve: all
 
 node_modules:
 	gitbook install
-
-test:
-	@python -m unittest tests
 
 clean:
 	@rm -rf _book node_modules
