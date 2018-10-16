@@ -1,0 +1,994 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Pointers, the absolute basics · PEP root6 workshop</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-panels/panels.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-block-align/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../css/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="introexer.html" />
+    
+    
+    <link rel="prev" href="feat2.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction.html">
+            
+                <a href="../introduction.html">
+            
+                    
+                    Part 1 - Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../feat1.html">
+            
+                <a href="../feat1.html">
+            
+                    
+                    Part 2 - New C++ features 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="feat2.html">
+            
+                <a href="feat2.html">
+            
+                    
+                    Part 3 - Smart (and dumb) pointers
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.4.1" data-path="intro.html">
+            
+                <a href="intro.html">
+            
+                    
+                    Pointers, the absolute basics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="introexer.html">
+            
+                <a href="introexer.html">
+            
+                    
+                    A quick refresher
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="smartp.md">
+            
+                <span>
+            
+                    
+                    Smart pointers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="exer.html">
+            
+                <a href="exer.html">
+            
+                    
+                    Exercises
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../parallellism.html">
+            
+                <a href="../parallellism.html">
+            
+                    
+                    Part 4 - Parallellism
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../parallell/intro.html">
+            
+                <a href="../parallell/intro.html">
+            
+                    
+                    Threads and processes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../parallell/example.html">
+            
+                <a href="../parallell/example.html">
+            
+                    
+                    Posix multithreading
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../parallell/caveats.html">
+            
+                <a href="../parallell/caveats.html">
+            
+                    
+                    What can go wrong?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../parallell/root.html">
+            
+                <a href="../parallell/root.html">
+            
+                    
+                    Parallellism with ROOT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../changes.html">
+            
+                <a href="../changes.html">
+            
+                    
+                    Part 5 - Changes to user code
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../vectorization.html">
+            
+                <a href="../vectorization.html">
+            
+                    
+                    Part 6 - Vectorization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../declarative.html">
+            
+                <a href="../declarative.html">
+            
+                    
+                    Part 7 - Declarative analysis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../python/">
+            
+                <a href="../python/">
+            
+                    
+                    Part 8 - Python
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../python/running.html">
+            
+                <a href="../python/running.html">
+            
+                    
+                    Running
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../python/operators.html">
+            
+                <a href="../python/operators.html">
+            
+                    
+                    Objects and operators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../python/numbers.html">
+            
+                <a href="../python/numbers.html">
+            
+                    
+                    Numbers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../python/strings.html">
+            
+                <a href="../python/strings.html">
+            
+                    
+                    Strings
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../python/lists.html">
+            
+                <a href="../python/lists.html">
+            
+                    
+                    Lists and looping
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../python/dictionaries.html">
+            
+                <a href="../python/dictionaries.html">
+            
+                    
+                    Dictionaries
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="../python/conditions.html">
+            
+                <a href="../python/conditions.html">
+            
+                    
+                    Conditions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.8" data-path="../python/methods.html">
+            
+                <a href="../python/methods.html">
+            
+                    
+                    Methods
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.9" data-path="../python/scripting.html">
+            
+                <a href="../python/scripting.html">
+            
+                    
+                    Scripting
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.10" data-path="../python/modules.html">
+            
+                <a href="../python/modules.html">
+            
+                    
+                    Modules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.11" data-path="../python/learning.html">
+            
+                <a href="../python/learning.html">
+            
+                    
+                    Learning more
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.12" data-path="../python/first_histogram.html">
+            
+                <a href="../python/first_histogram.html">
+            
+                    
+                    Making your first histogram
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.13" data-path="../python/further_reading.html">
+            
+                <a href="../python/further_reading.html">
+            
+                    
+                    Further reading
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../bestprac/best_prac.html">
+            
+                <a href="../bestprac/best_prac.html">
+            
+                    
+                    Part 9 - Best Practices
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../bestprac/preparing.html">
+            
+                <a href="../bestprac/preparing.html">
+            
+                    
+                    Preparing your code for debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../bestprac/general.html">
+            
+                <a href="../bestprac/general.html">
+            
+                    
+                    Some general programming tips
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../bestprac/crash.html">
+            
+                <a href="../bestprac/crash.html">
+            
+                    
+                    Where does my code crash
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../bestprac/memory.html">
+            
+                <a href="../bestprac/memory.html">
+            
+                    
+                    Finding memory leaks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Pointers, the absolute basics</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p>[Outline]{}</p>
+<h1 id="introduction">Introduction</h1>
+<p>[What is a Pointer?]{}</p>
+<p>[img/Pointers]{} (70,22)</p>
+<p>A pointer is an object whose value &#x201C;points to&#x201D; another value stored
+somewhere else in memory</p>
+<ul>
+<li><p>it contains a <strong>memory address</strong></p>
+</li>
+<li><p>: obtaining the stored at the pointed location</p>
+</li>
+<li><p>very flexible and powerful tool</p>
+</li>
+</ul>
+<p>[Using a Pointer]{}</p>
+<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    /<em> Defining a pointer </em>/
+    int<em> a; // declares a pointer that can point to an integer value
+    (</em>@ \onslide<2-> @*)//DANGER: the pointer points to a random memory portion!</2-></p>
+<pre><code>(*@ \onslide&lt;3-&gt; @*)int* b = nullptr; // OK, pointer is initialised to a null memory address
+
+(*@ \onslide&lt;4-&gt; @*)int* c = new int; // allocate memory for an integer value in the heap
+//and assign its memory address to this pointer
+
+(*@ \onslide&lt;5-&gt; @*)int** d = &amp;a; // this pointer points to a pointer to an integer value
+
+(*@ \onslide&lt;6-&gt; @*)MyObject* e = new MyObject(); // allocate memory for MyObject
+// and assign its memory address to the pointer e
+
+(*@ \onslide&lt;7-&gt; @*)/* Using a pointer */
+int f = *c; // dereferencing a pointer and assigning the pointed
+// value to another integer variable
+
+(*@ \onslide&lt;8-&gt; @*)e-&gt;DoSomething(); // dereferencing a pointer and calling
+// the method DoSomething() of the instance of MyObject
+// pointed by e
+</code></pre><pre><code>
+Why a raw pointer is hard to love
+=================================
+
+[Memory leak]{}
+
+``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    void MyAnalysisTask::UserExec()
+    {
+      TLorentzVector* v = nullptr;
+      for (int i = 0; i &lt; InputEvent()-&gt;GetNumberOfTracks(); i++) {
+        AliVTrack* track = InputEvent()-&gt;GetTrack(i);
+        if (!track) continue;
+        v = new TLorentzVector(track-&gt;Px(), 
+          track-&gt;Py(), track-&gt;Pz(), track-&gt;M());
+
+        // my analysis here
+        std::cout &lt;&lt; v-&gt;Pt() &lt;&lt; std::endl;
+      }
+
+      delete v;
+    }
+</code></pre><p>What is the problem with this code?</p>
+<p>[Array or single value?]{}</p>
+<ul>
+<li><p>A pointer can point to a single value or to an array $\rightarrow$
+no way to infer it from its declaration</p>
+</li>
+<li><p>Different syntax to destroy (= deallocate, free) the pointed object
+for arrays and single objects</p>
+</li>
+</ul>
+<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    AliVTrack* FilterTracks();</p>
+<pre><code>void UserExec()
+{
+  TLorentzVector *vect = new TLorentzVector(0,0,0,0);
+  double *trackPts = new double[100];
+  AliVTrack *returnValue = FilterTracks();
+
+  // here use the pointers
+
+  delete vect;
+  delete[] trackPts;
+  delete returnValue; // or should I use delete[] ??
+}
+</code></pre><pre><code>
+[Double deletes]{}
+
+-   Each memory allocation should match a corresponding deallocation
+
+-   Difficult to keep track of all memory allocations/deallocations in a
+    large project
+
+-   **Ownership** of the pointed memory is ambiguous: multiple deletes
+    of the same object may occur
+
+``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    AliVTrack* FilterTracks();
+    void AnalyzeTracks(AliVTrack* tracks);
+
+    void MyAnalysisTask::UserExec()
+    {
+      AliVTrack* tracks = FilterTracks();
+
+      AnalyzeTracks(tracks);
+
+      delete[] tracks; // should I actually delete it?? 
+      //or was it already deleted by AnalyzeTracks?
+    }
+</code></pre><h1 id="smart-pointers">Smart Pointers</h1>
+<p>[Smart Pointers]{}</p>
+<ul>
+<li><p>Clear (<em>shared</em> or <em>exclusive</em>) <strong>ownership</strong> of the pointed object</p>
+</li>
+<li><p>: memory is deallocated when the last pointer goes out of scope</p>
+</li>
+<li><p>Available since C++11</p>
+</li>
+</ul>
+<p>[Exclusive-Ownership Pointers: <code>unique_ptr</code>]{}</p>
+<ul>
+<li><p>Automatic garbage collection with <em>**</em> (i.e. it uses the same
+resources as a raw pointer)</p>
+</li>
+<li><p><code>unique_ptr</code> <strong>owns</strong> the object it points</p>
+</li>
+<li><p>Memory automatically released when <code>unique_ptr</code> goes out of scope or
+when its <code>reset(T* ptr)</code> method is called</p>
+</li>
+<li><p>Only one <code>unique_ptr</code> can point to the same memory address</p>
+</li>
+</ul>
+<p>[<code>unique_ptr</code> example / 1]{}</p>
+<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    void MyFunction() {
+      std::unique_ptr<tlorentzvector> vector(new TLorentzVector(0,0,0,0));
+      std::unique_ptr<tlorentzvector> vector2(new TLorentzVector(0,0,0,0));</tlorentzvector></tlorentzvector></p>
+<pre><code>  // use vector and vector2
+
+  // dereferencing unique_ptr works exactly as a raw pointer
+  std::cout &lt;&lt; vector-&gt;Pt() &lt;&lt; std::endl;
+
+  // the line below does not compile!
+  // vector = vector2;
+  // cannot assign the same address to two unique_ptr instances
+
+  vector.swap(vector2); // however I can swap the memory addresses
+
+  // this also releases the memory previously pointed by vector2
+  vector2.reset(new TLorentzVector(0,0,0,0)); 
+
+  // objects pointed by vector and vector2 are deleted here
+}
+</code></pre><pre><code>
+[`unique_ptr` example / 2]{}
+
+``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    void MyAnalysisTask::UserExec()
+    {
+      for (int i = 0; i &lt; InputEvent()-&gt;GetNumberOfTracks(); i++) {
+        AliVTrack* track = InputEvent()-&gt;GetTrack(i);
+        if (!track) continue;
+        std::unique_ptr&lt;TLorentzVector&gt; v(new TLorentzVector(track-&gt;Px(), 
+          track-&gt;Py(), track-&gt;Pz(), track-&gt;M()));
+
+        // my analysis here
+        std::cout &lt;&lt; v-&gt;Pt() &lt;&lt; std::endl;
+        // no need to delete
+        // v is automatically deallocated after each for loop
+      }
+    }
+</code></pre><p>No memory leak here! :)</p>
+<p>[Shared-Ownership Pointers: <code>shared_ptr</code>]{}</p>
+<ul>
+<li><p>Automatic garbage collection with some CPU and memory overhead</p>
+</li>
+<li><p>The pointed object is <em>collectively owned</em> by one or more
+<code>shared_ptr</code> instances</p>
+</li>
+<li><p>Memory automatically released the last <code>shared_ptr</code> goes out of
+scope or when it is re-assigned</p>
+</li>
+</ul>
+<p>[img/Sharedptr]{}</p>
+<p>[<code>shared_ptr</code> example / 1]{}</p>
+<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    void MyFunction() {
+      std::shared_ptr<tlorentzvector> vector(new TLorentzVector(0,0,0,0));
+      std::shared_ptr<tlorentzvector> vector2(new TLorentzVector(0,0,0,0));</tlorentzvector></tlorentzvector></p>
+<pre><code>  // dereferencing shared_ptr works exactly as a raw pointer
+  std::cout &lt;&lt; vector-&gt;Pt() &lt;&lt; std::endl;
+
+  // assignment is allowed between shared_ptr instances
+  vector = vector2; 
+  // the object previously pointed by vector is deleted!
+  // vector and vector2 now share the ownership of the same object
+
+  // object pointed by both vector and vector2 is deleted here
+}
+</code></pre><pre><code>
+[`shared_ptr` example / 2]{}
+
+``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    class MyClass {
+      public:
+        MyClass();
+      private:
+        void MyFunction();
+        std::shared_ptr&lt;TLorentzVector&gt; fVector;
+    };
+
+    void MyClass::MyFunction() {
+      std::shared_ptr&lt;TLorentzVector&gt; vector(new TLorentzVector(0,0,0,0));
+
+      // assignment is allowed between shared_ptr instances
+      fVector = vector;
+      // the object previously pointed by fVector (if any) is deleted
+      // vector and fVector now share the ownership of the same object
+
+      // here vector goes out-of-scope
+      // however fVector is a class member so the object is not deleted!
+      // it will be deleted automatically when this instance of the class
+      // is deleted (and therefore fVector goes out-of-scope) :)
+    }
+</code></pre><p>[Some word of caution on <code>shared_ptr</code>]{}</p>
+<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    void MyClass::MyFunction() {
+      auto ptr = new TLorentzVector(0,0,0,0);</p>
+<pre><code>  std::shared_ptr&lt;TLorentzVector&gt; v1 (ptr);
+  std::shared_ptr&lt;TLorentzVector&gt; v2 (ptr);
+
+  // a double delete occurs here!
+}
+</code></pre><pre><code>
+What is the problem with the code above?
+
+[Some word of caution on `shared_ptr`]{}
+
+``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    void MyFunction() {
+      auto ptr = new TLorentzVector(0,0,0,0);
+
+      std::shared_ptr&lt;TLorentzVector&gt; v1 (ptr);
+      std::shared_ptr&lt;TLorentzVector&gt; v2 (ptr);
+
+      // a double delete occurs here!
+    }
+</code></pre><ul>
+<li><p><code>v1</code> does not know about <code>v2</code> and viceversa!</p>
+</li>
+<li><p>Two control blocks have been created for the same pointed objects</p>
+</li>
+</ul>
+<p>[Some word of caution on <code>shared_ptr</code>]{}</p>
+<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+    void MyFunction() {
+      std::shared_ptr<tlorentzvector> v1 (new TLorentzVector(0,0,0,0));
+      std::shared_ptr<tlorentzvector> v2 (v1);</tlorentzvector></tlorentzvector></p>
+<pre><code>  // this is fine!
+}
+</code></pre><pre><code>
+-   Solution: use raw pointers only when absolutely needed (if at all)
+
+[Usage Notes for ALICE Software]{}
+
+-   -   (therefore cannot be used as non-transient class members)\
+
+    ``` {style=&quot;base&quot; gobble=&quot;4&quot;}
+        #if !(defined(__CINT__) || defined(__MAKECINT__))
+        // your C++11 code goes here
+        #endif
+</code></pre><ul>
+<li></li>
+</ul>
+<h1 id="conclusions">Conclusions</h1>
+<p>[Final remarks]{}</p>
+<ul>
+<li><p>When the extra-flexibility of a pointer is not needed, do not use it</p>
+</li>
+<li><p>Alternative to pointers: arguments by reference (not covered here)</p>
+</li>
+<li><p>Avoid raw pointers whenever possible!</p>
+</li>
+<li><p>Smart pointers (<code>unique_ptr</code> and <code>shared_ptr</code>) should cover most use
+cases and provide a much more robust and safe memory management</p>
+</li>
+</ul>
+<p>References\
+Effective modern C++, Scott Meyers (O&#x2019;Reilly 2015)\
+<a href="http://en.cppreference.com/" target="_blank">http://en.cppreference.com/</a></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="feat2.html" class="navigation navigation-prev " aria-label="Previous page: Part 3 - Smart (and dumb) pointers">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="introexer.html" class="navigation navigation-next " aria-label="Next page: A quick refresher">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"next":{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},"previous":{"title":"Part 3 - Smart (and dumb) pointers","level":"1.4","depth":1,"path":"analysis/newf2/feat2.md","ref":"analysis/newf2/feat2.md","articles":[{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"path":"analysis/newf2/intro.md","ref":"analysis/newf2/intro.md","articles":[]},{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},{"title":"Smart pointers","level":"1.4.3","depth":2,"path":"analysis/newf2/smartp.md","ref":"analysis/newf2/smartp.md","articles":[]},{"title":"Exercises","level":"1.4.4","depth":2,"path":"analysis/newf2/exer.md","ref":"analysis/newf2/exer.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/intro.md","mtime":"2018-10-15T16:45:39.776Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-16T07:59:46.974Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-panels/panels.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-collapsible-menu/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
