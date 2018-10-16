@@ -1,7 +1,7 @@
 git branch safe_serve
 git checkout safe_serve
 
-gitbook install && gitbook bulid
+gitbook install && gitbook build
 gitbook serve
 
 git checkout master
