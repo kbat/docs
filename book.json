@@ -1,6 +1,6 @@
 {
-  "title": "ALICE Analysis Tutorial",
-  "description": "Introduction to the common analysis techniques and tools of ALICE",
+  "title": "PEP root6 workshop",
+  "description": "PEP root6 introduction material",
   "styles": {
     "website": "css/website.css"
   },
@@ -8,7 +8,6 @@
     "katex",
     "panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8",
     "collapsible-menu",
-    "block-align",
-    "page-toc"
+    "block-align"
   ]
 }
