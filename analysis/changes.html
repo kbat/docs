@@ -742,6 +742,11 @@ is specific to <em>ROOT6</em>. The part including macros has to be protected (se
 below).</p>
 </li>
 </ul>
+<h2 id="and-what-about-libraries">And what about libraries?</h2>
+<ul>
+<li>gSystem-&gt;Load(&quot;...&quot;) will not work anymore, symbols not know at compile time</li>
+<li>R__LOAD_LIBRARY(&quot;...&quot;)  read by the preprocessor</li>
+</ul>
 <h2 id="do-i-need-to-include-header-files-in-my-macros">Do I need to include header files in my macros?</h2>
 <p><em>ROOT6</em> comes with a technique called pre-compiled header files. Header files
 from a certain library are compiled to a binary format by <code>rootcling</code>, the
@@ -913,6 +918,11 @@ For <em>ROOT6</em> this is not necessary.</li>
 </ul>
 </li>
 </ul>
+<h1 id="exercise">Exercise</h1>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(10152360);" id="try-to-get-this-macro-working"><i class="fa fa-square-o"></i> Try to get this macro working<span id="heading-10152360"></span></h3></div><div class="panel-body" id="panel-10152360"><pre><code class="lang-cpp">add pythi macro here
+</code></pre>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6020430542);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-6020430542">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-6020430542"><p>here goes the pathed version</p>
+</div></div></div></div></p>
 
                                 
                                 </section>
@@ -956,7 +966,7 @@ For <em>ROOT6</em> this is not necessary.</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Part 5 - Changes to user code","level":"1.6","depth":1,"next":{"title":"Part 6 - Vectorization","level":"1.7","depth":1,"path":"analysis/vectorization.md","ref":"analysis/vectorization.md","articles":[]},"previous":{"title":"Parallellism with ROOT","level":"1.5.4","depth":2,"path":"analysis/parallell/root.md","ref":"analysis/parallell/root.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/changes.md","mtime":"2018-10-16T08:45:36.471Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-16T11:41:55.773Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Part 5 - Changes to user code","level":"1.6","depth":1,"next":{"title":"Part 6 - Vectorization","level":"1.7","depth":1,"path":"analysis/vectorization.md","ref":"analysis/vectorization.md","articles":[]},"previous":{"title":"Parallellism with ROOT","level":"1.5.4","depth":2,"path":"analysis/parallell/root.md","ref":"analysis/parallell/root.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/changes.md","mtime":"2018-10-19T09:46:33.072Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-19T09:51:57.040Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
