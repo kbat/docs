@@ -143,6 +143,12 @@ most common use cases:
   is specific to *ROOT6*. The part including macros has to be protected (see
   below).
 
+## And what about libraries? 
+
+* gSystem->Load("...") will not work anymore, symbols not know at compile time
+*  R__LOAD_LIBRARY("...")  read by the preprocessor
+
+
 ## Do I need to include header files in my macros?
 
 *ROOT6* comes with a technique called pre-compiled header files. Header files
@@ -341,3 +347,16 @@ understand.
     #pragma link C++ class std::vector<AliAnalysisTaskEmcalJetTreeBase::AliEmcalJetInfoSummaryPP>+;
     ```
     For *ROOT6* this is not necessary.
+
+
+# Exercise
+
+{% challenge "Try to get this macro working" %}
+```cpp
+add pythi macro here
+```
+{% solution "Solution" %}
+here goes the pathed version
+
+{% endchallenge %}
+
