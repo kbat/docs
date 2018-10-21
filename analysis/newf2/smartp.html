@@ -470,12 +470,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.12" data-path="../python/first_histogram.html">
+        <li class="chapter " data-level="1.9.12" data-path="../python/further_reading.html">
             
-                <a href="../python/first_histogram.html">
+                <a href="../python/further_reading.html">
             
                     
-                    Making your first histogram
+                    Further reading
             
                 </a>
             
@@ -483,12 +483,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.13" data-path="../python/further_reading.html">
+        <li class="chapter " data-level="1.9.13" data-path="../python/pyroot.html">
             
-                <a href="../python/further_reading.html">
+                <a href="../python/pyroot.html">
             
                     
-                    Further reading
+                    PyROOT
             
                 </a>
             
@@ -655,7 +655,7 @@ somewhere else in memory</p>
 </code></pre>
 <h1 id="why-a-raw-pointer-is-hard-to-love">Why a raw pointer is hard to love</h1>
 <h2 id="memory-leaks">Memory leaks</h2>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3471368611);" id="-what-is-the-problem-with-this-code"><i class="fa fa-square-o"></i>  What is the problem with this code?<span id="heading-3471368611"></span></h3></div><div class="panel-body" id="panel-3471368611"><p>Below is a snippet of analysis code. What is wrong with it ? </p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(420192814);" id="-what-is-the-problem-with-this-code"><i class="fa fa-square-o"></i>  What is the problem with this code?<span id="heading-420192814"></span></h3></div><div class="panel-body" id="panel-420192814"><p>Below is a snippet of analysis code. What is wrong with it ? </p>
 <pre><code class="lang-cpp">    <span class="hljs-keyword">void</span> MyAnalysisTask::UserExec()
     {
       TLorentzVector* v = <span class="hljs-literal">nullptr</span>;
@@ -672,7 +672,7 @@ somewhere else in memory</p>
       <span class="hljs-keyword">delete</span> v;
     }
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2468945691);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-2468945691">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2468945691"><p>Array or single value?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4948087998);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-4948087998">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-4948087998"><p>Array or single value?</p>
 <ul>
 <li>A pointer can point to a single value or to an array, there is 
 no way to infer it from its declaration</li>
@@ -741,7 +741,7 @@ when its <code>reset(T* ptr)</code> method is called</p>
 <li><p>Only one <code>unique_ptr</code> can point to the same memory address</p>
 </li>
 </ul>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8052654361);" id="unique-pointers-in-the-wild"><i class="fa fa-info-circle"></i> Unique pointers in the wild<span id="heading-8052654361"></span></h3></div><div class="panel-body" id="panel-8052654361"><p>Example 1</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(774670072);" id="unique-pointers-in-the-wild"><i class="fa fa-info-circle"></i> Unique pointers in the wild<span id="heading-774670072"></span></h3></div><div class="panel-body" id="panel-774670072"><p>Example 1</p>
 <pre><code class="lang-cpp">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyFunction</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;TLorentzVector&gt; <span class="hljs-built_in">vector</span>(<span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));
       <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;TLorentzVector&gt; vector2(<span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));
@@ -793,7 +793,7 @@ scope or when it is re-assigned</p>
 </li>
 </ul>
 <p>![SharedPtr]{Sharedptr.png}</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4238157403);" id="shared-pointers-in-the-wild"><i class="fa fa-info-circle"></i> Shared pointers in the wild<span id="heading-4238157403"></span></h3></div><div class="panel-body" id="panel-4238157403"><p>Example 1</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5503832065);" id="shared-pointers-in-the-wild"><i class="fa fa-info-circle"></i> Shared pointers in the wild<span id="heading-5503832065"></span></h3></div><div class="panel-body" id="panel-5503832065"><p>Example 1</p>
 <pre><code class="lang-cpp">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyFunction</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;TLorentzVector&gt; <span class="hljs-built_in">vector</span>(<span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));
       <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;TLorentzVector&gt; vector2(<span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));
@@ -834,7 +834,7 @@ scope or when it is re-assigned</p>
 </code></pre>
 </div></div></p>
 <h2 id="some-word-of-caution-on-sharedptr">Some word of caution on `shared_ptr&apos;</h2>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6502114659);" id="what-is-the-problem-in-this-case"><i class="fa fa-square-o"></i> What is the problem in this case?<span id="heading-6502114659"></span></h3></div><div class="panel-body" id="panel-6502114659"><p>You have crated smart code, using smart pointers. It looks like this</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9511514488);" id="what-is-the-problem-in-this-case"><i class="fa fa-square-o"></i> What is the problem in this case?<span id="heading-9511514488"></span></h3></div><div class="panel-body" id="panel-9511514488"><p>You have crated smart code, using smart pointers. It looks like this</p>
 <pre><code class="lang-cpp">    <span class="hljs-keyword">void</span> MyClass::MyFunction() {
       <span class="hljs-keyword">auto</span> ptr = <span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
 
@@ -845,7 +845,7 @@ scope or when it is re-assigned</p>
     }
 </code></pre>
 <p>still, something is wrong with it, do you know what ?</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2641362029);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-2641362029">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2641362029"><p>Some word of caution on <code>shared_ptr</code></p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1624512328);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1624512328">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1624512328"><p>Some word of caution on <code>shared_ptr</code></p>
 <pre><code class="lang-cpp">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyFunction</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-keyword">auto</span> ptr = <span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
 
@@ -942,7 +942,7 @@ cases and provide a much more robust and safe memory management</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Smart pointers","level":"1.4.3","depth":2,"next":{"title":"Exercises","level":"1.4.4","depth":2,"path":"analysis/newf2/exer.md","ref":"analysis/newf2/exer.md","articles":[]},"previous":{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/smartp.md","mtime":"2018-10-16T11:42:07.735Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-19T09:51:57.040Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Smart pointers","level":"1.4.3","depth":2,"next":{"title":"Exercises","level":"1.4.4","depth":2,"path":"analysis/newf2/exer.md","ref":"analysis/newf2/exer.md","articles":[]},"previous":{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/smartp.md","mtime":"2018-10-19T09:52:11.874Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-21T09:51:23.250Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

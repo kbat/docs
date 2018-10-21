@@ -470,12 +470,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.12" data-path="../python/first_histogram.html">
+        <li class="chapter " data-level="1.9.12" data-path="../python/further_reading.html">
             
-                <a href="../python/first_histogram.html">
+                <a href="../python/further_reading.html">
             
                     
-                    Making your first histogram
+                    Further reading
             
                 </a>
             
@@ -483,12 +483,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.13" data-path="../python/further_reading.html">
+        <li class="chapter " data-level="1.9.13" data-path="../python/pyroot.html">
             
-                <a href="../python/further_reading.html">
+                <a href="../python/pyroot.html">
             
                     
-                    Further reading
+                    PyROOT
             
                 </a>
             
@@ -617,7 +617,265 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p> simple parallellism with root6 </p>
+                                <h1 id="threads-with-root">Threads with ROOT</h1>
+<p>A thread is an independent flow of control that operates within the same address space as other independent flows of controls within a process. In most UNIX systems, thread and process characteristics are grouped into a single entity called a process. Sometimes, threads are called &#x201C;lightweight processes&#x2019;&#x2019;.</p>
+<h2 id="threads-and-processes">Threads and Processes</h2>
+<p>In traditional single-threaded process systems, a process has a set of properties. In multi-threaded systems, these properties are divided between processes and threads.</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1810620455);" id="process-properties"><i class="fa fa-info-circle"></i> Process properties<span id="heading-1810620455"></span></h3></div><div class="panel-body" id="panel-1810620455"><p>A process in a multi-threaded system is the changeable entity. It must be considered as an execution frame. It has all traditional process attributes, such as:</p>
+<ul>
+<li><p>Process ID, process group ID, user ID, and group ID</p>
+</li>
+<li><p>Environment</p>
+</li>
+<li><p>Working directory</p>
+</li>
+</ul>
+<p>A process also provides a common address space and common system resources:</p>
+<ul>
+<li><p>File descriptors</p>
+</li>
+<li><p>Signal actions</p>
+</li>
+<li><p>Shared libraries</p>
+</li>
+<li><p>Inter-process communication tools (such as message queues, pipes, semaphores, or shared memory)</p>
+</li>
+</ul>
+</div></div></p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2604883087);" id="thread-properties"><i class="fa fa-info-circle"></i> Thread properties<span id="heading-2604883087"></span></h3></div><div class="panel-body" id="panel-2604883087"><p>A thread is the schedulable entity. It has only those properties that are required to ensure its independent flow of control. These include the following properties:</p>
+<ul>
+<li><p>Stack</p>
+</li>
+<li><p>Scheduling properties (such as policy or priority)</p>
+</li>
+<li><p>Set of pending and blocked signals</p>
+</li>
+<li><p>Some thread-specific data (TSD)</p>
+</li>
+</ul>
+</div></div></p>
+<p>An example of thread-specific data is the error indicator, errno. In multi-threaded systems, errno is no longer a global variable, but usually a subroutine returning a thread-specific errno value. Some other systems may provide other implementations of errno. With respect to ROOT, a thread specific data is for example the gPad pointer, which is treated in a different way, whether it is accessed from any thread or the main thread.</p>
+<p>Threads within a process must not be considered as a group of processes (even though in Linux each thread receives an own process id, so that it can be scheduled by the kernel scheduler). All threads share the same address space. This means that two pointers having the same value in two threads refer to the same data. Also, if any thread changes one of the shared system resources, all threads within the process are affected. For example, if a thread closes a file, the file is closed for all threads.</p>
+<h2 id="the-initial-thread">The Initial Thread</h2>
+<p>When a process is created, one thread is automatically created. This thread is called the initial thread or the main thread. The initial thread executes the main routine in multi-threaded programs.</p>
+<p>Note: At the end of this chapter is a glossary of thread specific terms</p>
+<h1 id="parallallism-in-root">Parallallism in ROOT</h1>
+<p>The <code>TThread</code> class has been developed to provide a platform independent interface to threads for ROOT. However, ROOT6 provides us with many ways to easily access <em>implicit</em> parallellism, which makes our lives much easier than defining <code>posix</code> threads by hand.</p>
+<h2 id="implicit-multi-threading">Implicit multi threading</h2>
+<pre><code class="lang-cpp">   <span class="hljs-comment">// First enable implicit multi-threading globally, so that the implicit parallelisation is on.</span>
+   <span class="hljs-comment">// The parameter of the call specifies the number of threads to use.</span>
+   <span class="hljs-keyword">int</span> nthreads = <span class="hljs-number">4</span>;
+   ROOT::EnableImplicitMT(nthreads);
+   <span class="hljs-comment">// Open the file containing the tree</span>
+   <span class="hljs-keyword">auto</span> file = TFile::Open(<span class="hljs-string">&quot;http://root.cern.ch/files/h1/dstarmb.root&quot;</span>);
+   <span class="hljs-comment">// Get the tree</span>
+   TTree *tree = <span class="hljs-literal">nullptr</span>;
+   file-&gt;GetObject&lt;TTree&gt;(<span class="hljs-string">&quot;h42&quot;</span>, tree);
+   <span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> nEntries = tree-&gt;GetEntries();
+   <span class="hljs-comment">// Read the branches in parallel.</span>
+   <span class="hljs-comment">// Note that the interface does not change, the parallelisation is internal</span>
+   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i : ROOT::TSeqUL(nEntries)) {
+      tree-&gt;GetEntry(i); <span class="hljs-comment">// parallel read</span>
+   }
+   <span class="hljs-comment">// IMT parallelisation can be disabled for a specific tree</span>
+   tree-&gt;SetImplicitMT(<span class="hljs-literal">false</span>);
+   <span class="hljs-comment">// If now GetEntry is invoked on the tree, the reading is sequential</span>
+   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i : ROOT::TSeqUL(nEntries)) {
+      tree-&gt;GetEntry(i); <span class="hljs-comment">// sequential read</span>
+   }
+   <span class="hljs-comment">// Parallel reading can be re-enabled</span>
+   tree-&gt;SetImplicitMT(<span class="hljs-literal">true</span>);
+   <span class="hljs-comment">// IMT can be also disabled globally.</span>
+   <span class="hljs-comment">// As a result, no tree will run GetEntry in parallel</span>
+   ROOT::DisableImplicitMT();
+   <span class="hljs-comment">// This is still sequential: the global flag is disabled, even if the</span>
+   <span class="hljs-comment">// flag for this particular tree is enabled</span>
+   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i : ROOT::TSeqUL(nEntries)) {
+      tree-&gt;GetEntry(i); <span class="hljs-comment">// sequential read</span>
+   }
+</code></pre>
+<h2 id="tprocessexecutor">TProcessExecutor</h2>
+<p>This class provides a simple interface to execute the same task multiple times in parallel, possibly with different arguments every time. This mimics the behaviour of python&apos;s pool.Map method.
+ROOT::TProcessExecutor::Map</p>
+<p>This class inherits its interfaces from ROOT::TExecutor
+. The two possible usages of the Map method are:</p>
+<ul>
+<li>Map(F func, unsigned nTimes): func is executed nTimes with no arguments</li>
+<li>Map(F func, T&amp; args): func is executed on each element of the collection of arguments args</li>
+</ul>
+<p>For either signature, func is executed as many times as needed by a pool of fNWorkers workers; the number of workers can be passed to the constructor or set via SetNWorkers. It defaults to the number of cores.
+A collection containing the result of each execution is returned.
+<div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1857015956);" id="beware"><i class="fa fa-info-circle"></i> Beware<span id="heading-1857015956"></span></h3></div><div class="panel-body" id="panel-1857015956"><p>Note: the user is responsible for the deletion of any object that might be created upon execution of func, returned objects included: ROOT::TProcessExecutor never deletes what it returns, it simply forgets it.
+Note: that the usage of ROOT::TProcessExecutor::Map is indicated only when the task to be executed takes more than a few seconds, otherwise the overhead introduced by Map will outrun the benefits of parallel execution on most machines.</p>
+</div></div></p>
+<p>Parameters</p>
+<ul>
+<li>func    a lambda expression, an std::function, a loaded macro, a functor class or a function that takes zero arguments (for the first signature) or one (for the second signature).
+args    a standard vector, a ROOT::TSeq of integer type or an initializer list for the second signature. An integer only for the first.</li>
+</ul>
+<p>Note: in cases where the function to be executed takes more than zero/one argument but all are fixed except zero/one, the function can be wrapped in a lambda or via std::bind to give it the right signature.
+Note: the user should take care of initializing random seeds differently in each process (e.g. using the process id in the seed). Otherwise several parallel executions might generate the same sequence of pseudo-random numbers.
+Return value:</p>
+<p>An std::vector. The elements in the container will be the objects returned by func.</p>
+<pre><code class="lang-cpp">ROOT::<span class="hljs-function">TProcessExecutor <span class="hljs-title">pool</span><span class="hljs-params">(<span class="hljs-number">2</span>)</span></span>; <span class="hljs-keyword">auto</span> squares = pool.Map([](<span class="hljs-keyword">int</span> a) { <span class="hljs-keyword">return</span> a*a; }, {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>});
+</code></pre>
+<p>This looks more complicated than it is. Let&apos;s look at an example in the wild, where we fill four histograms with random numbers simultaneously:</p>
+<pre><code class="lang-cpp">// Total amount of numbers
+const UInt_t nNumbers = 20000000U;
+// The number of workers
+const UInt_t nWorkers = 4U;
+
+   // We define our work item
+   auto workItem = [](UInt_t workerID) {
+      // One generator, file and ntuple per worker
+      TRandom3 workerRndm(workerID); // Change the seed
+      TFile f(Form(&quot;myFile_%u.root&quot;, workerID), &quot;RECREATE&quot;);
+      TH1F h(Form(&quot;myHisto_%u&quot;, workerID), &quot;The Histogram&quot;, 64, -4, 4);
+      for (UInt_t i = 0; i &lt; nNumbers; ++i) {
+         h.Fill(workerRndm.Gaus());
+      }
+      h.Write();
+      return 0;
+   };
+
+   // Create the pool of workers
+   ROOT::TProcessExecutor workers(nWorkers);
+   // Fill the pool with work
+   workers.Map(workItem, ROOT::TSeqI(nWorkers));
+</code></pre>
+<h2 id="ttreeprocessormt">TTreeProcessorMT</h2>
+<p>ethod provides an implicit parallelisation of the reading and processing of a TTree. In particular, when invoking Process, the user provides a function that iterates on a subrange of the tree via a TTreeReader. Multiple tasks will be spawned, one for each sub-range, so that the processing of the tree is parallelised. Since two invocations of the user function can potentially run in parallel, the function code must be thread safe. The example also introduces a new class, ROOT::TThreadedObject, which makes objects thread private. With the help of this class, histograms can be filled safely inside the user function and then merged at the end to get the final result.</p>
+<p>By means of its Process method, ROOT::TTreeProcessorMT provides a way to process the entries of a TTree in parallel. When invoking TTreeProcessor::Process, the user passes a function whose only parameter is a TTreeReader. The function iterates on a subrange of entries by using that TTreeReader.</p>
+<p>The implementation of ROOT::TTreeProcessorMT parallelizes the processing of the subranges, each corresponding to a cluster in the TTree. This is possible thanks to the use of a ROOT::TThreadedObject, so that each thread works with its own TFile and TTree objects. </p>
+<pre><code class="lang-cpp">   <span class="hljs-comment">// First enable implicit multi-threading globally, so that the implicit parallelisation is on.</span>
+   <span class="hljs-comment">// The parameter of the call specifies the number of threads to use.</span>
+   <span class="hljs-keyword">int</span> nthreads = <span class="hljs-number">4</span>;
+   ROOT::EnableImplicitMT(nthreads);
+   <span class="hljs-comment">// Create one TThreadedObject per histogram to fill during the processing of the tree</span>
+   ROOT::TThreadedObject&lt;TH1F&gt; ptHist(<span class="hljs-string">&quot;pt_dist&quot;</span>, <span class="hljs-string">&quot;p_{T} Distribution;p_{T};dN/p_{T}dp_{T}&quot;</span>, <span class="hljs-number">100</span>, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>);
+   ROOT::TThreadedObject&lt;TH1F&gt; pzHist(<span class="hljs-string">&quot;pz_dist&quot;</span>, <span class="hljs-string">&quot;p_{Z} Distribution;p_{Z};dN/dp_{Z}&quot;</span>, <span class="hljs-number">100</span>, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>);
+   ROOT::TThreadedObject&lt;TH2F&gt; pxpyHist(<span class="hljs-string">&quot;px_py&quot;</span>, <span class="hljs-string">&quot;p_{X} vs p_{Y} Distribution;p_{X};p_{Y}&quot;</span>, <span class="hljs-number">100</span>, <span class="hljs-number">-5.</span>, <span class="hljs-number">5.</span>, <span class="hljs-number">100</span>, <span class="hljs-number">-5.</span>, <span class="hljs-number">5.</span>);
+   <span class="hljs-comment">// Create a TTreeProcessorMT: specify the file and the tree in it</span>
+   ROOT::<span class="hljs-function">TTreeProcessorMT <span class="hljs-title">tp</span><span class="hljs-params">(<span class="hljs-string">&quot;http://root.cern.ch/files/tp_process_imt.root&quot;</span>, <span class="hljs-string">&quot;events&quot;</span>)</span></span>;
+   <span class="hljs-comment">// Define the function that will process a subrange of the tree.</span>
+   <span class="hljs-comment">// The function must receive only one parameter, a TTreeReader,</span>
+   <span class="hljs-comment">// and it must be thread safe. To enforce the latter requirement,</span>
+   <span class="hljs-comment">// TThreadedObject histograms will be used.</span>
+   <span class="hljs-keyword">auto</span> myFunction = [&amp;](TTreeReader &amp;myReader) {
+      TTreeReaderValue&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;ROOT::Math::PxPyPzEVector&gt;&gt; tracksRV(myReader, <span class="hljs-string">&quot;tracks&quot;</span>);
+      <span class="hljs-comment">// For performance reasons, a copy of the pointer associated to this thread on the</span>
+      <span class="hljs-comment">// stack is used</span>
+      <span class="hljs-keyword">auto</span> myPtHist = ptHist.Get();
+      <span class="hljs-keyword">auto</span> myPzHist = pzHist.Get();
+      <span class="hljs-keyword">auto</span> myPxPyHist = pxpyHist.Get();
+      <span class="hljs-keyword">while</span> (myReader.Next()) {
+         <span class="hljs-keyword">auto</span> tracks = *tracksRV;
+         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;&amp;track : tracks) {
+            myPtHist-&gt;Fill(track.Pt(), <span class="hljs-number">1.</span> / track.Pt());
+            myPxPyHist-&gt;Fill(track.Px(), track.Py());
+            myPzHist-&gt;Fill(track.Pz());
+         }
+      }
+   };
+   <span class="hljs-comment">// Launch the parallel processing of the tree</span>
+   tp.Process(myFunction);
+   <span class="hljs-comment">// Use the TThreadedObject::Merge method to merge the thread private histograms</span>
+   <span class="hljs-comment">// into the final result</span>
+   <span class="hljs-keyword">auto</span> ptHistMerged = ptHist.Merge();
+   <span class="hljs-keyword">auto</span> pzHistMerged = pzHist.Merge();
+   <span class="hljs-keyword">auto</span> pxpyHistMerged = pxpyHist.Merge();
+</code></pre>
+<h2 id="multi-core-reading-of-tchain-data">Multi core reading of TChain data</h2>
+<pre><code class="lang-cpp">   <span class="hljs-comment">// No nuisance for batch execution</span>
+   gROOT-&gt;SetBatch();
+   <span class="hljs-comment">//---------------------------------------</span>
+   <span class="hljs-comment">// Perform the operation sequentially</span>
+   <span class="hljs-function">TChain <span class="hljs-title">inputChain</span><span class="hljs-params">(<span class="hljs-string">&quot;multiCore&quot;</span>)</span></span>;
+   inputChain.Add(<span class="hljs-string">&quot;mp101_multiCore_*.root&quot;</span>);
+   <span class="hljs-keyword">if</span> (inputChain.GetNtrees() &lt;= <span class="hljs-number">0</span>) {
+      Printf(<span class="hljs-string">&quot; No files in the TChain: did you run mp101_fillNtuples.C before?&quot;</span>);
+      <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+   }
+   <span class="hljs-function">TH1F <span class="hljs-title">outHisto</span><span class="hljs-params">(<span class="hljs-string">&quot;outHisto&quot;</span>, <span class="hljs-string">&quot;Random Numbers&quot;</span>, <span class="hljs-number">128</span>, <span class="hljs-number">-4</span>, <span class="hljs-number">4</span>)</span></span>;
+   inputChain.Draw(<span class="hljs-string">&quot;r &gt;&gt; outHisto&quot;</span>);
+   outHisto.Fit(<span class="hljs-string">&quot;gaus&quot;</span>);
+   <span class="hljs-comment">//---------------------------------------</span>
+   <span class="hljs-comment">// We now go MP!</span>
+   <span class="hljs-comment">// TProcessExecutor offers an interface to directly process trees and chains without</span>
+   <span class="hljs-comment">// the need for the user to go through the low level implementation of a</span>
+   <span class="hljs-comment">// map-reduce.</span>
+   <span class="hljs-comment">// We adapt our parallelisation to the number of input files</span>
+   <span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> nFiles = inputChain.GetListOfFiles()-&gt;GetEntries();
+   <span class="hljs-comment">// This is the function invoked during the processing of the trees.</span>
+   <span class="hljs-keyword">auto</span> workItem = [](TTreeReader &amp;reader) {
+      TTreeReaderValue&lt;Float_t&gt; randomRV(reader, <span class="hljs-string">&quot;r&quot;</span>);
+      <span class="hljs-keyword">auto</span> partialHisto = <span class="hljs-keyword">new</span> TH1F(<span class="hljs-string">&quot;outHistoMP&quot;</span>, <span class="hljs-string">&quot;Random Numbers&quot;</span>, <span class="hljs-number">128</span>, <span class="hljs-number">-4</span>, <span class="hljs-number">4</span>);
+      <span class="hljs-keyword">while</span> (reader.Next()) {
+         partialHisto-&gt;Fill(*randomRV);
+      }
+      <span class="hljs-keyword">return</span> partialHisto;
+   };
+   <span class="hljs-comment">// Create the pool of processes</span>
+   ROOT::<span class="hljs-function">TTreeProcessorMP <span class="hljs-title">workers</span><span class="hljs-params">(nFiles)</span></span>;
+   <span class="hljs-comment">// Process the TChain</span>
+   <span class="hljs-keyword">auto</span> sumHistogram = workers.Process(inputChain, workItem, <span class="hljs-string">&quot;multiCore&quot;</span>);
+   sumHistogram-&gt;Fit(<span class="hljs-string">&quot;gaus&quot;</span>, <span class="hljs-number">0</span>);
+</code></pre>
+<h2 id="ttaskgroup">TTaskGroup</h2>
+<p>Calculate Fibonacci numbers exploiting nested parallellism through TTaskGroup</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Fibonacci</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span>
+</span>{
+   <span class="hljs-keyword">if</span> (n &lt; <span class="hljs-number">2</span>) {
+      <span class="hljs-keyword">return</span> n;
+   } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">int</span> x, y;
+      ROOT::Experimental::TTaskGroup tg;
+      tg.Run([&amp;] { x = Fibonacci(n - <span class="hljs-number">1</span>); });
+      tg.Run([&amp;] { y = Fibonacci(n - <span class="hljs-number">2</span>); });
+      tg.Wait();
+      <span class="hljs-keyword">return</span> x + y;
+   }
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mt302_TTaskGroupNested</span><span class="hljs-params">()</span>
+</span>{
+   ROOT::EnableImplicitMT(<span class="hljs-number">4</span>);
+   <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Fibonacci(33) = &quot;</span> &lt;&lt; Fibonacci(<span class="hljs-number">33</span>) &lt;&lt; <span class="hljs-built_in">endl</span>;
+}
+</code></pre>
+<h2 id="enabling-thread-safety">Enabling thread safety</h2>
+<p>Enables the global mutex to make ROOT thread safe/aware.</p>
+<p>The following becomes safe:</p>
+<ul>
+<li>concurrent construction and destruction of TObjects, including the ones registered in ROOT&apos;s global lists (e.g. gROOT-&gt;GetListOfCleanups(), gROOT-&gt;GetListOfFiles())</li>
+<li>concurrent usage of different ROOT objects from different threads, including ones with global state (e.g. TFile, TTree, TChain) with the exception of graphics classes (e.g. TCanvas)</li>
+<li>concurrent calls to ROOT&apos;s type system classes, e.g. TClass and TEnum</li>
+<li>concurrent calls to the interpreter through gInterpreter</li>
+<li>concurrent loading of ROOT plug-ins</li>
+</ul>
+<p>In addition, gDirectory, gFile and gPad become a thread-local variable. In all threads, gDirectory defaults to gROOT, a singleton which supports thread-safe insertion and deletion of contents. gFile and gPad default to nullptr, as it is for single-thread programs.</p>
+<p>Note that there is no DisableThreadSafety(). ROOT&apos;s thread-safety features cannot be disabled once activated. </p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> UInt_t poolSize = <span class="hljs-number">4U</span>;
+<span class="hljs-function">Int_t <span class="hljs-title">mtbb201_parallelHistoFill</span><span class="hljs-params">()</span>
+</span>{
+   ROOT::EnableThreadSafety();
+   TH1::AddDirectory(<span class="hljs-literal">false</span>);
+   ROOT::<span class="hljs-function">TThreadExecutor <span class="hljs-title">pool</span><span class="hljs-params">(poolSize)</span></span>;
+   <span class="hljs-keyword">auto</span> fillRandomHisto = [](<span class="hljs-keyword">int</span> seed = <span class="hljs-number">0</span>) {
+      <span class="hljs-function">TRandom3 <span class="hljs-title">rndm</span><span class="hljs-params">(seed)</span></span>;
+      <span class="hljs-keyword">auto</span> h = <span class="hljs-keyword">new</span> TH1F(<span class="hljs-string">&quot;myHist&quot;</span>, <span class="hljs-string">&quot;Filled in parallel&quot;</span>, <span class="hljs-number">128</span>, <span class="hljs-number">-8</span>, <span class="hljs-number">8</span>);
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i : ROOT::TSeqI(<span class="hljs-number">1000000</span>)) {
+         h-&gt;Fill(rndm.Gaus(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>));
+      }
+      <span class="hljs-keyword">return</span> h;
+   };
+   <span class="hljs-keyword">auto</span> seeds = ROOT::TSeqI(<span class="hljs-number">23</span>);
+   ROOT::ExecutorUtils::ReduceObjects&lt;TH1F *&gt; redfunc;
+   <span class="hljs-keyword">auto</span> sumRandomHisto = pool.MapReduce(fillRandomHisto, seeds, redfunc);
+   <span class="hljs-keyword">auto</span> c = <span class="hljs-keyword">new</span> TCanvas();
+   sumRandomHisto-&gt;Draw();
+   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -661,7 +919,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Parallellism with ROOT","level":"1.5.4","depth":2,"next":{"title":"Part 5 - Changes to user code","level":"1.6","depth":1,"path":"analysis/changes.md","ref":"analysis/changes.md","articles":[]},"previous":{"title":"What can go wrong?","level":"1.5.3","depth":2,"path":"analysis/parallell/caveats.md","ref":"analysis/parallell/caveats.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/root.md","mtime":"2018-10-16T11:42:07.735Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-19T09:51:57.040Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Parallellism with ROOT","level":"1.5.4","depth":2,"next":{"title":"Part 5 - Changes to user code","level":"1.6","depth":1,"path":"analysis/changes.md","ref":"analysis/changes.md","articles":[]},"previous":{"title":"What can go wrong?","level":"1.5.3","depth":2,"path":"analysis/parallell/caveats.md","ref":"analysis/parallell/caveats.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/root.md","mtime":"2018-10-21T09:28:10.895Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-21T09:51:23.250Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
