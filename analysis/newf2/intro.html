@@ -64,7 +64,7 @@
     <link rel="next" href="introexer.html" />
     
     
-    <link rel="prev" href="feat2.html" />
+    <link rel="prev" href="../feat2.html" />
     
 
     </head>
@@ -132,9 +132,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="feat2.html">
+        <li class="chapter " data-level="1.4" data-path="../feat2.html">
             
-                <a href="feat2.html">
+                <a href="../feat2.html">
             
                     
                     Part 3 - Smart (and dumb) pointers
@@ -279,7 +279,7 @@
                 <a href="../changes.html">
             
                     
-                    Part 5 - Changes to user code
+                    Part 5 - 5 to 6: changes to user code
             
                 </a>
             
@@ -617,293 +617,146 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p>[Outline]{}</p>
-<h1 id="introduction">Introduction</h1>
-<p>[What is a Pointer?]{}</p>
-<p>[Pointers.pdf]{} (70,22)</p>
-<p>A pointer is an object whose value &#x201C;points to&#x201D; another value stored
-somewhere else in memory</p>
-<ul>
-<li><p>it contains a <strong>memory address</strong></p>
-</li>
-<li><p>: obtaining the stored at the pointed location</p>
-</li>
-<li><p>very flexible and powerful tool</p>
-</li>
-</ul>
-<p>[Using a Pointer]{}</p>
-<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    /<em> Defining a pointer </em>/
-    int<em> a; // declares a pointer that can point to an integer value
-    (</em>@ \onslide<2-> @*)//DANGER: the pointer points to a random memory portion!</2-></p>
-<pre><code>(*@ \onslide&lt;3-&gt; @*)int* b = nullptr; // OK, pointer is initialised to a null memory address
+                                <h1 id="the-absolute-basics">The absolute basics</h1>
+<p>Of course, all of us remember from our C++ 101 class what a pointer is. Still, it cannot hurt to refresh the basics a little bit before we dive into the deep end. </p>
+<p>When a variable is declared, the memory needed to store its value is assigned a specific location in memory (its memory address). Generally, C++ programs do not actively decide the exact memory addresses where its variables are stored. Fortunately, that task is left to the environment where the program is run - generally, an operating system that decides the particular memory locations on runtime. However, it may be useful for a program to be able to obtain the address of a variable during runtime in order to access data cells that are at a certain position relative to it.</p>
+<h2 id="the-address-of-operator-">The address-of operator &amp;</h2>
+<p>The address of a variable can be obtained by preceding the name of a variable with an ampersand sign (&amp;), known as address-of operator. For example: </p>
+<pre><code class="lang-cpp">foo = &amp;myfar;
+</code></pre>
+<p>This would assign the address of variable myvar to foo; by preceding the name of the variable myvar with the address-of operator (&amp;), we are no longer assigning the content of the variable itself to foo, but its address.</p>
+<p>The actual address of a variable in memory cannot be known before runtime, but let&apos;s assume, in order to help clarify some concepts, that myvar is placed during runtime in the memory address 1776.</p>
+<p>In this case, consider the following code fragment:</p>
+<p>First, we have assigned the value 25 to myvar (a variable whose address in memory we assumed to be 1776).</p>
+<p>The second statement assigns foo the address of myvar, which we have assumed to be 1776.</p>
+<p>Finally, the third statement, assigns the value contained in myvar to bar. This is a standard assignment operation, as already done many times in earlier chapters.</p>
+<p>The main difference between the second and third statements is the appearance of the address-of operator (&amp;).</p>
+<p>The variable that stores the address of another variable (like foo in the previous example) is what in C++ is called a pointer. Pointers are a very powerful feature of the language that has many uses in lower level programming. A bit later, we will see how to declare and use pointers.</p>
+<h2 id="dereference-operator-">Dereference operator *</h2>
+<p>As just seen, a variable which stores the address of another variable is called a pointer. Pointers are said to &quot;point to&quot; the variable whose address they store.</p>
+<p>An interesting property of pointers is that they can be used to access the variable they point to directly. This is done by preceding the pointer name with the dereference operator (*). The operator itself can be read as &quot;value pointed to by&quot;.</p>
+<p>Therefore, following with the values of the previous example, the following statement: </p>
+<pre><code class="lang-cpp">baz = *foo
+</code></pre>
+<p>This could be read as: &quot;baz equal to value pointed to by foo&quot;, and the statement would actually assign the value 25 to baz, since foo is 1776, and the value pointed to by 1776 (following the example above) would be 25.</p>
+<p>It is important to clearly differentiate that foo refers to the value 1776, while *foo (with an asterisk * preceding the identifier) refers to the value stored at address 1776, which in this case is 25. Notice the difference of including or not including the dereference operator (I have added an explanatory comment of how each of these two expressions could be read): </p>
+<pre><code class="lang-cpp">baz = foo;   <span class="hljs-comment">// baz equal to foo (1776)</span>
+baz = *foo;  <span class="hljs-comment">// baz equal to value pointed to by foo (25)</span>
+</code></pre>
+<p>The reference and dereference operators are thus complementary:
+\&amp; is the address-of operator, and can be read simply as &quot;address of&quot;
+* is the dereference operator, and can be read as &quot;value pointed to by&quot;</p>
+<p>Thus, they have sort of opposite meanings: An address obtained with &amp; can be dereferenced with *.</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2224840225);" id="example-of-pointers"><i class="fa fa-square-o"></i> Example of pointers<span id="heading-2224840225"></span></h3></div><div class="panel-body" id="panel-2224840225"><p>What will this program return ? </p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// my first pointer</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
 
-(*@ \onslide&lt;4-&gt; @*)int* c = new int; // allocate memory for an integer value in the heap
-//and assign its memory address to this pointer
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">int</span> firstvalue, secondvalue;
+  <span class="hljs-keyword">int</span> * mypointer;
 
-(*@ \onslide&lt;5-&gt; @*)int** d = &amp;a; // this pointer points to a pointer to an integer value
+  mypointer = &amp;firstvalue;
+  *mypointer = <span class="hljs-number">10</span>;
+  mypointer = &amp;secondvalue;
+  *mypointer = <span class="hljs-number">20</span>;
+  <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;firstvalue is &quot;</span> &lt;&lt; firstvalue &lt;&lt; <span class="hljs-string">&apos;\n&apos;</span>;
+  <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;secondvalue is &quot;</span> &lt;&lt; secondvalue &lt;&lt; <span class="hljs-string">&apos;\n&apos;</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2339467921);" id="-drum-roll-click-to-expand"><i class="fa fa-line-chart"></i>  Drum roll ...<span id="heading-2339467921">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2339467921"><p>The solution is</p>
+<pre><code class="lang-cpp">firstvalue is <span class="hljs-number">10</span>
+secondvalue is <span class="hljs-number">20</span>
+</code></pre>
+</div></div></div></div></p>
+<h2 id="void-pointers">Void pointers</h2>
+<p>The void type of pointer is a special type of pointer. In C++, void represents the absence of type. Therefore, void pointers are pointers that point to a value that has no type (and thus also an undetermined length and undetermined dereferencing properties).</p>
+<p>This gives void pointers a great flexibility, by being able to point to any data type, from an integer value or a float to a string of characters. In exchange, they have a great limitation: the data pointed to by them cannot be directly dereferenced (which is logical, since we have no type to dereference to), and for that reason, any address in a void pointer needs to be transformed into some other pointer type that points to a concrete data type before being dereferenced.</p>
+<p>One of its possible uses may be to pass generic parameters to a function. For example: </p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2352762465);" id="what-does-this-code-do"><i class="fa fa-square-o"></i> What does this code do?<span id="heading-2352762465"></span></h3></div><div class="panel-body" id="panel-2352762465"><p>One of the possible uses of void pointers is passing generic parameters to a function:</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// increaser</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
 
-(*@ \onslide&lt;6-&gt; @*)MyObject* e = new MyObject(); // allocate memory for MyObject
-// and assign its memory address to the pointer e
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">increase</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>* data, <span class="hljs-keyword">int</span> psize)</span>
+</span>{
+  <span class="hljs-keyword">if</span> ( psize == <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">char</span>) )
+  { <span class="hljs-keyword">char</span>* pchar; pchar=(<span class="hljs-keyword">char</span>*)data; ++(*pchar); }
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (psize == <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>) )
+  { <span class="hljs-keyword">int</span>* pint; pint=(<span class="hljs-keyword">int</span>*)data; ++(*pint); }
+}
 
-(*@ \onslide&lt;7-&gt; @*)/* Using a pointer */
-int f = *c; // dereferencing a pointer and assigning the pointed
-// value to another integer variable
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">char</span> a = <span class="hljs-string">&apos;x&apos;</span>;
+  <span class="hljs-keyword">int</span> b = <span class="hljs-number">1602</span>;
+  increase (&amp;a,<span class="hljs-keyword">sizeof</span>(a));
+  increase (&amp;b,<span class="hljs-keyword">sizeof</span>(b));
+  <span class="hljs-built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="hljs-string">&quot;, &quot;</span> &lt;&lt; b &lt;&lt; <span class="hljs-string">&apos;\n&apos;</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(517947562);" id="drum-roll--click-to-expand"><i class="fa fa-line-chart"></i> Drum roll ... <span id="heading-517947562">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-517947562"><p>The solution is</p>
+<pre><code class="lang-cpp">y, <span class="hljs-number">1603</span>
+</code></pre>
+</div></div></div></div></p>
+<h2 id="pointers-to-functions">Pointers to functions</h2>
+<p>C++ allows operations with pointers to functions. The typical use of this is for passing a function as an argument to another function. Pointers to functions are declared with the same syntax as a regular function declaration, except that the name of the function is enclosed between parentheses () and an asterisk (*) is inserted before the name:</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1694291359);" id="-function-pointers-"><i class="fa fa-square-o"></i>  Function pointers <span id="heading-1694291359"></span></h3></div><div class="panel-body" id="panel-1694291359"><p>This is an example of a function pointer</p>
+<pre><code class="lang-cpp">// pointer to functions
+#include &lt;iostream&gt;
+using namespace std;
 
-(*@ \onslide&lt;8-&gt; @*)e-&gt;DoSomething(); // dereferencing a pointer and calling
-// the method DoSomething() of the instance of MyObject
-// pointed by e
-</code></pre><pre><code>
-Why a raw pointer is hard to love
-=================================
+int addition (int a, int b)
+{ return (a+b); }
 
-[Memory leak]{}
+int subtraction (int a, int b)
+{ return (a-b); }
 
-``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    void MyAnalysisTask::UserExec()
-    {
-      TLorentzVector* v = nullptr;
-      for (int i = 0; i &lt; InputEvent()-&gt;GetNumberOfTracks(); i++) {
-        AliVTrack* track = InputEvent()-&gt;GetTrack(i);
-        if (!track) continue;
-        v = new TLorentzVector(track-&gt;Px(), 
-          track-&gt;Py(), track-&gt;Pz(), track-&gt;M());
-
-        // my analysis here
-        std::cout &lt;&lt; v-&gt;Pt() &lt;&lt; std::endl;
-      }
-
-      delete v;
-    }
-</code></pre><p>What is the problem with this code?</p>
-<p>[Array or single value?]{}</p>
-<ul>
-<li><p>A pointer can point to a single value or to an array $\rightarrow$
-no way to infer it from its declaration</p>
-</li>
-<li><p>Different syntax to destroy (= deallocate, free) the pointed object
-for arrays and single objects</p>
-</li>
-</ul>
-<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    AliVTrack* FilterTracks();</p>
-<pre><code>void UserExec()
+int operation (int x, int y, int (*functocall)(int,int))
 {
-  TLorentzVector *vect = new TLorentzVector(0,0,0,0);
-  double *trackPts = new double[100];
-  AliVTrack *returnValue = FilterTracks();
-
-  // here use the pointers
-
-  delete vect;
-  delete[] trackPts;
-  delete returnValue; // or should I use delete[] ??
+  int g;
+  g = (*functocall)(x,y);
+  return (g);
 }
-</code></pre><pre><code>
-[Double deletes]{}
 
--   Each memory allocation should match a corresponding deallocation
+int main ()
+{
+  int m,n;
+  int (*minus)(int,int) = subtraction;
 
--   Difficult to keep track of all memory allocations/deallocations in a
-    large project
-
--   **Ownership** of the pointed memory is ambiguous: multiple deletes
-    of the same object may occur
-
-``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    AliVTrack* FilterTracks();
-    void AnalyzeTracks(AliVTrack* tracks);
-
-    void MyAnalysisTask::UserExec()
-    {
-      AliVTrack* tracks = FilterTracks();
-
-      AnalyzeTracks(tracks);
-
-      delete[] tracks; // should I actually delete it?? 
-      //or was it already deleted by AnalyzeTracks?
-    }
-</code></pre><h1 id="smart-pointers">Smart Pointers</h1>
-<p>[Smart Pointers]{}</p>
+  m = operation (7, 5, addition);
+  n = operation (20, m, minus);
+  cout &lt;&lt;n;
+  return 0;
+}
+</code></pre>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1226393007);" id="-drum-roll--click-to-expand"><i class="fa fa-line-chart"></i>  Drum roll ... <span id="heading-1226393007">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1226393007"><p>And the output is</p>
+<pre><code class="lang-cpp"><span class="hljs-number">8</span>
+</code></pre>
+</div></div></div></div></p>
+<h2 id="dynamic-memory">Dynamic memory</h2>
+<p>all memory needs were determined before program execution by defining the variables needed. But there may be cases where the memory needs of a program can only be determined during runtime. For example, when the memory needed depends on user input. On these cases, programs need to dynamically allocate memory, for which the C++ language integrates the operators new and delete.</p>
+<h3 id="operators-new-and-new">Operators <code>new</code> and <code>new[]</code></h3>
+<p>Dynamic memory is allocated using operator new. new is followed by a data type specifier and, if a sequence of more than one element is required, the number of these within brackets []. It returns a pointer to the beginning of the new block of memory allocated. Its syntax is: </p>
 <ul>
-<li><p>Clear (<em>shared</em> or <em>exclusive</em>) <strong>ownership</strong> of the pointed object</p>
-</li>
-<li><p>: memory is deallocated when the last pointer goes out of scope</p>
-</li>
-<li><p>Available since C++11</p>
-</li>
+<li>pointer = new type</li>
+<li>pointer = new type [number_of_elements]</li>
 </ul>
-<p>[Exclusive-Ownership Pointers: <code>unique_ptr</code>]{}</p>
+<p>The first expression is used to allocate memory to contain one single element of type type. The second one is used to allocate a block (an array) of elements of type type, where number_of_elements is an integer value representing the amount of these. For example:</p>
+<h3 id="operators-delete-and-delete">Operators delete and delete[]</h3>
+<p>In most cases, memory allocated dynamically is only needed during specific periods of time within a program; once it is no longer needed, it can be freed so that the memory becomes available again for other requests of dynamic memory. This is the purpose of operator delete, whose syntax is:</p>
 <ul>
-<li><p>Automatic garbage collection with <em>**</em> (i.e. it uses the same
-resources as a raw pointer)</p>
-</li>
-<li><p><code>unique_ptr</code> <strong>owns</strong> the object it points</p>
-</li>
-<li><p>Memory automatically released when <code>unique_ptr</code> goes out of scope or
-when its <code>reset(T* ptr)</code> method is called</p>
-</li>
-<li><p>Only one <code>unique_ptr</code> can point to the same memory address</p>
-</li>
+<li>delete pointer;</li>
+<li>delete[] pointer;</li>
 </ul>
-<p>[<code>unique_ptr</code> example / 1]{}</p>
-<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    void MyFunction() {
-      std::unique_ptr<tlorentzvector> vector(new TLorentzVector(0,0,0,0));
-      std::unique_ptr<tlorentzvector> vector2(new TLorentzVector(0,0,0,0));</tlorentzvector></tlorentzvector></p>
-<pre><code>  // use vector and vector2
-
-  // dereferencing unique_ptr works exactly as a raw pointer
-  std::cout &lt;&lt; vector-&gt;Pt() &lt;&lt; std::endl;
-
-  // the line below does not compile!
-  // vector = vector2;
-  // cannot assign the same address to two unique_ptr instances
-
-  vector.swap(vector2); // however I can swap the memory addresses
-
-  // this also releases the memory previously pointed by vector2
-  vector2.reset(new TLorentzVector(0,0,0,0)); 
-
-  // objects pointed by vector and vector2 are deleted here
-}
-</code></pre><pre><code>
-[`unique_ptr` example / 2]{}
-
-``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    void MyAnalysisTask::UserExec()
-    {
-      for (int i = 0; i &lt; InputEvent()-&gt;GetNumberOfTracks(); i++) {
-        AliVTrack* track = InputEvent()-&gt;GetTrack(i);
-        if (!track) continue;
-        std::unique_ptr&lt;TLorentzVector&gt; v(new TLorentzVector(track-&gt;Px(), 
-          track-&gt;Py(), track-&gt;Pz(), track-&gt;M()));
-
-        // my analysis here
-        std::cout &lt;&lt; v-&gt;Pt() &lt;&lt; std::endl;
-        // no need to delete
-        // v is automatically deallocated after each for loop
-      }
-    }
-</code></pre><p>No memory leak here! :)</p>
-<p>[Shared-Ownership Pointers: <code>shared_ptr</code>]{}</p>
-<ul>
-<li><p>Automatic garbage collection with some CPU and memory overhead</p>
-</li>
-<li><p>The pointed object is <em>collectively owned</em> by one or more
-<code>shared_ptr</code> instances</p>
-</li>
-<li><p>Memory automatically released the last <code>shared_ptr</code> goes out of
-scope or when it is re-assigned</p>
-</li>
-</ul>
-<p>[Sharedptr.pdf]{}</p>
-<p>[<code>shared_ptr</code> example / 1]{}</p>
-<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    void MyFunction() {
-      std::shared_ptr<tlorentzvector> vector(new TLorentzVector(0,0,0,0));
-      std::shared_ptr<tlorentzvector> vector2(new TLorentzVector(0,0,0,0));</tlorentzvector></tlorentzvector></p>
-<pre><code>  // dereferencing shared_ptr works exactly as a raw pointer
-  std::cout &lt;&lt; vector-&gt;Pt() &lt;&lt; std::endl;
-
-  // assignment is allowed between shared_ptr instances
-  vector = vector2; 
-  // the object previously pointed by vector is deleted!
-  // vector and vector2 now share the ownership of the same object
-
-  // object pointed by both vector and vector2 is deleted here
-}
-</code></pre><pre><code>
-[`shared_ptr` example / 2]{}
-
-``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    class MyClass {
-      public:
-        MyClass();
-      private:
-        void MyFunction();
-        std::shared_ptr&lt;TLorentzVector&gt; fVector;
-    };
-
-    void MyClass::MyFunction() {
-      std::shared_ptr&lt;TLorentzVector&gt; vector(new TLorentzVector(0,0,0,0));
-
-      // assignment is allowed between shared_ptr instances
-      fVector = vector;
-      // the object previously pointed by fVector (if any) is deleted
-      // vector and fVector now share the ownership of the same object
-
-      // here vector goes out-of-scope
-      // however fVector is a class member so the object is not deleted!
-      // it will be deleted automatically when this instance of the class
-      // is deleted (and therefore fVector goes out-of-scope) :)
-    }
-</code></pre><p>[Some word of caution on <code>shared_ptr</code>]{}</p>
-<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    void MyClass::MyFunction() {
-      auto ptr = new TLorentzVector(0,0,0,0);</p>
-<pre><code>  std::shared_ptr&lt;TLorentzVector&gt; v1 (ptr);
-  std::shared_ptr&lt;TLorentzVector&gt; v2 (ptr);
-
-  // a double delete occurs here!
-}
-</code></pre><pre><code>
-What is the problem with the code above?
-
-[Some word of caution on `shared_ptr`]{}
-
-``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    void MyFunction() {
-      auto ptr = new TLorentzVector(0,0,0,0);
-
-      std::shared_ptr&lt;TLorentzVector&gt; v1 (ptr);
-      std::shared_ptr&lt;TLorentzVector&gt; v2 (ptr);
-
-      // a double delete occurs here!
-    }
-</code></pre><ul>
-<li><p><code>v1</code> does not know about <code>v2</code> and viceversa!</p>
-</li>
-<li><p>Two control blocks have been created for the same pointed objects</p>
-</li>
-</ul>
-<p>[Some word of caution on <code>shared_ptr</code>]{}</p>
-<p>``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-    void MyFunction() {
-      std::shared_ptr<tlorentzvector> v1 (new TLorentzVector(0,0,0,0));
-      std::shared_ptr<tlorentzvector> v2 (v1);</tlorentzvector></tlorentzvector></p>
-<pre><code>  // this is fine!
-}
-</code></pre><pre><code>
--   Solution: use raw pointers only when absolutely needed (if at all)
-
-[Usage Notes for ALICE Software]{}
-
--   -   (therefore cannot be used as non-transient class members)\
-
-    ``` {style=&quot;base&quot; gobble=&quot;4&quot;}
-        #if !(defined(__CINT__) || defined(__MAKECINT__))
-        // your C++11 code goes here
-        #endif
-</code></pre><ul>
-<li></li>
-</ul>
-<h1 id="conclusions">Conclusions</h1>
-<p>[Final remarks]{}</p>
-<ul>
-<li><p>When the extra-flexibility of a pointer is not needed, do not use it</p>
-</li>
-<li><p>Alternative to pointers: arguments by reference (not covered here)</p>
-</li>
-<li><p>Avoid raw pointers whenever possible!</p>
-</li>
-<li><p>Smart pointers (<code>unique_ptr</code> and <code>shared_ptr</code>) should cover most use
-cases and provide a much more robust and safe memory management</p>
-</li>
-</ul>
-<p>References\
-Effective modern C++, Scott Meyers (O&#x2019;Reilly 2015)\
-<a href="http://en.cppreference.com/" target="_blank">http://en.cppreference.com/</a></p>
+<p>The first statement releases the memory of a single element allocated using new, and the second one releases the memory allocated for arrays of elements using new and a size in brackets ([]).</p>
+<p>The value passed as argument to delete shall be either a pointer to a memory block previously allocated with new, or a null pointer (in the case of a null pointer, delete produces no effect).</p>
+<h2 id="dynamic-memory-in-c">Dynamic memory in C</h2>
+<p>C++ integrates the operators new and delete for allocating dynamic memory. But these were not available in the C language; instead, it used a library solution, with the functions malloc, calloc, realloc and free, defined in the header <cstdlib> (known as <stdlib.h> in C). The functions are also available in C++ and can also be used to allocate and deallocate dynamic memory.</stdlib.h></cstdlib></p>
+<p>Note, though, that the memory blocks allocated by these functions are not necessarily compatible with those returned by new, so they should not be mixed; each one should be handled with its own set of functions or operators.</p>
 
                                 
                                 </section>
@@ -931,7 +784,7 @@ Effective modern C++, Scott Meyers (O&#x2019;Reilly 2015)\
 
             
                 
-                <a href="feat2.html" class="navigation navigation-prev " aria-label="Previous page: Part 3 - Smart (and dumb) pointers">
+                <a href="../feat2.html" class="navigation navigation-prev " aria-label="Previous page: Part 3 - Smart (and dumb) pointers">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -947,7 +800,7 @@ Effective modern C++, Scott Meyers (O&#x2019;Reilly 2015)\
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"next":{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},"previous":{"title":"Part 3 - Smart (and dumb) pointers","level":"1.4","depth":1,"path":"analysis/newf2/feat2.md","ref":"analysis/newf2/feat2.md","articles":[{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"path":"analysis/newf2/intro.md","ref":"analysis/newf2/intro.md","articles":[]},{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},{"title":"Smart pointers","level":"1.4.3","depth":2,"path":"analysis/newf2/smartp.md","ref":"analysis/newf2/smartp.md","articles":[]},{"title":"Exercises","level":"1.4.4","depth":2,"path":"analysis/newf2/exer.md","ref":"analysis/newf2/exer.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/intro.md","mtime":"2018-10-19T09:52:11.874Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-21T09:51:23.250Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"next":{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},"previous":{"title":"Part 3 - Smart (and dumb) pointers","level":"1.4","depth":1,"path":"analysis/feat2.md","ref":"analysis/feat2.md","articles":[{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"path":"analysis/newf2/intro.md","ref":"analysis/newf2/intro.md","articles":[]},{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},{"title":"Smart pointers","level":"1.4.3","depth":2,"path":"analysis/newf2/smartp.md","ref":"analysis/newf2/smartp.md","articles":[]},{"title":"Exercises","level":"1.4.4","depth":2,"path":"analysis/newf2/exer.md","ref":"analysis/newf2/exer.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/intro.md","mtime":"2018-10-21T16:40:34.936Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-21T18:28:27.680Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
