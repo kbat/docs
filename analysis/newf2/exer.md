@@ -1,5 +1,7 @@
 # Exercise
 
+Below is a very long page of exercises related to using smart pointers, varying in difficulty. Click on 'solution' to see the answer to the questions. You can put the questions 'in action' by writing small C++ programs, but they are also answerable by just inspecting the code snippets.  
+
 {% challenge "Question" %}
 Smart Pointers allow you to access the underlying pointer, but they don't make you do it very often.  However, it's common for those recently acquainted with smart pointers to ignore the overloaded operators out of either ignorance or a misplaced fear of performance degradation.  Change the following code using `.get()` to have a more natural syntax:
 ```c++

@@ -199,7 +199,7 @@ No memory leak here! :)
 -   Memory automatically released the last `shared_ptr` goes out of
     scope or when it is re-assigned
 
-![SharedPtr]{Sharedptr.png}
+![SharedPtr](Sharedptr.png)
 
 {% callout "Shared pointers in the wild" %}
 
@@ -261,13 +261,13 @@ You have crated smart code, using smart pointers. It looks like this
       std::shared_ptr<TLorentzVector> v1 (ptr);
       std::shared_ptr<TLorentzVector> v2 (ptr);
   
-      // a double delete occurs here!
     }
 ```
 still, something is wrong with it, do you know what ?
 
 {% solution "Solution" %}
-Some word of caution on `shared_ptr`
+
+A possible way of solving this:
 
 ```cpp
     void MyFunction() {
@@ -295,25 +295,11 @@ Some word of caution on `shared_ptr`
     }
 ```
 
--   Solution: use raw pointers only when absolutely needed (if at all)
+The lesson to learn: use raw pointers only when absolutely needed (if at all)
 
 {% endchallenge %}
 
-Usage Notes for ALICE Software
-
--   -   (therefore cannot be used as non-transient class members)\
-
-    ``` {style="base" gobble="4"}
-        #if !(defined(__CINT__) || defined(__MAKECINT__))
-        // your C++11 code goes here
-        #endif
-    ```
-
--   
-
-# Conclusions
-
-Final remarks
+# Final remarks
 
 -   When the extra-flexibility of a pointer is not needed, do not use it
 

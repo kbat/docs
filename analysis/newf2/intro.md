@@ -1,319 +1,202 @@
-[Outline]{}
+# The absolute basics
 
-Introduction
-============
+Of course, all of us remember from our C++ 101 class what a pointer is. Still, it cannot hurt to refresh the basics a little bit before we dive into the deep end. 
 
-[What is a Pointer?]{}
+When a variable is declared, the memory needed to store its value is assigned a specific location in memory (its memory address). Generally, C++ programs do not actively decide the exact memory addresses where its variables are stored. Fortunately, that task is left to the environment where the program is run - generally, an operating system that decides the particular memory locations on runtime. However, it may be useful for a program to be able to obtain the address of a variable during runtime in order to access data cells that are at a certain position relative to it.
 
-[Pointers.pdf]{} (70,22)
+## The address-of operator &
 
-A pointer is an object whose value “points to” another value stored
-somewhere else in memory
+The address of a variable can be obtained by preceding the name of a variable with an ampersand sign (&), known as address-of operator. For example: 
 
--   it contains a **memory address**
-
--   : obtaining the stored at the pointed location
-
--   very flexible and powerful tool
-
-[Using a Pointer]{}
-
-``` {style="base" gobble="4"}
-    /* Defining a pointer */
-    int* a; // declares a pointer that can point to an integer value
-    (*@ \onslide<2-> @*)//DANGER: the pointer points to a random memory portion!
-    
-    (*@ \onslide<3-> @*)int* b = nullptr; // OK, pointer is initialised to a null memory address
-
-    (*@ \onslide<4-> @*)int* c = new int; // allocate memory for an integer value in the heap
-    //and assign its memory address to this pointer
-    
-    (*@ \onslide<5-> @*)int** d = &a; // this pointer points to a pointer to an integer value
-    
-    (*@ \onslide<6-> @*)MyObject* e = new MyObject(); // allocate memory for MyObject
-    // and assign its memory address to the pointer e
-    
-    (*@ \onslide<7-> @*)/* Using a pointer */
-    int f = *c; // dereferencing a pointer and assigning the pointed
-    // value to another integer variable
-    
-    (*@ \onslide<8-> @*)e->DoSomething(); // dereferencing a pointer and calling
-    // the method DoSomething() of the instance of MyObject
-    // pointed by e
+```cpp
+foo = &myfar;
 ```
 
-Why a raw pointer is hard to love
-=================================
+This would assign the address of variable myvar to foo; by preceding the name of the variable myvar with the address-of operator (&), we are no longer assigning the content of the variable itself to foo, but its address.
 
-[Memory leak]{}
+The actual address of a variable in memory cannot be known before runtime, but let's assume, in order to help clarify some concepts, that myvar is placed during runtime in the memory address 1776.
 
-``` {style="base" gobble="4"}
-    void MyAnalysisTask::UserExec()
-    {
-      TLorentzVector* v = nullptr;
-      for (int i = 0; i < InputEvent()->GetNumberOfTracks(); i++) {
-        AliVTrack* track = InputEvent()->GetTrack(i);
-        if (!track) continue;
-        v = new TLorentzVector(track->Px(), 
-          track->Py(), track->Pz(), track->M());
-    
-        // my analysis here
-        std::cout << v->Pt() << std::endl;
-      }
-  
-      delete v;
-    }
+In this case, consider the following code fragment:
+
+First, we have assigned the value 25 to myvar (a variable whose address in memory we assumed to be 1776).
+
+The second statement assigns foo the address of myvar, which we have assumed to be 1776.
+
+Finally, the third statement, assigns the value contained in myvar to bar. This is a standard assignment operation, as already done many times in earlier chapters.
+
+The main difference between the second and third statements is the appearance of the address-of operator (&).
+
+The variable that stores the address of another variable (like foo in the previous example) is what in C++ is called a pointer. Pointers are a very powerful feature of the language that has many uses in lower level programming. A bit later, we will see how to declare and use pointers.
+
+## Dereference operator \*
+
+As just seen, a variable which stores the address of another variable is called a pointer. Pointers are said to "point to" the variable whose address they store.
+
+An interesting property of pointers is that they can be used to access the variable they point to directly. This is done by preceding the pointer name with the dereference operator (\*). The operator itself can be read as "value pointed to by".
+
+Therefore, following with the values of the previous example, the following statement: 
+
+```cpp
+baz = *foo
 ```
 
-What is the problem with this code?
+This could be read as: "baz equal to value pointed to by foo", and the statement would actually assign the value 25 to baz, since foo is 1776, and the value pointed to by 1776 (following the example above) would be 25.
 
-[Array or single value?]{}
+It is important to clearly differentiate that foo refers to the value 1776, while \*foo (with an asterisk \* preceding the identifier) refers to the value stored at address 1776, which in this case is 25. Notice the difference of including or not including the dereference operator (I have added an explanatory comment of how each of these two expressions could be read): 
 
--   A pointer can point to a single value or to an array $\rightarrow$
-    no way to infer it from its declaration
-
--   Different syntax to destroy (= deallocate, free) the pointed object
-    for arrays and single objects
-
-``` {style="base" gobble="4"}
-    AliVTrack* FilterTracks();
-
-    void UserExec()
-    {
-      TLorentzVector *vect = new TLorentzVector(0,0,0,0);
-      double *trackPts = new double[100];
-      AliVTrack *returnValue = FilterTracks();
-
-      // here use the pointers
-
-      delete vect;
-      delete[] trackPts;
-      delete returnValue; // or should I use delete[] ??
-    }
+```cpp
+baz = foo;   // baz equal to foo (1776)
+baz = *foo;  // baz equal to value pointed to by foo (25) 
 ```
 
-[Double deletes]{}
 
--   Each memory allocation should match a corresponding deallocation
+The reference and dereference operators are thus complementary:
+\& is the address-of operator, and can be read simply as "address of"
+\* is the dereference operator, and can be read as "value pointed to by"
 
--   Difficult to keep track of all memory allocations/deallocations in a
-    large project
+Thus, they have sort of opposite meanings: An address obtained with & can be dereferenced with \*.
 
--   **Ownership** of the pointed memory is ambiguous: multiple deletes
-    of the same object may occur
+{% challenge "Example of pointers" %}
 
-``` {style="base" gobble="4"}
-    AliVTrack* FilterTracks();
-    void AnalyzeTracks(AliVTrack* tracks);
+What will this program return ? 
 
-    void MyAnalysisTask::UserExec()
-    {
-      AliVTrack* tracks = FilterTracks();
+```cpp
+// my first pointer
+#include <iostream>
+using namespace std;
 
-      AnalyzeTracks(tracks);
+int main ()
+{
+  int firstvalue, secondvalue;
+  int * mypointer;
 
-      delete[] tracks; // should I actually delete it?? 
-      //or was it already deleted by AnalyzeTracks?
-    }
+  mypointer = &firstvalue;
+  *mypointer = 10;
+  mypointer = &secondvalue;
+  *mypointer = 20;
+  cout << "firstvalue is " << firstvalue << '\n';
+  cout << "secondvalue is " << secondvalue << '\n';
+  return 0;
+}
 ```
-
-Smart Pointers
-==============
-
-[Smart Pointers]{}
-
--   Clear (*shared* or *exclusive*) **ownership** of the pointed object
-
--   : memory is deallocated when the last pointer goes out of scope
-
--   Available since C++11
-
-[Exclusive-Ownership Pointers: `unique_ptr`]{}
-
--   Automatic garbage collection with **** (i.e. it uses the same
-    resources as a raw pointer)
-
--   `unique_ptr` **owns** the object it points
-
--   Memory automatically released when `unique_ptr` goes out of scope or
-    when its `reset(T* ptr)` method is called
-
--   Only one `unique_ptr` can point to the same memory address
-
-[`unique_ptr` example / 1]{}
-
-``` {style="base" gobble="4"}
-    void MyFunction() {
-      std::unique_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
-      std::unique_ptr<TLorentzVector> vector2(new TLorentzVector(0,0,0,0));
-  
-      // use vector and vector2
-  
-      // dereferencing unique_ptr works exactly as a raw pointer
-      std::cout << vector->Pt() << std::endl;
-  
-      // the line below does not compile!
-      // vector = vector2;
-      // cannot assign the same address to two unique_ptr instances
-  
-      vector.swap(vector2); // however I can swap the memory addresses
-  
-      // this also releases the memory previously pointed by vector2
-      vector2.reset(new TLorentzVector(0,0,0,0)); 
-  
-      // objects pointed by vector and vector2 are deleted here
-    }
+{% solution " Drum roll ..." %}
+The solution is
+```cpp
+firstvalue is 10
+secondvalue is 20
 ```
+{% endchallenge %}
 
-[`unique_ptr` example / 2]{}
 
-``` {style="base" gobble="4"}
-    void MyAnalysisTask::UserExec()
-    {
-      for (int i = 0; i < InputEvent()->GetNumberOfTracks(); i++) {
-        AliVTrack* track = InputEvent()->GetTrack(i);
-        if (!track) continue;
-        std::unique_ptr<TLorentzVector> v(new TLorentzVector(track->Px(), 
-          track->Py(), track->Pz(), track->M()));
-    
-        // my analysis here
-        std::cout << v->Pt() << std::endl;
-        // no need to delete
-        // v is automatically deallocated after each for loop
-      }
-    }
+## Void pointers
+
+The void type of pointer is a special type of pointer. In C++, void represents the absence of type. Therefore, void pointers are pointers that point to a value that has no type (and thus also an undetermined length and undetermined dereferencing properties).
+
+This gives void pointers a great flexibility, by being able to point to any data type, from an integer value or a float to a string of characters. In exchange, they have a great limitation: the data pointed to by them cannot be directly dereferenced (which is logical, since we have no type to dereference to), and for that reason, any address in a void pointer needs to be transformed into some other pointer type that points to a concrete data type before being dereferenced.
+
+One of its possible uses may be to pass generic parameters to a function. For example: 
+
+{% challenge "What does this code do?" %}
+One of the possible uses of void pointers is passing generic parameters to a function:
+```cpp
+// increaser
+#include <iostream>
+using namespace std;
+
+void increase (void* data, int psize)
+{
+  if ( psize == sizeof(char) )
+  { char* pchar; pchar=(char*)data; ++(*pchar); }
+  else if (psize == sizeof(int) )
+  { int* pint; pint=(int*)data; ++(*pint); }
+}
+
+int main ()
+{
+  char a = 'x';
+  int b = 1602;
+  increase (&a,sizeof(a));
+  increase (&b,sizeof(b));
+  cout << a << ", " << b << '\n';
+  return 0;
+}
 ```
+{% solution "Drum roll ... " %}
 
-No memory leak here! :)
+The solution is
 
-[Shared-Ownership Pointers: `shared_ptr`]{}
-
--   Automatic garbage collection with some CPU and memory overhead
-
--   The pointed object is *collectively owned* by one or more
-    `shared_ptr` instances
-
--   Memory automatically released the last `shared_ptr` goes out of
-    scope or when it is re-assigned
-
-[Sharedptr.pdf]{}
-
-[`shared_ptr` example / 1]{}
-
-``` {style="base" gobble="4"}
-    void MyFunction() {
-      std::shared_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
-      std::shared_ptr<TLorentzVector> vector2(new TLorentzVector(0,0,0,0));
-  
-      // dereferencing shared_ptr works exactly as a raw pointer
-      std::cout << vector->Pt() << std::endl;
-  
-      // assignment is allowed between shared_ptr instances
-      vector = vector2; 
-      // the object previously pointed by vector is deleted!
-      // vector and vector2 now share the ownership of the same object
-  
-      // object pointed by both vector and vector2 is deleted here
-    }
+```cpp
+y, 1603
 ```
+{% endchallenge %}
 
-[`shared_ptr` example / 2]{}
+## Pointers to functions
 
-``` {style="base" gobble="4"}
-    class MyClass {
-      public:
-        MyClass();
-      private:
-        void MyFunction();
-        std::shared_ptr<TLorentzVector> fVector;
-    };
+C++ allows operations with pointers to functions. The typical use of this is for passing a function as an argument to another function. Pointers to functions are declared with the same syntax as a regular function declaration, except that the name of the function is enclosed between parentheses () and an asterisk (\*) is inserted before the name:
 
-    void MyClass::MyFunction() {
-      std::shared_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
-  
-      // assignment is allowed between shared_ptr instances
-      fVector = vector;
-      // the object previously pointed by fVector (if any) is deleted
-      // vector and fVector now share the ownership of the same object
+{% challenge " Function pointers " %}
+This is an example of a function pointer
+```cpp
+// pointer to functions
+#include <iostream>
+using namespace std;
 
-      // here vector goes out-of-scope
-      // however fVector is a class member so the object is not deleted!
-      // it will be deleted automatically when this instance of the class
-      // is deleted (and therefore fVector goes out-of-scope) :)
-    }
+int addition (int a, int b)
+{ return (a+b); }
+
+int subtraction (int a, int b)
+{ return (a-b); }
+
+int operation (int x, int y, int (*functocall)(int,int))
+{
+  int g;
+  g = (*functocall)(x,y);
+  return (g);
+}
+
+int main ()
+{
+  int m,n;
+  int (*minus)(int,int) = subtraction;
+
+  m = operation (7, 5, addition);
+  n = operation (20, m, minus);
+  cout <<n;
+  return 0;
+}
 ```
-
-[Some word of caution on `shared_ptr`]{}
-
-``` {style="base" gobble="4"}
-    void MyClass::MyFunction() {
-      auto ptr = new TLorentzVector(0,0,0,0);
-  
-      std::shared_ptr<TLorentzVector> v1 (ptr);
-      std::shared_ptr<TLorentzVector> v2 (ptr);
-  
-      // a double delete occurs here!
-    }
+{% solution " Drum roll ... " %}
+And the output is
+```cpp
+8
 ```
+{% endchallenge %}
 
-What is the problem with the code above?
+## Dynamic memory
+all memory needs were determined before program execution by defining the variables needed. But there may be cases where the memory needs of a program can only be determined during runtime. For example, when the memory needed depends on user input. On these cases, programs need to dynamically allocate memory, for which the C++ language integrates the operators new and delete.
 
-[Some word of caution on `shared_ptr`]{}
+### Operators `new` and `new[]`
 
-``` {style="base" gobble="4"}
-    void MyFunction() {
-      auto ptr = new TLorentzVector(0,0,0,0);
-  
-      std::shared_ptr<TLorentzVector> v1 (ptr);
-      std::shared_ptr<TLorentzVector> v2 (ptr);
-  
-      // a double delete occurs here!
-    }
-```
+Dynamic memory is allocated using operator new. new is followed by a data type specifier and, if a sequence of more than one element is required, the number of these within brackets []. It returns a pointer to the beginning of the new block of memory allocated. Its syntax is: 
 
--   `v1` does not know about `v2` and viceversa!
+* pointer = new type
+* pointer = new type [number\_of\_elements]
 
--   Two control blocks have been created for the same pointed objects
+The first expression is used to allocate memory to contain one single element of type type. The second one is used to allocate a block (an array) of elements of type type, where number\_of\_elements is an integer value representing the amount of these. For example:
 
-[Some word of caution on `shared_ptr`]{}
+### Operators delete and delete[]
+In most cases, memory allocated dynamically is only needed during specific periods of time within a program; once it is no longer needed, it can be freed so that the memory becomes available again for other requests of dynamic memory. This is the purpose of operator delete, whose syntax is:
 
-``` {style="base" gobble="4"}
-    void MyFunction() {
-      std::shared_ptr<TLorentzVector> v1 (new TLorentzVector(0,0,0,0));
-      std::shared_ptr<TLorentzVector> v2 (v1);
-  
-      // this is fine!
-    }
-```
+* delete pointer;
+* delete[] pointer;
 
--   Solution: use raw pointers only when absolutely needed (if at all)
 
-[Usage Notes for ALICE Software]{}
+The first statement releases the memory of a single element allocated using new, and the second one releases the memory allocated for arrays of elements using new and a size in brackets ([]).
 
--   -   (therefore cannot be used as non-transient class members)\
+The value passed as argument to delete shall be either a pointer to a memory block previously allocated with new, or a null pointer (in the case of a null pointer, delete produces no effect).
 
-    ``` {style="base" gobble="4"}
-        #if !(defined(__CINT__) || defined(__MAKECINT__))
-        // your C++11 code goes here
-        #endif
-    ```
+## Dynamic memory in C
 
--   
+C++ integrates the operators new and delete for allocating dynamic memory. But these were not available in the C language; instead, it used a library solution, with the functions malloc, calloc, realloc and free, defined in the header <cstdlib> (known as <stdlib.h> in C). The functions are also available in C++ and can also be used to allocate and deallocate dynamic memory.
 
-Conclusions
-===========
-
-[Final remarks]{}
-
--   When the extra-flexibility of a pointer is not needed, do not use it
-
--   Alternative to pointers: arguments by reference (not covered here)
-
--   Avoid raw pointers whenever possible!
-
--   Smart pointers (`unique_ptr` and `shared_ptr`) should cover most use
-    cases and provide a much more robust and safe memory management
-
-References\
-Effective modern C++, Scott Meyers (O’Reilly 2015)\
-<http://en.cppreference.com/>
+Note, though, that the memory blocks allocated by these functions are not necessarily compatible with those returned by new, so they should not be mixed; each one should be handled with its own set of functions or operators.

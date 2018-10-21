@@ -2,7 +2,7 @@
 ----
 * [Part 1 - Introduction](analysis/introduction.md)
 * [Part 2 - New C++ features 1](analysis/feat1.md)
-* [Part 3 - Smart (and dumb) pointers](analysis/newf2/feat2.md)
+* [Part 3 - Smart (and dumb) pointers](analysis/feat2.md)
   * [Pointers, the absolute basics](analysis/newf2/intro.md)
   * [A quick refresher](analysis/newf2/introexer.md)
   * [Smart pointers](analysis/newf2/smartp.md)
@@ -12,7 +12,7 @@
   * [Posix multithreading](analysis/parallell/example.md)
   * [What can go wrong?](analysis/parallell/caveats.md)
   * [Parallellism with ROOT](analysis/parallell/root.md)
-* [Part 5 - Changes to user code](analysis/changes.md)
+* [Part 5 - 5 to 6: changes to user code](analysis/changes.md)
 * [Part 6 - Vectorization](analysis/vectorization.md)
 * [Part 7 - Declarative analysis](analysis/declarative.md)
 * [Part 8 - Python](analysis/python/README.md)
