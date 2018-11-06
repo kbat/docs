@@ -1,17 +1,6 @@
 # Running Python
 
-To start using Python, we need access to the `python` program in a terminal.
-The version installed on lxplus is 2.6.6, which is very old. However, we can get
-a newer version along with various useful packages
-(see details on the [LCG stacks][lcg_stack]) by setting up an LCG environment:
-
-```bash
-$ source /cvmfs/sft.cern.ch/lcg/views/setupViews.sh LCG_93 x86_64-slc6-gcc62-opt
-```
-
-If you have a computer running MacOS or some Linux distribution, it will have
-come will Python pre-installed. Either way, a simple way to get Python on your 
-computer is to install [Anaconda][anaconda].
+To start using Python, we need access to the `python` program in a terminal. If you have a reasonable recent linux flavor at your disposal, the python version that you are running should be new enough to follow these lessons. The same goes for the python version version that ships with aliBuild. 
 
 {% callout "Python 3?" %}
 You might see material that talks about Python 3. Like a lot of other software, 
@@ -21,8 +10,7 @@ it isn’t _backwards compatible_ with Python 2. This means that code that works
 when run with version 2 of Python may not necessarily work when run with 
 version 3. Python 2 was around for a long time, and so the process of migrating to Python 3 has been slow, which is why so many people talk about it.
 
-Indeed, LHCb software is not compatible with Python 3, and so we use Python 2 
-in these lessons. In general, and out in the real world, Python 3 is preferred 
+We use Python 2 in these lessons. In general, and out in the real world, Python 3 is preferred 
 as it receives the most focus from the people who make Python. If you’re 
 starting a new project, and don’t have to use LHCb software, consider trying to 
 use Python 3. You can install both Python 2 and Python 3 using 

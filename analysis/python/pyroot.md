@@ -75,6 +75,16 @@ f.Draw()
 
 ## Fitting a histogram
 
+You have seen in the previous section that we can resolve all ROOT classes through python bindings. 
+
+{% challenge "Fitting a histogram" %}
+Take the code example from the previous section as a starting point, and write a simple piece of python code that
+* defines a linear function
+* fills a histogram with some linearly distributed data
+* fits the linear function to the histogram
+
+{% solution "Click to check possible solution" %}
+
 ```python
 from ROOT import TF1, TH1F, TCanvas
 
@@ -97,6 +107,7 @@ h.Fit(f)
 par = f.GetParameters()
 print('fit results: const =', par[0], ',pitch =', par[1])
 ```
+{% endchallenge %}
 
 ## Working with trees
 Next to making histograms, working with trees is probably the most common part of any analysis. The TTree implementation uses pointers and dedicated buffers to reduce the memory usage and to speed up access. Consequently, mapping TTree functionality to Python is not straightforward, and most of the following features are implemented in ROOT release 4.01/04 and later only, whereas you will need 5.02 if you require all of them.
@@ -137,7 +148,7 @@ for jentry in xrange(entries):
 
 Writing a ROOT TTree in a Python session is a little convoluted, if only because you will need a C++ class to make sure that data members can be mapped, unless you are working with built-in types. Here is an example for working with the latter only:
 
-``python
+```python
 from ROOT import TFile, TTree
 from array import array
 

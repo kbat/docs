@@ -136,6 +136,7 @@ C++ allows operations with pointers to functions. The typical use of this is for
 
 {% challenge " Function pointers " %}
 This is an example of a function pointer
+
 ```cpp
 // pointer to functions
 #include <iostream>
@@ -166,6 +167,7 @@ int main ()
 }
 ```
 {% solution " Drum roll ... " %}
+
 And the output is
 ```cpp
 8
