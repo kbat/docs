@@ -470,20 +470,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.12" data-path="../python/further_reading.html">
-            
-                <a href="../python/further_reading.html">
-            
-                    
-                    Further reading
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9.13" data-path="../python/pyroot.html">
+        <li class="chapter " data-level="1.9.12" data-path="../python/pyroot.html">
             
                 <a href="../python/pyroot.html">
             
@@ -647,7 +634,7 @@ baz = *foo;  <span class="hljs-comment">// baz equal to value pointed to by foo 
 \&amp; is the address-of operator, and can be read simply as &quot;address of&quot;
 * is the dereference operator, and can be read as &quot;value pointed to by&quot;</p>
 <p>Thus, they have sort of opposite meanings: An address obtained with &amp; can be dereferenced with *.</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2224840225);" id="example-of-pointers"><i class="fa fa-square-o"></i> Example of pointers<span id="heading-2224840225"></span></h3></div><div class="panel-body" id="panel-2224840225"><p>What will this program return ? </p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1501838602);" id="example-of-pointers"><i class="fa fa-square-o"></i> Example of pointers<span id="heading-1501838602"></span></h3></div><div class="panel-body" id="panel-1501838602"><p>What will this program return ? </p>
 <pre><code class="lang-cpp"><span class="hljs-comment">// my first pointer</span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
@@ -666,7 +653,7 @@ baz = *foo;  <span class="hljs-comment">// baz equal to value pointed to by foo 
   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2339467921);" id="-drum-roll-click-to-expand"><i class="fa fa-line-chart"></i>  Drum roll ...<span id="heading-2339467921">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2339467921"><p>The solution is</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1696637781);" id="-drum-roll-click-to-expand"><i class="fa fa-line-chart"></i>  Drum roll ...<span id="heading-1696637781">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1696637781"><p>The solution is</p>
 <pre><code class="lang-cpp">firstvalue is <span class="hljs-number">10</span>
 secondvalue is <span class="hljs-number">20</span>
 </code></pre>
@@ -675,7 +662,7 @@ secondvalue is <span class="hljs-number">20</span>
 <p>The void type of pointer is a special type of pointer. In C++, void represents the absence of type. Therefore, void pointers are pointers that point to a value that has no type (and thus also an undetermined length and undetermined dereferencing properties).</p>
 <p>This gives void pointers a great flexibility, by being able to point to any data type, from an integer value or a float to a string of characters. In exchange, they have a great limitation: the data pointed to by them cannot be directly dereferenced (which is logical, since we have no type to dereference to), and for that reason, any address in a void pointer needs to be transformed into some other pointer type that points to a concrete data type before being dereferenced.</p>
 <p>One of its possible uses may be to pass generic parameters to a function. For example: </p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2352762465);" id="what-does-this-code-do"><i class="fa fa-square-o"></i> What does this code do?<span id="heading-2352762465"></span></h3></div><div class="panel-body" id="panel-2352762465"><p>One of the possible uses of void pointers is passing generic parameters to a function:</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6357832667);" id="what-does-this-code-do"><i class="fa fa-square-o"></i> What does this code do?<span id="heading-6357832667"></span></h3></div><div class="panel-body" id="panel-6357832667"><p>One of the possible uses of void pointers is passing generic parameters to a function:</p>
 <pre><code class="lang-cpp"><span class="hljs-comment">// increaser</span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
@@ -698,13 +685,13 @@ secondvalue is <span class="hljs-number">20</span>
   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(517947562);" id="drum-roll--click-to-expand"><i class="fa fa-line-chart"></i> Drum roll ... <span id="heading-517947562">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-517947562"><p>The solution is</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8418951459);" id="drum-roll--click-to-expand"><i class="fa fa-line-chart"></i> Drum roll ... <span id="heading-8418951459">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-8418951459"><p>The solution is</p>
 <pre><code class="lang-cpp">y, <span class="hljs-number">1603</span>
 </code></pre>
 </div></div></div></div></p>
 <h2 id="pointers-to-functions">Pointers to functions</h2>
 <p>C++ allows operations with pointers to functions. The typical use of this is for passing a function as an argument to another function. Pointers to functions are declared with the same syntax as a regular function declaration, except that the name of the function is enclosed between parentheses () and an asterisk (*) is inserted before the name:</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1694291359);" id="-function-pointers-"><i class="fa fa-square-o"></i>  Function pointers <span id="heading-1694291359"></span></h3></div><div class="panel-body" id="panel-1694291359"><p>This is an example of a function pointer</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(567461937);" id="-function-pointers-"><i class="fa fa-square-o"></i>  Function pointers <span id="heading-567461937"></span></h3></div><div class="panel-body" id="panel-567461937"><p>This is an example of a function pointer</p>
 <pre><code class="lang-cpp">// pointer to functions
 #include &lt;iostream&gt;
 using namespace std;
@@ -733,7 +720,7 @@ int main ()
   return 0;
 }
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1226393007);" id="-drum-roll--click-to-expand"><i class="fa fa-line-chart"></i>  Drum roll ... <span id="heading-1226393007">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1226393007"><p>And the output is</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6625029645);" id="-drum-roll--click-to-expand"><i class="fa fa-line-chart"></i>  Drum roll ... <span id="heading-6625029645">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-6625029645"><p>And the output is</p>
 <pre><code class="lang-cpp"><span class="hljs-number">8</span>
 </code></pre>
 </div></div></div></div></p>
@@ -800,7 +787,7 @@ int main ()
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"next":{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},"previous":{"title":"Part 3 - Smart (and dumb) pointers","level":"1.4","depth":1,"path":"analysis/feat2.md","ref":"analysis/feat2.md","articles":[{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"path":"analysis/newf2/intro.md","ref":"analysis/newf2/intro.md","articles":[]},{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},{"title":"Smart pointers","level":"1.4.3","depth":2,"path":"analysis/newf2/smartp.md","ref":"analysis/newf2/smartp.md","articles":[]},{"title":"Exercises","level":"1.4.4","depth":2,"path":"analysis/newf2/exer.md","ref":"analysis/newf2/exer.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/intro.md","mtime":"2018-10-21T16:40:34.936Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-21T18:28:27.680Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"next":{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},"previous":{"title":"Part 3 - Smart (and dumb) pointers","level":"1.4","depth":1,"path":"analysis/feat2.md","ref":"analysis/feat2.md","articles":[{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"path":"analysis/newf2/intro.md","ref":"analysis/newf2/intro.md","articles":[]},{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},{"title":"Smart pointers","level":"1.4.3","depth":2,"path":"analysis/newf2/smartp.md","ref":"analysis/newf2/smartp.md","articles":[]},{"title":"Exercises","level":"1.4.4","depth":2,"path":"analysis/newf2/exer.md","ref":"analysis/newf2/exer.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/intro.md","mtime":"2018-10-31T15:07:03.656Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-07T16:08:26.592Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

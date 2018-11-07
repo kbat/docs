@@ -470,20 +470,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.12" data-path="further_reading.html">
-            
-                <a href="further_reading.html">
-            
-                    
-                    Further reading
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9.13" data-path="pyroot.html">
+        <li class="chapter " data-level="1.9.12" data-path="pyroot.html">
             
                 <a href="pyroot.html">
             
@@ -623,28 +610,16 @@ scientific community due to the broad selection of feature-rich, actively
 maintained libraries. This means that a lot of software has already been 
 written to solve problems common to our field, so you can concentrate on the 
 interesting stuff!</p>
-<p>In LHCb, Python is used for lots of things, particularly for writing files that 
-make ntuples for you, but also for many analyses.
-Unless you are absolutely <em>forced</em> to use another language by external 
-constraints, such as your fit program already being written in C++, we 
-recommend using Python, even if you&#x2019;re not comfortable with it right now. This 
-is because there&#x2019;s a large support group of other people who can help you with 
-problems you might have down the line, and because we believe it&#x2019;s the best 
-tool, all in all, for data analysis.</p>
+<p>These lessons (with the exception of the PyROOT part) are strongly based on those written by <a href="http://software-carpentry.org/" target="_blank">Software Carpentry</a> and fall under the Creative Commons Attribution license. </p>
 <h2 id="aim-of-these-lessons">Aim of these lessons</h2>
-<p>There are already plenty of <a href="https://www.google.com/search?q=learn+python" target="_blank">superb guides</a> on the Internet for learning 
-Python, all of which will be more comprehensive than this one. This particular 
-guide exists because it closely follows what we teach at the 
-<a href="https://lhcb.github.io/starterkit/" target="_blank">Starterkit</a>, where we teach Python over the course of one day, and 
-so only teaches you what you need to follow along in the lessons that are 
-specific to high-energy physics.</p>
-<p>We expect you to be familiar with at least one other programming language, so 
+<p>There are already plenty of superb guides on the Internet for learning 
+Python, all of which will be more comprehensive than this one.  We expect you to be familiar with at least one other programming language, so 
 that you understand sentences like &quot;we assign value 123 to variable <code>abc</code>&quot; and 
 &quot;this is a function which accepts two arguments&quot;. You should also understand 
 the basics of using a text editor, which you use to write code to a file 
 somewhere, and then you can somehow run the contents using commands in your 
 terminal to make stuff happen.</p>
-<p>Sounds good? Then let&#x2019;s get going!</p>
+<p>Sounds good? Then let&#x2019;s get going! What we cover in this part of the tutorial is the last section of this part - PyROOT. However, if you are completely unfamiliar with Python, you might find the first lessons quite interesting!</p>
 
                                 
                                 </section>
@@ -688,7 +663,7 @@ terminal to make stuff happen.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Part 8 - Python","level":"1.9","depth":1,"next":{"title":"Running","level":"1.9.1","depth":2,"path":"analysis/python/running.md","ref":"analysis/python/running.md","articles":[]},"previous":{"title":"Part 7 - Declarative analysis","level":"1.8","depth":1,"path":"analysis/declarative.md","ref":"analysis/declarative.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/python/README.md","mtime":"2018-10-21T09:51:35.237Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-21T18:28:27.680Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Part 8 - Python","level":"1.9","depth":1,"next":{"title":"Running","level":"1.9.1","depth":2,"path":"analysis/python/running.md","ref":"analysis/python/running.md","articles":[]},"previous":{"title":"Part 7 - Declarative analysis","level":"1.8","depth":1,"path":"analysis/declarative.md","ref":"analysis/declarative.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/python/README.md","mtime":"2018-11-07T14:45:16.839Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-07T16:08:26.592Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

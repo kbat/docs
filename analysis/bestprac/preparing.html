@@ -470,20 +470,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.12" data-path="../python/further_reading.html">
-            
-                <a href="../python/further_reading.html">
-            
-                    
-                    Further reading
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9.13" data-path="../python/pyroot.html">
+        <li class="chapter " data-level="1.9.12" data-path="../python/pyroot.html">
             
                 <a href="../python/pyroot.html">
             
@@ -617,10 +604,10 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="preparing-your-code-for-debug">Preparing your code for debug</h2>
+                                <h2 id="preparing-your-code-for-debugging">Preparing your code for debugging</h2>
 <p>In broad terms when building software you typically have the option between
 generating either a <strong>release</strong> or a <strong>debug</strong> build.</p>
-<p>This also applies to ROOT, AliRoot, AliPhysics, and your compiled analysis tasks
+<p>This also applies to ROOT (and AliRoot, AliPhysics), and your compiled analysis tasks
 and macros. As the name suggests:</p>
 <ul>
 <li><strong>release</strong> builds are meant for production and should be used when running
@@ -672,8 +659,7 @@ better specify also <code>-O0</code>:</p>
 <pre><code class="lang-bash">gcc -O0 -g ...
 </code></pre>
 <p>The same flags are used for <code>clang</code>.</p>
-<h3 id="compiling-your-alice-code-for-debug">Compiling your ALICE code for debug</h3>
-<p>Complex frameworks aren&apos;t typically built by directly invoking a compiler and
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5650872224);" id="-compiling-your-alice-code-for-debug-"><i class="fa fa-info-circle"></i>  Compiling your ALICE code for debug <span id="heading-5650872224"></span></h3></div><div class="panel-body" id="panel-5650872224"><p>Complex frameworks aren&apos;t typically built by directly invoking a compiler and
 its options: for instance, when compiling AliPhysics you use
 <a href="https://alisw.github.io/alibuild/tutorial.html" target="_blank">aliBuild</a>, managing
 dependencies between different packages, and <a href="https://cmake.org/" target="_blank">CMake</a>, a
@@ -697,6 +683,7 @@ this will trigger a full recompilation of most packages):</p>
 <pre><code class="lang-bash">aliBuild build AliPhysics --defaults debug
 </code></pre>
 <p>Such debug configuration uses <code>-O0</code> and <code>-g</code>.</p>
+</div></div></p>
 <h4 id="your-analysis">Your analysis</h4>
 <p>Suppose your analysis task is called <code>AliAnalysisTaskDummyTask</code>. In the macro
 you use to load the analysis task, you can do:</p>
@@ -778,7 +765,7 @@ debug symbols are present.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Preparing your code for debugging","layout":"tweet","createtoc":true,"parnumbers":true,"level":"1.10.1","depth":2,"next":{"title":"Some general programming tips","level":"1.10.2","depth":2,"path":"analysis/bestprac/general.md","ref":"analysis/bestprac/general.md","articles":[]},"previous":{"title":"Part 9 - Best Practices","level":"1.10","depth":1,"path":"analysis/bestprac/best_prac.md","ref":"analysis/bestprac/best_prac.md","articles":[{"title":"Preparing your code for debugging","level":"1.10.1","depth":2,"path":"analysis/bestprac/preparing.md","ref":"analysis/bestprac/preparing.md","articles":[]},{"title":"Some general programming tips","level":"1.10.2","depth":2,"path":"analysis/bestprac/general.md","ref":"analysis/bestprac/general.md","articles":[]},{"title":"Where does my code crash","level":"1.10.3","depth":2,"path":"analysis/bestprac/crash.md","ref":"analysis/bestprac/crash.md","articles":[]},{"title":"Finding memory leaks","level":"1.10.4","depth":2,"path":"analysis/bestprac/memory.md","ref":"analysis/bestprac/memory.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/bestprac/preparing.md","mtime":"2018-10-21T09:51:35.232Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-21T18:28:27.680Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Preparing your code for debugging","level":"1.10.1","depth":2,"next":{"title":"Some general programming tips","level":"1.10.2","depth":2,"path":"analysis/bestprac/general.md","ref":"analysis/bestprac/general.md","articles":[]},"previous":{"title":"Part 9 - Best Practices","level":"1.10","depth":1,"path":"analysis/bestprac/best_prac.md","ref":"analysis/bestprac/best_prac.md","articles":[{"title":"Preparing your code for debugging","level":"1.10.1","depth":2,"path":"analysis/bestprac/preparing.md","ref":"analysis/bestprac/preparing.md","articles":[]},{"title":"Some general programming tips","level":"1.10.2","depth":2,"path":"analysis/bestprac/general.md","ref":"analysis/bestprac/general.md","articles":[]},{"title":"Where does my code crash","level":"1.10.3","depth":2,"path":"analysis/bestprac/crash.md","ref":"analysis/bestprac/crash.md","articles":[]},{"title":"Finding memory leaks","level":"1.10.4","depth":2,"path":"analysis/bestprac/memory.md","ref":"analysis/bestprac/memory.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/bestprac/preparing.md","mtime":"2018-11-07T16:04:10.936Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-07T16:08:26.592Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
