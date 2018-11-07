@@ -357,3 +357,14 @@ m = MyClass()
 m.SetValue(42)
 print(m.GetValue())
 ```
+
+{% callout "So ... why would I use this?" %}
+Whether or not you to use PyROOT is fully up to you: most people find the syntax easier than that of C++, and of course on does not have to worry about memory management when you use Python. 
+
+With the advent of ROOT6, an attractive feature of PyROOT can be *speed*
+* CLING will compile your macro's line-by-line, which can sometimes lead to sluggish execution
+* PyROOT is interpreted 
+
+Python code is often ran as an interpreted language, it *can* be compiled, but you do don't *need* to compile it. Interpretation of macros is often much faster than compilation plus execution, unless the performance gain gained by compiling out-weighs the time the compiler spends on compiling the code. Since macro's are often intended to do only simple things (or call optimized libraries to carry out the heavy work, such as fitting), interpretation often suffices. 
+
+{% endcallout %}
