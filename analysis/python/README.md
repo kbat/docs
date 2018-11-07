@@ -6,7 +6,7 @@ maintained libraries. This means that a lot of software has already been
 written to solve problems common to our field, so you can concentrate on the 
 interesting stuff!
 
-These lessons are strongly based on those written by [http://software-carpentry.org/][http://software-carpentry.org/] and fall under the Creative Commons Attribution license. 
+These lessons (with the exception of the PyROOT part) are strongly based on those written by [Software Carpentry](http://software-carpentry.org/) and fall under the Creative Commons Attribution license. 
 
 ## Aim of these lessons
 
@@ -18,6 +18,6 @@ the basics of using a text editor, which you use to write code to a file
 somewhere, and then you can somehow run the contents using commands in your 
 terminal to make stuff happen.
 
-Sounds good? Then let’s get going!
+Sounds good? Then let’s get going! What we cover in this part of the tutorial is the last section of this part - PyROOT. However, if you are completely unfamiliar with Python, you might find the first lessons quite interesting!
 
 [python]: https://www.python.org/

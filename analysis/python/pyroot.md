@@ -1,17 +1,30 @@
 #PyROOT
 
-many existing third-party applications and libraries have therefore so-called “Python bindings.” PyROOT provides Python bindings for ROOT: it enables cross-calls from ROOT/Cling into Python and vice versa, the intermingling of the two interpreters, and the transport of user-level objects from one interpreter to the other. PyROOT enables access from ROOT to any application or library that itself has Python bindings, and it makes all ROOT functionality directly available from the python interpreter.
+In the previous sections, we have introduced some basics of Python to you. Now, it's time to make the connection between ROOT and Python, and see why Python can be pretty convenient. 
+
+## Python bindings
+
+Many existing third-party applications and libraries have so-called "Python bindings". 
+
+{% callout "Bindings" %}
+Binding generally refers to a mapping of one thing to another. In the context of software libraries, bindings are wrapper libraries that bridge two programming languages, so that a library written for one language can be used in another language.
+
+Many software libraries are written in system programming languages such as C or C++. To use such libraries from another language, usually of higher-level, a binding to the library must be created in that language, possibly requiring recompiling the language's code, depending on the amount of modification needed. However, most languages offer a foreign function interface, such as Python's ctypes.
+{% endcallout %}
+
+
+PyROOT provides Python bindings for ROOT: it enables cross-calls from ROOT/Cling into Python and vice versa, the intermingling of the two interpreters, and the transport of user-level objects from one interpreter to the other. PyROOT enables access from ROOT to any application or library that itself has Python bindings, and it makes all ROOT functionality directly available from the python interpreter.
 
 
 The Python scripting language is widely used for scientific programming, including high performance and distributed parallel code (see http://www.scipy.org). It is the second most popular scripting language (after Perl) and enjoys a wide-spread use as a “glue language”: practically every library and application these days comes with Python bindings (and if not, they can be easily written or generated).
 
-PyROOT, a Python extension module, provides the bindings for the ROOT class library in a generic way using the Cling dictionary. This way, it allows the use of any ROOT classes from the Python interpreter, and thus the “glue-ing” of ROOT libraries with any non-ROOT library or applications that provide Python bindings. Further, PyROOT can be loaded into the Cling interpreter to allow (as of now still rudimentary) access to Python classes. The best way to understand the benefits of PyROOT is through a few examples.
+PyROOT, a Python extension module, provides the bindings for the ROOT class library in a generic way using the Cling dictionary. This way, it allows the use of any ROOT classes from the Python interpreter, and thus the “glue-ing” of ROOT libraries with any non-ROOT library or applications that provide Python bindings. 
 
 ## Access to ROOT from Python
 
 There are several tools for scientific analysis that come with bindings that allow the use of these tools from the Python interpreter. PyROOT provides this for users who want to do analysis in Python with ROOT classes. The following example shows how to fill and display a ROOT histogram while working in Python. Of course, any actual analysis code may come from somewhere else through other bindings, e.g. from a C++ program.
 
-When run, the next example will display a 1-dimensional histogram showing a Gaussian distribution. More examples like the one above are distributed with ROOT under the $ROOTSYS/tutorials directory.
+When run, the next example will display a 1-dimensional histogram showing a Gaussian distribution. 
 
 ```python
 from ROOT import gRandom,TCanvas,TH1F
@@ -27,9 +40,17 @@ hpx.Draw()
 c1.Update()
 ```
 
+{% callout "Make sure that PyROOT is enabled" %}
+To make use of the Python Bindings of ROOT, make sure that the build of the PyROOT module is enabeled when you compile ROOT. If you use ROOT through aliBuild, ROOT6 is built with python support out-of-the-box. For ROOT5 based builds, PyROOT support is disabeled by default in aliBuild. For a manual build of ROOT, Python bindings are enabled by default, but can be disabled via the CMake options.
+
+To load the ROOT module in your Python code, make sure that `libPyROOT.so` and the `ROOT.py` module can be resolved by the system by entering your (Ali)ROOT environment. 
+
+{% endcallout %}
+
+
 ## Access to ROOT classes
 
-Before a ROOT class can be used from Python, its dictionary needs to be loaded into the current process. Starting with ROOT version 4.00/06, this happens automatically for all classes that are declared to the auto-loading mechanism through so-called rootmap files. Effectively, this means that all classes in the ROOT distributions are directly available for import. For example:
+Before a ROOT class can be used from Python, its dictionary needs to be loaded into the current process. This happens automatically for all classes that are declared to the auto-loading mechanism through so-called rootmap files. Effectively, this means that all classes in the ROOT distributions are directly available for import. For example:
 
 ```python
 from ROOT import TCanvas          # available at startup
@@ -109,11 +130,101 @@ print('fit results: const =', par[0], ',pitch =', par[1])
 ```
 {% endchallenge %}
 
-## Working with trees
-Next to making histograms, working with trees is probably the most common part of any analysis. The TTree implementation uses pointers and dedicated buffers to reduce the memory usage and to speed up access. Consequently, mapping TTree functionality to Python is not straightforward, and most of the following features are implemented in ROOT release 4.01/04 and later only, whereas you will need 5.02 if you require all of them.
-19.1.9.1 Accessing an Existing Tree
+## Advanced examples: working with trees
+Next to making histograms, working with trees is probably the most common part of any analysis. The TTree implementation uses pointers and dedicated buffers to reduce the memory usage and to speed up access. Consequently, mapping TTree functionality to Python is not straightforward.
 
-Let us assume that you have a file containing TTrees, TChains, or TNtuples and want to read the contents for use in your analysis code. This is commonly the case when you work with the result of the reconstruction software of your experiment (e.g. the combined ntuple in ATLAS). The following example code outlines the main steps (you can run it on the result of the tree1.C macro):
+Let us assume that you have a file containing TTrees, TChains, or TNtuples and want to read the contents for use in your analysis code. The following example code outlines the main steps :
+
+{% challenge "But first ... create a tree" %}
+To run the Python code below, you need a small tree
+{% solution "Click here for a generic example which fills a suitable tree" %}
+Place the following in a file called `tree1.C`
+```cpp
+
+#include "TROOT.h"
+#include "TFile.h"
+#include "TTree.h"
+#include "TBrowser.h"
+#include "TH2.h"
+#include "TRandom.h"
+
+void tree1w()
+{
+   //create a Tree file tree1.root
+
+   //create the file, the Tree and a few branches
+   TFile f("tree1.root","recreate");
+   TTree t1("t1","a simple Tree with simple variables");
+   Float_t px, py, pz;
+   Double_t random;
+   Int_t ev;
+   t1.Branch("px",&px,"px/F");
+   t1.Branch("py",&py,"py/F");
+   t1.Branch("pz",&pz,"pz/F");
+   t1.Branch("random",&random,"random/D");
+   t1.Branch("ev",&ev,"ev/I");
+
+   //fill the tree
+   for (Int_t i=0;i<10000;i++) {
+     gRandom->Rannor(px,py);
+     pz = px*px + py*py;
+     random = gRandom->Rndm();
+     ev = i;
+     t1.Fill();
+  }
+
+  //save the Tree header. The file will be automatically closed
+  //when going out of the function scope
+  t1.Write();
+}
+
+void tree1r()
+{
+   //read the Tree generated by tree1w and fill two histograms
+
+   //note that we use "new" to create the TFile and TTree objects !
+   //because we want to keep these objects alive when we leave this function.
+   TFile *f = new TFile("tree1.root");
+   TTree *t1 = (TTree*)f->Get("t1");
+   Float_t px, py, pz;
+   Double_t random;
+   Int_t ev;
+   t1->SetBranchAddress("px",&px);
+   t1->SetBranchAddress("py",&py);
+   t1->SetBranchAddress("pz",&pz);
+   t1->SetBranchAddress("random",&random);
+   t1->SetBranchAddress("ev",&ev);
+
+   //create two histograms
+   TH1F *hpx   = new TH1F("hpx","px distribution",100,-3,3);
+   TH2F *hpxpy = new TH2F("hpxpy","py vs px",30,-3,3,30,-3,3);
+
+   //read all entries and fill the histograms
+   Long64_t nentries = t1->GetEntries();
+   for (Long64_t i=0;i<nentries;i++) {
+     t1->GetEntry(i);
+     hpx->Fill(px);
+     hpxpy->Fill(px,py);
+  }
+
+  //we do not close the file. We want to keep the generated histograms
+  //we open a browser and the TreeViewer
+  if (gROOT->IsBatch()) return;
+  new TBrowser();
+  t1->StartViewer();
+  // in the browser, click on "ROOT Files", then on "tree1.root".
+  //     you can click on the histogram icons in the right panel to draw them.
+  // in the TreeViewer, follow the instructions in the Help button.
+}
+
+void tree1() {
+   tree1w();
+   tree1r();
+}
+```
+{% endchallenge %}
+
+So, let's assume that you have cooked up a tree using the mini-code above, or you have a tree of your own. Below is a snippet of Python code that will read info from the branches of your tree and prints some extracted information to the screen. If you are interested, you can try to visualize the data in histograms. 
 
 ```python
 from ROOT import TFile
@@ -170,14 +281,13 @@ for i in range(25):
 f.Write()
 f.Close()
 ```
-The use of arrays is needed, because the pointer to the address of the object that is used for filling must be given to the TTree::Branch() call, even though the formal argument is declared a ’void*'. In the case of ROOT objects, similar pointer manipulation is unnecessary, because the full type information is available, and TTree::Branch() has been Pythonized to take care of the call details. However, data members of such objects that are of built-in types, still require something extra since they are normally translated to Python primitive types on access and hence their address cannot be taken.
+The use of arrays is needed, because the pointer to the address of the object that is used for filling must be given to the TTree::Branch() call, even though the formal argument is declared a ’void\*'. In the case of ROOT objects, similar pointer manipulation is unnecessary, because the full type information is available, and TTree::Branch() has been Pythonized to take care of the call details. However, data members of such objects that are of built-in types, still require something extra since they are normally translated to Python primitive types on access and hence their address cannot be taken.
 
 ## Creating your own classes
 
-A user’s own classes can be accessed after loading, either directly or indirectly, the library that contains the dictionary. One easy way of obtaining such a library, is by using ACLiC:
+A user’s own classes can be accessed after loading, either directly or indirectly, the library that contains the dictionary. One easy way of obtaining such a library, is by using ACLiC. Let's first make up a very small class, by putting in a file `MyClass.C` the following code
 
 ```cpp
-$ cat MyClass.C
 class MyClass {
 public:
 
@@ -196,13 +306,28 @@ return m_value;
 private:
     int m_value;
 };
-
-$ echo .L MyClass.C+ | root.exe -b
-[...]
-Info in <TUnixSystem::ACLiC>: creating shared library [..]/./MyClass_C.so
-$
 ```
-Then you can use it, for example, like so:
+
+Create the shared library using ACLiC:
+
+```
+root -e 'gInterpreter->LoadMacro("MyClass.C++o");' -q
+```
+
+{% challenge "Optimization or debug symbols ?" %}
+Anyone have any idea what the difference is between 
+```
+root -e 'gInterpreter->LoadMacro("MyClass.C++o");' -q
+```
+and
+```
+root -e 'gInterpreter->LoadMacro("MyClass.C++g");' -q
+```
+{% solution "Drum roll" %}
+Using `o`, we specify to the compiler to use optimization for speed. Using `g`, we specify to the compiler that we want to enable debug symbols. Confused by this? Check out Part 9 of this tutorial, 'Best Practices', where there is a lot of information about this!
+{% endchallenge %}
+
+We have now compiled our class. If we want to access it with Python, we can e.g. do
 
 ```python
 from ROOT import gSystem

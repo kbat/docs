@@ -182,7 +182,7 @@ line without modifying your code.
 > one is trivial and provided as an example.
 
 
-#### The AliRoot way: AliDebug
+{% callout  "The AliRoot way: AliDebug " %}
 
 AliRoot has a logging facility defined in `STEER/STEERbase/AliLog.{h,cxx}`:
 there are different functions defined there that allow you to add sensible
@@ -313,7 +313,6 @@ As a general rule:
 > Choose `AliInfo()` or `AliInfoF()` according to your needs, but be
 > aware of what they do under the hood!
 
-
 #### Choosing a "debug level"
 
 AliLog allows you to set the "importance" of your debug message, which is
@@ -345,6 +344,7 @@ printed out.
 The `SetGlobalDebugLevel` function is a *static* function, so you
 should literally use it prefixed by `AliLog::`.
 
+{% endcallout %}
 
 ### Using a debugger
 

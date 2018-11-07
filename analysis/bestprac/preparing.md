@@ -1,19 +1,10 @@
----
-title: "Basic code debugging"
-layout: tweet
-
-createtoc: true
-parnumbers: true
----
-
-
-Preparing your code for debug
------------------------------
+Preparing your code for debugging
+---------------------------------
 
 In broad terms when building software you typically have the option between
 generating either a **release** or a **debug** build.
 
-This also applies to ROOT, AliRoot, AliPhysics, and your compiled analysis tasks
+This also applies to ROOT (and AliRoot, AliPhysics), and your compiled analysis tasks
 and macros. As the name suggests:
 
 * **release** builds are meant for production and should be used when running
@@ -84,7 +75,7 @@ gcc -O0 -g ...
 The same flags are used for `clang`.
 
 
-### Compiling your ALICE code for debug
+{% callout " Compiling your ALICE code for debug " %}
 
 Complex frameworks aren't typically built by directly invoking a compiler and
 its options: for instance, when compiling AliPhysics you use
@@ -117,7 +108,7 @@ aliBuild build AliPhysics --defaults debug
 ```
 
 Such debug configuration uses `-O0` and `-g`.
-
+{% endcallout %}
 
 #### Your analysis
 

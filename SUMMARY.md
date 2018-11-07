@@ -27,7 +27,6 @@
   * [Scripting](analysis/python/scripting.md)
   * [Modules](analysis/python/modules.md)
   * [Learning more](analysis/python/learning.md)
-  * [Further reading](analysis/python/further_reading.md)
   * [PyROOT](analysis/python/pyroot.md)
 * [Part 9 - Best Practices](analysis/bestprac/best_prac.md) 
   * [Preparing your code for debugging](analysis/bestprac/preparing.md)
