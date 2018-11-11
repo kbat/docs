@@ -579,11 +579,16 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="transition-from-root5-to-root6">Transition from ROOT5 to ROOT6</h1>
-<p><em>ROOT6</em> is similar to <em>ROOT5</em>: It comes with the same library of classes (base
+<p><em>ROOT6</em> is similar to <em>ROOT5</em></p>
+<ul>
+<li>It comes with the same library of classes (base
 classes, histogram classes like TH1, ...) which share the same interface as under
-<em>ROOT5</em>. It provides a command line interface as <em>ROOT5</em>, and runs macros just
-like under <em>ROOT5</em>. Therefore it is possible to build and run the ALICE
-simulation, reconstruction and analysis framework under ROOT6. AliPhysics can be
+<em>ROOT5</em></li>
+<li>It provides a command line interface as <em>ROOT5</em>, and runs macros just
+like under <em>ROOT5</em></li>
+</ul>
+<p>There are however some differences between ROOT5 and ROOT6, which will be discussed in this section. </p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1320576006);" id="root6-and-aliroot"><i class="fa fa-info-circle"></i> ROOT6 and AliROOT<span id="heading-1320576006"></span></h3></div><div class="panel-body" id="panel-1320576006"><p>AliPhysics can be
 built against <em>ROOT6</em> in the following way:</p>
 <pre><code class="lang-bash">aliBuild -z --defaults root6 build AliPhysics
 </code></pre>
@@ -591,20 +596,30 @@ built against <em>ROOT6</em> in the following way:</p>
 macros there are however a few difference. This page tries to summarize the
 differences in behaviour observed so far and gives some suggestions how to solve
 these issues so work can go on smoothly under <em>ROOT6</em>.</p>
-<h2 id="what-is-a-just-in-time-compiler">What is a just-in-time compiler?</h2>
+</div></div></p>
+<h2 id="cling-roots-just-in-time-compiler">CLING: ROOT&apos;s just-in-time compiler</h2>
 <p>For the command line interface and running macros <em>ROOT5</em> uses <em>CINT</em>, which is an
-interpreter for C/C++. An interpreter processes a macro line-by-line. It depends
-on the implementation of the interpreter how C++ code will be handled and how
-close the interpretation comes to the language standard. <em>ROOT5</em> allows for some
+interpreter for C/C++. </p>
+<ul>
+<li>An interpreter processes a macro line-by-line</li>
+<li>It depends on the implementation of the interpreter how C++ code will be handled and how
+close the interpretation comes to the language standard</li>
+</ul>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6360284362);" id="c-"><i class="fa fa-info-circle"></i> C++ ...?<span id="heading-6360284362"></span></h3></div><div class="panel-body" id="panel-6360284362"><p><em>ROOT5</em> allows for some
 deviations from the language standards, which means that some coding errors
 which would thrown by a compiler leading in a break of the compilation are still
 tolerated by <em>ROOT5</em>. Furthermore the standard library is not fully supported as
-its handling has to be implemented into the compiler. Macro can however also be
-run in the compiled mode by ROOT5 (adding a &quot;+&quot; to the macro name). In this case
-ROOT calls an external compiler to compile the macro to a library which is loaded
-into ROOT. Once the macro runs in compiled mode it is expected to be fully
+its handling has to be implemented into the compiler. </p>
+</div></div></p>
+<p>Macros can however also be
+run in the compiled mode by ROOT5 (adding a &quot;+&quot; to the macro name). In this case</p>
+<ul>
+<li>ROOT calls an external compiler to compile the macro to a library which is loaded
+into ROOT</li>
+<li>Once the macro runs in compiled mode it is expected to be fully
 compatible with the C++ standard and coding error free as the compiler will not
-tolerate compiler errors.</p>
+tolerate compiler errors.</li>
+</ul>
 <p>In contrast to this <em>ROOT6</em> uses a just-in-time compiler called <em>cling</em>. A
 just-in-time compiler translates each statement, no matter whether it is a single
 command or a complicated macro, into machine code as it would be a program and
@@ -642,17 +657,19 @@ the macro path. The macro is run using TMacro::Exec. The result of
 TMacro::Exec() is a number representing an address in memory where to
 find the resulting object. This has to be cast into a pointer to an object of
 the expected type. Example:</p>
-<pre><code class="lang-C++">TMacro physseladd(gSystem-&gt;ExpandPathName(&quot;$ALICE_PHYSICS/OADB/macros/AddTaskPhysicsSelection.C&quot;));
-AliPhysicsSelectionTask *physseltask = reinterpret_cast&lt;AliPhysicsSelectionTask *&gt;(physseladd.Exec());
-</code></pre>
-<p>The macro is still evaluated at runtime, however with the reinterpret_cast to
-AliPhysicsSelectionTask * we tell ROOT that the result of the macro
-interpretation must be of type AliPhysicsSelectionTask *, so the type is known
-at compile time. TMacro::Exec optionally gets a string representation of the
-function arguments. This might be a bit complicated to handle, particularly if
-the arguments are dynamic and change at run time. The method works both for
-<em>ROOT5</em> and <em>ROOT6</em>.</p>
 </li>
+</ul>
+<pre><code class="lang-cpp">  TMacro physseladd(gSystem-&gt;ExpandPathName(&quot;$ALICE_PHYSICS/OADB/macros/AddTaskPhysicsSelection.C&quot;));
+  AliPhysicsSelectionTask *physseltask = reinterpret_cast&lt;AliPhysicsSelectionTask *&gt;(physseladd.Exec());
+</code></pre>
+<p>  The macro is still evaluated at runtime, however with the reinterpret_cast to
+  AliPhysicsSelectionTask * we tell ROOT that the result of the macro
+  interpretation must be of type AliPhysicsSelectionTask *, so the type is known
+  at compile time. TMacro::Exec optionally gets a string representation of the
+  function arguments. This might be a bit complicated to handle, particularly if
+  the arguments are dynamic and change at run time. The method works both for
+  <em>ROOT5</em> and <em>ROOT6</em>.</p>
+<ul>
 <li><p>Using gROOT/gInterpreter-&gt;ProcessLine: </p>
 <p>Macro execution can be launched as well via gROOT-&gt;ProcessLine() /
 gInterpreter-&gt;ProcessLine(). As with TMacro this method is focused on running
@@ -661,12 +678,14 @@ long number representing an address in memory where to find the output objects.
 This number has to be cast to the expected output type using a
 reinterpret_cast in order to access the content of the output objects. The
 following example runs the add macro for the physics selection task:</p>
-<pre><code class="lang-C++">AliPhysicsSelectionTask *physseltask = <span class="hljs-keyword">reinterpret_cast</span>&lt;AliPhysicsSelectionTask *&gt;(gInterpreter-&gt;ProcessLine(Form(<span class="hljs-string">&quot;.x %s&quot;</span>, gSystem-&gt;ExpandPathName(<span class="hljs-string">&quot;$ALICE_PHYSICS/OADB/macros/AddTaskPhysicsSelection.C&quot;</span>))))
-</code></pre>
-<p>Adding function arguments is possible here as well as a simple string
-representation after the macro path, surrounded with (). This method also works
-both under <em>ROOT5</em> and <em>ROOT6</em>.</p>
 </li>
+</ul>
+<pre><code class="lang-cpp">  AliPhysicsSelectionTask *physseltask = <span class="hljs-keyword">reinterpret_cast</span>&lt;AliPhysicsSelectionTask *&gt;(gInterpreter-&gt;ProcessLine(Form(<span class="hljs-string">&quot;.x %s&quot;</span>, gSystem-&gt;ExpandPathName(<span class="hljs-string">&quot;$ALICE_PHYSICS/OADB/macros/AddTaskPhysicsSelection.C&quot;</span>))))
+</code></pre>
+<p>  Adding function arguments is possible here as well as a simple string
+  representation after the macro path, surrounded with (). This method also works
+  both under <em>ROOT5</em> and <em>ROOT6</em>.</p>
+<ul>
 <li><p>Including macros:</p>
 <p>As <em>ROOT6</em> compiles the macro it is possible to include macros and treat them
 as if they were header files. In order for this to work it is essential to tell
@@ -674,55 +693,88 @@ ROOT before where to find the macro. This can be done using the preprocessor
 macro <code>R_ADD_INCLUDE_PATH(...)</code>. For the just-in-time compiler macros
 included will look as if they were part of the code itself. The following macro
 runs under <em>ROOT6</em>:</p>
-<pre><code class="lang-C++"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __CLING__</span>
-<span class="hljs-comment">// Tell  ROOT where to find AliRoot headers</span>
-R__ADD_INCLUDE_PATH($ALICE_ROOT)
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ANALYSIS/macros/train/AddESDHandler.C&gt;</span></span>
-
-<span class="hljs-comment">// Tell ROOT where to find AliPhysics headers</span>
-R__ADD_INCLUDE_PATH($ALICE_PHYSICS)
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;OADB/macros/AddTaskPhysicsSelection.C&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">simpleaddtest</span><span class="hljs-params">()</span></span>{
-  AliAnalysisManager *mgr = <span class="hljs-keyword">new</span> AliAnalysisManager;
-
-  <span class="hljs-comment">// Take function from macro AddESDHandler</span>
-  <span class="hljs-comment">// no gROOT-&gt;LoadMacro for ROOT6</span>
-  AddESDHandler();
-
-  AliPhysicsSelectionTask *test = AddTaskPhysicsSelection(kTRUE);
-
-  mgr-&gt;InitAnalysis();
-  mgr-&gt;PrintStatus();
-}
-</code></pre>
-<p>In particular when passing arguments to the macro (in the example above passing
-kTRUE to AddTaskPhysicsSelection) this method is very convenient. This method
-is specific to <em>ROOT6</em>. The part including macros has to be protected (see
-below).</p>
 </li>
 </ul>
-<h2 id="and-what-about-libraries">And what about libraries?</h2>
-<ul>
-<li>gSystem-&gt;Load(&quot;...&quot;) will not work anymore, symbols not know at compile time</li>
-<li>R__LOAD_LIBRARY(&quot;...&quot;)  read by the preprocessor</li>
-</ul>
+<pre><code class="lang-cpp">  <span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __CLING__</span>
+  <span class="hljs-comment">// Tell  ROOT where to find AliRoot headers</span>
+  R__ADD_INCLUDE_PATH($ALICE_ROOT)
+  <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ANALYSIS/macros/train/AddESDHandler.C&gt;</span></span>
+
+  <span class="hljs-comment">// Tell ROOT where to find AliPhysics headers</span>
+  R__ADD_INCLUDE_PATH($ALICE_PHYSICS)
+  <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;OADB/macros/AddTaskPhysicsSelection.C&gt;</span></span>
+  <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">simpleaddtest</span><span class="hljs-params">()</span></span>{
+    AliAnalysisManager *mgr = <span class="hljs-keyword">new</span> AliAnalysisManager;
+
+    <span class="hljs-comment">// Take function from macro AddESDHandler</span>
+    <span class="hljs-comment">// no gROOT-&gt;LoadMacro for ROOT6</span>
+    AddESDHandler();
+
+    AliPhysicsSelectionTask *test = AddTaskPhysicsSelection(kTRUE);
+
+    mgr-&gt;InitAnalysis();
+    mgr-&gt;PrintStatus();
+  }
+</code></pre>
+<p>  In particular when passing arguments to the macro (in the example above passing
+  kTRUE to AddTaskPhysicsSelection) this method is very convenient. This method
+  is specific to <em>ROOT6</em>. The part including macros has to be protected (see
+  below).</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4385446708);" id="new-c-string-literals"><i class="fa fa-info-circle"></i> NEW: C++ string literals<span id="heading-4385446708"></span></h3></div><div class="panel-body" id="panel-4385446708"><p>In C++, to escape characters like &#x201C;\n&#x201D; we use an extra &#x201C;\&#x201D;. From C++ 11, we can use raw strings in which escape characters (like \n \t or \&#x201D; ) are not processed. The syntax of raw string is that the literal starts with R&#x201D;( and ends in )&#x201D;.</p>
+<p>Let&#x2019;s see an an example to see raw string literal in C++:</p>
+<pre><code class="lang-cpp">
+<span class="hljs-comment">// C++ program to demonstrate working of raw string. </span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span> </span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>; 
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> 
+</span>{ 
+    <span class="hljs-comment">// A Normal string </span>
+    <span class="hljs-built_in">string</span> string1 = <span class="hljs-string">&quot;Geeks.\nFor.\nGeeks.\n&quot;</span> ;  
+
+    <span class="hljs-comment">// A Raw string </span>
+    <span class="hljs-built_in">string</span> string2 = <span class="hljs-string">R&quot;(Geeks.\nFor.\nGeeks.\n)&quot;</span>;  
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; string1 &lt;&lt; <span class="hljs-built_in">endl</span>; 
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; string2 &lt;&lt; <span class="hljs-built_in">endl</span>; 
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+} 
+</code></pre>
+<p>this code will ouptut</p>
+<pre><code>Geeks.
+For.
+Geeks.
+
+Geeks.\nFor.\nGeeks.\n
+</code></pre><p>This can come in handy when dealing with calling macros within macros, consider for example that you have a dummy AddTask macro that takes a boolean and and a string as arguments. The way
+  to call this function would then be</p>
+<pre><code class="lang-cpp">    TString arguments = <span class="hljs-string">R&quot;((kTRUE, &quot;</span>test.root<span class="hljs-string">&quot;))&quot;</span>;
+    AliAnalysisTaskDummy *task = <span class="hljs-keyword">reinterpret_cast</span>&lt;AliAnalysisTaskDummy*&gt;(gInterpreter-&gt;ProcessLine(<span class="hljs-string">&quot;.x AddTaskDummy.C&quot;</span> +  arguments));
+</code></pre>
+<p>  Note the syntax! The outer R&quot;( and )&quot; are part of the TString literal while the innner ( and ) 
+  are there for the function call of AddTaskDummmy.</p>
+</div></div></p>
+<h2 id="what-about-loading-libraries-that-are-not-automatically-loaded">What about loading libraries that are not automatically loaded?</h2>
+<p>ROOT can load libraries automatically via so-called <code>rootmaps</code>, but if you compile your own class, on which you are developing, in a steering macro, this class is not known to ROOT and therefore cannot be auto loaded. This can be cumbersome. However, you can load your compiled classes within a macro by hand. </p>
+<p>In a ROOT session, do</p>
+<pre><code class="lang-cpp">    .L myDummyClass.cpp++g
+</code></pre>
+<p>  This will generate a shared object file (<code>.so</code>). Now, in a given macro in which you want to access your class, write in the preamble</p>
+<pre><code class="lang-cpp">    R__LOAD_LIBRARY(myDummyClass.so)
+</code></pre>
+<p>which will load the shared library, and give you access to all the symbols defined within. Note the syntax: despite what you might expect, the word <code>myDummyClass</code> should <strong>not</strong> be put within quotes &quot;&quot;!</p>
 <h2 id="do-i-need-to-include-header-files-in-my-macros">Do I need to include header files in my macros?</h2>
 <p><em>ROOT6</em> comes with a technique called pre-compiled header files. Header files
 from a certain library are compiled to a binary format by <code>rootcling</code>, the
 successor of <code>rootcint</code>, and loaded into <em>ROOT6</em> by an auto-loading mechanism
-similar to the rootmap mechanism. Once <code>rootcling</code> is invoked with the
+similar to the rootmap mechanism. </p>
+<p>Once <code>rootcling</code> is invoked with the
 argument <code>-rml name</code> a <strong>.pcm</strong>-file is created containing the pre-compiled
 headers. <em>ROOT6</em> will search for .pcm-files in the <strong>LD_LIBRARY_PATH</strong>.</p>
-<p>The following packages in ALICE provide .pcm support:</p>
-<ul>
-<li>AliRoot</li>
-<li>AliPhysics</li>
-<li>RooUnfold</li>
-<li>FairRoot</li>
-<li>o2</li>
-</ul>
 <p>For libraries providing .pcm-support <strong>NO</strong> headers should be included in macros.</p>
 <p>For libraries handled by the user make sure to</p>
 <ul>
@@ -731,7 +783,8 @@ and <code>-rml</code> for the .pcm file</li>
 <li>Install both the .rootmap and the .pcm file of your library path in the 
 library location (usually PROJECT_PATH/lib)</li>
 </ul>
-<h2 id="i-get-a-huge-amount-of-errors-and-my-macro-doesnt-run-what-can-i-do">I get a huge amount of errors, and my macro doesn&apos;t run. What can I do?</h2>
+<p>Once you have done this, there is no need anymore to e.g. call <code>R_LOAD_LIBRARY(myDummyClass.so)</code> when you want to access symbols defined in <code>myDummyClass</code>; rather than that, the corresponding library will be automatically loaded by ROOT once a symbol defined in it is encountered. </p>
+<h2 id="troubleshooting-i-get-a-huge-amount-of-errors-and-my-macro-doesnt-run-what-can-i-do">Troubleshooting: I get a huge amount of errors, and my macro doesn&apos;t run. What can I do?</h2>
 <p>Here are few examples that commonly appear in user macros and which are tolerated by ROOT5 but not anymore by ROOT6:</p>
 <ul>
 <li><p>Undefined symbols:</p>
@@ -820,14 +873,14 @@ ptr.SetTitle(&quot;test1&quot;);
                              .
 </code></pre></li>
 </ul>
-<h2 id="i-get-a-huge-amount-of-unknown-symbols-from-classes-in-aliroot-or-aliphysics-do-i-still-need-to-include-header-files">I get a huge amount of unknown symbols from classes in AliRoot or AliPhysics? Do I still need to include header files?</h2>
-<p>In case the compilation of a macro under <em>ROOT6</em> fails libraries and pre-compiled
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9500315367);" id="i-get-a-huge-amount-of-unknown-symbols-from-classes-in-aliroot-or-aliphysics-do-i-still-need-to-include-header-files"><i class="fa fa-info-circle"></i> I get a huge amount of unknown symbols from classes in AliRoot or AliPhysics? Do I still need to include header files?<span id="heading-9500315367"></span></h3></div><div class="panel-body" id="panel-9500315367"><p>In case the compilation of a macro under <em>ROOT6</em> fails libraries and pre-compiled
 headers from external packages are not loaded. The consequence is that <em>ROOT6</em>
 does not know about these classes and will raise errors about unknown symbols.
 Once <strong>all</strong> the initial compiler errors are fixed (usually at the very top of
 the error log), the next time the macros are compiled <em>ROOT6</em> will also load the
 libraries and .pch files from external libraries and the errors disappear. Header
 from ALICE libraries should <strong>NOT</strong> be included.</p>
+</div></div></p>
 <h2 id="how-do-i-distinguish-between-root5-and-root6-in-my-macros">How do I distinguish between <em>ROOT5</em> and <em>ROOT6</em> in my macros?</h2>
 <p>Sometimes macros require different treatment for <em>ROOT5</em> and <em>ROOT6</em>. It is then
 necessary to know which ROOT version is used while the macro is running.</p>
@@ -880,10 +933,7 @@ For <em>ROOT6</em> this is not necessary.</li>
 </li>
 </ul>
 <h1 id="exercise">Exercise</h1>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4756170854);" id="try-to-get-this-macro-working"><i class="fa fa-square-o"></i> Try to get this macro working<span id="heading-4756170854"></span></h3></div><div class="panel-body" id="panel-4756170854"><pre><code class="lang-cpp">add pythi macro here
-</code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8067704740);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-8067704740">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-8067704740"><p>here goes the pathed version</p>
-</div></div></div></div></p>
+<p>The exercise here is to find some old macros you have, that worked under ROOT5 - and see how &apos;C++ compliant&apos; they actually are, but loading them in a ROOT6 session. </p>
 
                                 
                                 </section>
@@ -927,7 +977,7 @@ For <em>ROOT6</em> this is not necessary.</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Part 5 - 5 to 6: changes to user code","level":"1.6","depth":1,"next":{"title":"Part 6 - Vectorization","level":"1.7","depth":1,"path":"analysis/vectorization.md","ref":"analysis/vectorization.md","articles":[]},"previous":{"title":"Parallellism with ROOT","level":"1.5.4","depth":2,"path":"analysis/parallell/root.md","ref":"analysis/parallell/root.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/changes.md","mtime":"2018-11-11T13:49:11.627Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T13:49:45.336Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Part 5 - 5 to 6: changes to user code","level":"1.6","depth":1,"next":{"title":"Part 6 - Vectorization","level":"1.7","depth":1,"path":"analysis/vectorization.md","ref":"analysis/vectorization.md","articles":[]},"previous":{"title":"Parallellism with ROOT","level":"1.5.4","depth":2,"path":"analysis/parallell/root.md","ref":"analysis/parallell/root.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/changes.md","mtime":"2018-11-11T15:22:33.698Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T15:52:40.837Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
