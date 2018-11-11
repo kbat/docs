@@ -1,10 +1,18 @@
 # Transition from ROOT5 to ROOT6
 
-*ROOT6* is similar to *ROOT5*: It comes with the same library of classes (base
+*ROOT6* is similar to *ROOT5*
+- It comes with the same library of classes (base
 classes, histogram classes like TH1, ...) which share the same interface as under
-*ROOT5*. It provides a command line interface as *ROOT5*, and runs macros just
-like under *ROOT5*. Therefore it is possible to build and run the ALICE
-simulation, reconstruction and analysis framework under ROOT6. AliPhysics can be
+*ROOT5*
+- It provides a command line interface as *ROOT5*, and runs macros just
+like under *ROOT5*
+
+There are however some differences between ROOT5 and ROOT6, which will be discussed in this section. 
+
+
+
+{% callout "ROOT6 and AliROOT" %}
+AliPhysics can be
 built against *ROOT6* in the following way:
 
 ```bash
@@ -15,20 +23,31 @@ For classes in AliRoot or AliPhysics this transition is transparent. For code in
 macros there are however a few difference. This page tries to summarize the
 differences in behaviour observed so far and gives some suggestions how to solve
 these issues so work can go on smoothly under *ROOT6*.
+{% endcallout %}
 
-## What is a just-in-time compiler?
+## CLING: ROOT's just-in-time compiler
 
 For the command line interface and running macros *ROOT5* uses *CINT*, which is an
-interpreter for C/C++. An interpreter processes a macro line-by-line. It depends
-on the implementation of the interpreter how C++ code will be handled and how
-close the interpretation comes to the language standard. *ROOT5* allows for some
+interpreter for C/C++. 
+
+- An interpreter processes a macro line-by-line
+- It depends on the implementation of the interpreter how C++ code will be handled and how
+close the interpretation comes to the language standard
+
+{% callout "C++ ...?" %}
+*ROOT5* allows for some
 deviations from the language standards, which means that some coding errors
 which would thrown by a compiler leading in a break of the compilation are still
 tolerated by *ROOT5*. Furthermore the standard library is not fully supported as
-its handling has to be implemented into the compiler. Macro can however also be
+its handling has to be implemented into the compiler. 
+{% endcallout %}
+
+Macros can however also be
 run in the compiled mode by ROOT5 (adding a "+" to the macro name). In this case
-ROOT calls an external compiler to compile the macro to a library which is loaded
-into ROOT. Once the macro runs in compiled mode it is expected to be fully
+
+- ROOT calls an external compiler to compile the macro to a library which is loaded
+into ROOT
+- Once the macro runs in compiled mode it is expected to be fully
 compatible with the C++ standard and coding error free as the compiler will not
 tolerate compiler errors.
 
@@ -73,10 +92,10 @@ most common use cases:
   find the resulting object. This has to be cast into a pointer to an object of
   the expected type. Example:
 
-  ```C++
+```cpp
   TMacro physseladd(gSystem->ExpandPathName("$ALICE_PHYSICS/OADB/macros/AddTaskPhysicsSelection.C"));
   AliPhysicsSelectionTask *physseltask = reinterpret_cast<AliPhysicsSelectionTask *>(physseladd.Exec());
-  ```
+```
 
   The macro is still evaluated at runtime, however with the reinterpret_cast to
   AliPhysicsSelectionTask \* we tell ROOT that the result of the macro
@@ -96,9 +115,9 @@ most common use cases:
   reinterpret_cast in order to access the content of the output objects. The
   following example runs the add macro for the physics selection task:
 
-  ```C++
+```cpp
   AliPhysicsSelectionTask *physseltask = reinterpret_cast<AliPhysicsSelectionTask *>(gInterpreter->ProcessLine(Form(".x %s", gSystem->ExpandPathName("$ALICE_PHYSICS/OADB/macros/AddTaskPhysicsSelection.C"))))
-  ```
+```
 
   Adding function arguments is possible here as well as a simple string
   representation after the macro path, surrounded with (). This method also works
@@ -113,7 +132,7 @@ most common use cases:
   included will look as if they were part of the code itself. The following macro
   runs under *ROOT6*:
 
-  ```C++
+```cpp
   #ifdef __CLING__
   // Tell  ROOT where to find AliRoot headers
   R__ADD_INCLUDE_PATH($ALICE_ROOT)
@@ -136,35 +155,87 @@ most common use cases:
     mgr->InitAnalysis();
     mgr->PrintStatus();
   }
-  ```
+```
 
   In particular when passing arguments to the macro (in the example above passing
   kTRUE to AddTaskPhysicsSelection) this method is very convenient. This method
   is specific to *ROOT6*. The part including macros has to be protected (see
   below).
 
-## And what about libraries? 
 
-* gSystem->Load("...") will not work anymore, symbols not know at compile time
-*  R__LOAD_LIBRARY("...")  read by the preprocessor
+{% callout "NEW: C++ string literals" %}
+In C++, to escape characters like “\n” we use an extra “\”. From C++ 11, we can use raw strings in which escape characters (like \n \t or \” ) are not processed. The syntax of raw string is that the literal starts with R”( and ends in )”.
 
+Let’s see an an example to see raw string literal in C++:
+
+```cpp
+
+// C++ program to demonstrate working of raw string. 
+#include <iostream> 
+using namespace std; 
+  
+int main() 
+{ 
+    // A Normal string 
+    string string1 = "Geeks.\nFor.\nGeeks.\n" ;  
+  
+    // A Raw string 
+    string string2 = R"(Geeks.\nFor.\nGeeks.\n)";  
+  
+    cout << string1 << endl; 
+  
+    cout << string2 << endl; 
+      
+    return 0; 
+} 
+```
+this code will ouptut
+```
+Geeks.
+For.
+Geeks.
+
+Geeks.\nFor.\nGeeks.\n
+```
+
+
+This can come in handy when dealing with calling macros within macros, consider for example that you have a dummy AddTask macro that takes a boolean and and a string as arguments. The way
+  to call this function would then be
+  
+```cpp
+    TString arguments = R"((kTRUE, "test.root"))";
+    AliAnalysisTaskDummy *task = reinterpret_cast<AliAnalysisTaskDummy*>(gInterpreter->ProcessLine(".x AddTaskDummy.C" +  arguments));
+```
+  Note the syntax! The outer R"( and )" are part of the TString literal while the innner ( and ) 
+  are there for the function call of AddTaskDummmy.
+  {% endcallout %}
+
+## What about loading libraries that are not automatically loaded? 
+
+ROOT can load libraries automatically via so-called `rootmaps`, but if you compile your own class, on which you are developing, in a steering macro, this class is not known to ROOT and therefore cannot be auto loaded. This can be cumbersome. However, you can load your compiled classes within a macro by hand. 
+
+In a ROOT session, do
+  
+```cpp
+    .L myDummyClass.cpp++g
+```
+  This will generate a shared object file (`.so`). Now, in a given macro in which you want to access your class, write in the preamble
+  
+```cpp
+    R__LOAD_LIBRARY(myDummyClass.so)
+```
+which will load the shared library, and give you access to all the symbols defined within. Note the syntax: despite what you might expect, the word `myDummyClass` should **not** be put within quotes ""!
 
 ## Do I need to include header files in my macros?
 
 *ROOT6* comes with a technique called pre-compiled header files. Header files
 from a certain library are compiled to a binary format by `rootcling`, the
 successor of `rootcint`, and loaded into *ROOT6* by an auto-loading mechanism
-similar to the rootmap mechanism. Once `rootcling` is invoked with the
+similar to the rootmap mechanism. 
+
+Once `rootcling` is invoked with the
 argument `-rml name` a **.pcm**-file is created containing the pre-compiled
 headers. *ROOT6* will search for .pcm-files in the **LD_LIBRARY_PATH**.
-
-The following packages in ALICE provide .pcm support:
-
-- AliRoot
-- AliPhysics
-- RooUnfold
-- FairRoot
-- o2
 
 For libraries providing .pcm-support **NO** headers should be included in macros.
 
@@ -174,7 +245,9 @@ For libraries handled by the user make sure to
 - Install both the .rootmap and the .pcm file of your library path in the 
   library location (usually PROJECT_PATH/lib)
 
-## I get a huge amount of errors, and my macro doesn't run. What can I do?
+Once you have done this, there is no need anymore to e.g. call `R_LOAD_LIBRARY(myDummyClass.so)` when you want to access symbols defined in `myDummyClass`; rather than that, the corresponding library will be automatically loaded by ROOT once a symbol defined in it is encountered. 
+
+## Troubleshooting: I get a huge amount of errors, and my macro doesn't run. What can I do?
 
 Here are few examples that commonly appear in user macros and which are tolerated by ROOT5 but not anymore by ROOT6:
 
@@ -280,7 +353,7 @@ Here are few examples that commonly appear in user macros and which are tolerate
                                .
   ```
 
-## I get a huge amount of unknown symbols from classes in AliRoot or AliPhysics? Do I still need to include header files?
+{% callout "I get a huge amount of unknown symbols from classes in AliRoot or AliPhysics? Do I still need to include header files?" %}
 
 In case the compilation of a macro under *ROOT6* fails libraries and pre-compiled
 headers from external packages are not loaded. The consequence is that *ROOT6*
@@ -289,8 +362,11 @@ Once **all** the initial compiler errors are fixed (usually at the very top of
 the error log), the next time the macros are compiled *ROOT6* will also load the
 libraries and .pch files from external libraries and the errors disappear. Header
 from ALICE libraries should **NOT** be included.
+{% endcallout %}
+
 
 ## How do I distinguish between *ROOT5* and *ROOT6* in my macros?
+
 
 Sometimes macros require different treatment for *ROOT5* and *ROOT6*. It is then
 necessary to know which ROOT version is used while the macro is running.
@@ -351,12 +427,4 @@ understand.
 
 # Exercise
 
-{% challenge "Try to get this macro working" %}
-```cpp
-add pythi macro here
-```
-{% solution "Solution" %}
-here goes the pathed version
-
-{% endchallenge %}
-
+The exercise here is to find some old macros you have, that worked under ROOT5 - and see how 'C++ compliant' they actually are, but loading them in a ROOT6 session. 

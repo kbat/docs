@@ -283,7 +283,7 @@ Example 2
 
 
 {% challenge "What is the problem in this case?" %}
-You have crated smart code, using smart pointers. It looks like this
+You have created smart code, using smart pointers. It looks like this
 ```cpp
     void MyClass::MyFunction() {
       auto ptr = new TLorentzVector(0,0,0,0);

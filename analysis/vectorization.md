@@ -1,17 +1,37 @@
 # Vectorization
 
-Vectorization is a topic that we will cover only very briefly, mostly to make you aware of its existence. 
+Vectorization is a topic that we will cover only very briefly, mostly to make you aware of its existence. Before we head into details, let's take a look at this picture
+
+![simd](simd.png)
+
+This picture summarizes what is known as 'Flynn's taxonomy', which is a classification of computer architectures in terms of data pools and instruction pools, based on the number of concurrent instruction streams and data streams. In the picture above, we see
+
+- SISD: single instruction stream single data stream
+- SIMD: single instruction stream, multiple data streams
+- MISD: multiple instruction streams, single data stream
+- MIMD: multiple instruction streams, multiple data streams (basically a distributed system)
+
+{% callout " MISD? " %}
+The MISD architecture might seem very strange, but is used in application where fault tolerance is extremely important, such as the flight control computer of the Space Shuttle program. 
+{% endcallout %}
+
+Vectorization relies on the properties of SIMD: single instruction stream, multiple data streams. 
 
 ## What is vectorization? 
 
-Vectorization is a special case of automatic parallelization, where a computer program is converted from a scalar implementation, which processes a single pair of operands at a time, to a vector implementation, which processes one operation on multiple pairs of operands at once. For example, modern conventional computers, including specialized supercomputers, typically have vector operations that simultaneously perform operations such as the following four additions (via SIMD or SPMD hardware): 
+Vectorization is a special case of automatic parallelization, where a computer program is converted from a
 
-An example would be a program to multiply two vectors of numeric data. A scalar approach would be something like: 
+- scalar implementation, which processes a single pair of operands at a time, to a 
+- vector implementation, which processes one operation on multiple pairs of operands at once. 
+
+Conventional computers typically have vector operations that simultaneously perform operations via SIMD or SPMD hardware. How does this work? Say we want to multiply two vectors of numeric data. A scalar approach would be something like: 
 
 ```cpp
  for (i = 0; i < 1024; i++)
     C[i] = A[i]*B[i];
 ```
+
+The loop is executed 1024 times. Not only that, but for each iteration, and new and independent data pool and instruction pool are required. 
 
 This could be vectorized to look something like: 
 
@@ -20,34 +40,29 @@ This could be vectorized to look something like:
      C[i:i+3] = A[i:i+3]*B[i:i+3];
 ```
 
-Here, C[i:i+3] represents the four array elements from C[i] to C[i+3] and the vector processor can perform four operations for a single vector instruction. Since the four vector operations complete in roughly the same time as one scalar instruction, the vector approach can run up to four times faster than the original code.
+Here, C[i:i+3] represents the four array elements from C[i] to C[i+3] and the vector processor can perform four operations for a single vector instruction. The loop is only evaluated 256 times, and since the four vector operations complete in roughly the same time as one scalar instruction (for each iteration, one data pool and one instruction pool are required), the vector approach can run up to four times faster than the original code.
 
 ## How is this helpful ? 
 
-Single instruction, multiple data (SIMD) is a class of parallel computers in Flynn's taxonomy. It describes computers with multiple processing elements that perform the same operation on multiple data points simultaneously. Such machines exploit data level parallelism, but not concurrency: there are simultaneous (parallel) computations, but only a single process (instruction) at a given moment. SIMD is particularly applicable to common tasks such as adjusting the contrast in a digital image or adjusting the volume of digital audio. Most modern CPU designs include SIMD instructions to improve the performance of multimedia use. Not to be confused with SIMT which utilizes threads. 
+Vectorization uses **data level parallelism** but not concurrency: 
 
-### Advantages
+- there are simultaneous (parallel) computations, but 
+- only a single process (instruction) at a given moment. 
 
-An application that may take advantage of SIMD is one where the same value is being added to (or subtracted from) a large number of data points, a common operation in many multimedia applications. One example would be changing the brightness of an image. Each pixel of an image consists of three values for the brightness of the red (R), green (G) and blue (B) portions of the color. To change the brightness, the R, G and B values are read from memory, a value is added to (or subtracted from) them, and the resulting values are written back out to memory.
+SIMD is particularly applicable to common tasks such as adjusting the contrast in a digital image or adjusting the volume of digital audio. Most modern CPU designs include SIMD instructions to improve the performance of multimedia use. 
 
-With a SIMD processor there are two improvements to this process. For one the data is understood to be in blocks, and a number of values can be loaded all at once. Instead of a series of instructions saying "retrieve this pixel, now retrieve the next pixel", a SIMD processor will have a single instruction that effectively says "retrieve n pixels" (where n is a number that varies from design to design). For a variety of reasons, this can take much less time than retrieving each pixel individually, as with traditional CPU design.
+Vectorization can be very useful, but for very specific problems, e.g. when
 
-Another advantage is that the instruction operates on all loaded data in a single operation. In other words, if the SIMD system works by loading up eight data points at once, the add operation being applied to the data will happen to all eight values at the same time. This parallelism is separate from the parallelism provided by a superscalar processor; the eight values are processed in parallel even on a non-superscalar processor, and a superscalar processor may be able to perform multiple SIMD operations in parallel. 
+- The same value is being added to (or subtracted from) a large number of data points. This is an often used application of SIMD: for example when changing the brightness of an image where each pixel of an image consists of three values for the brightness of the red (R), green (G) and blue (B) portions of the color and a common value is added to (or subtracted from) them
 
-### Disadvantages
 
-Not all algorithms can be vectorized easily. For example, a flow-control-heavy task like code parsing may not easily benefit from SIMD; however, it is theoretically possible to vectorize comparisons and "batch flow" to target maximal cache optimality, though this technique will require more intermediate state. Note: Batch-pipeline systems (example: GPUs or software rasterization pipelines) are most advantageous for cache control when implemented with SIMD intrinsics, but they are not exclusive to SIMD features. Further complexity may be apparent to avoid dependence within series such as code strings; while independence is required for vectorization.
-Large register files which increases power consumption and require chip area.
-Currently, implementing an algorithm with SIMD instructions usually requires human labor; most compilers don't generate SIMD instructions from a typical C program, for instance. Automatic vectorization in compilers is an active area of computer science research. (Compare vector processing.)
-
-## Hardware
-Small-scale (64 or 128 bits) SIMD became popular on general-purpose CPUs in the early 1990s and continued through 1997 and later with Motion Video Instructions (MVI) for Alpha. SIMD instructions can be found, to one degree or another, on most CPUs, including the IBM's AltiVec and SPE for PowerPC, HP's PA-RISC Multimedia Acceleration eXtensions (MAX), Intel's MMX and iwMMXt, SSE, SSE2, SSE3 SSSE3 and SSE4.x, AMD's 3DNow!, ARC's ARC Video subsystem, SPARC's VIS and VIS2, Sun's MAJC, ARM's NEON technology, MIPS' MDMX (MaDMaX) and MIPS-3D. The IBM, Sony, Toshiba co-developed Cell Processor's SPU's instruction set is heavily SIMD based. NXP founded by Philips developed several SIMD processors named Xetal. The Xetal has 320 16bit processor elements especially designed for vision tasks.
-
-Modern graphics processing units (GPUs) are often wide SIMD implementations, capable of branches, loads, and stores on 128 or 256 bits at a time.
-
-Intel's AVX SIMD instructions now process 256 bits of data at once. Intel's Larrabee prototype microarchitecture includes more than two 512-bit SIMD registers on each of its cores (VPU: Wide Vector Processing Units), and this 512-bit SIMD capability is being continued in Intel's Many Integrated Core Architecture (Intel MIC) and Skylake-X. 
+Not all algorithms can be vectorized easily though! Additinally, vectorization is labor-intensive: implementing an algorithm with SIMD instructions usually requires human labor as most compilers don't generate SIMD instructions from a typical C program. Automatic vectorization in compilers is an active area of computer science research. Modern graphics processing units (GPUs) are often wide SIMD implementations, capable of branches, loads, and stores on 128 or 256 bits at a time.
 
 # Vectorization support in ROOT
+
+We would not talk about vectorization if it would not have a direct connection to ROOT. Also in physics, some problems might benefit from vectorization. Therefore, ROOT has introduced built-in vector types: `Float_v` and `Double_v`, which look like normal types (`float` and `double`), but the suffix `_v` tells us that they are vector types. 
+
+Vectorization support in ROOT comprises the following:
 
 * Integration of VecCore in ROOT as the common vector abstraction in HEP
   * Definition of new ROOT SIMD types: ROOT::Double_v, ROOT::Float_v.
@@ -61,12 +76,12 @@ TFormula supports vectorization. All the TF1 objected created with a formula exp
 
 ```cpp
 //Higgs Fit: Implementation of the scalar function
-double func(const double *data, const double *params)
-{
-return params[0] * exp(-(*data + (-130.)) * (*data + (-130.)) / 2) +
-params[1] * exp(-(params[2] * (*data * (0.01)) - params[3] *
-((*data) * (0.01)) * ((*data) * (0.01))));
+double func(const double *data, const double *params) {
+   return params[0] * exp(-(*data + (-130.)) * (*data + (-130.)) / 2) +
+       params[1] * exp(-(params[2] * (*data * (0.01)) - params[3] *
+       ((*data) * (0.01)) * ((*data) * (0.01))));
 }
+
 TF1 *f = new TF1(”fScalar”, func, 100, 200, 4);
 f->SetParameters(1, 1000, 7.5, 1.5);
 TH1D h1f(”h1f”, ”Test random numbers”, 12800, 100, 200);
@@ -74,16 +89,16 @@ h1f.FillRandom(”fvScalar”, 1000000);
 h1f.Fit(f);
 ```
 
-in the vectorized approach
+in the vectorized approach, we change the built-in types
 
 ```cpp
 //Higgs Fit: Implementation of the vectorized function
-ROOT::Double_v func(const ROOT::Double_v *data, const double *params)
-{
-return params[0] * exp(-(*data + (-130.)) * (*data + (-130.)) / 2) +
-params[1] * exp(-(params[2] * (*data * (0.01)) - params[3] *
-((*data) * (0.01)) * ((*data) * (0.01))));
+ROOT::Double_v func(const ROOT::Double_v *data, const double *params) {
+    return params[0] * exp(-(*data + (-130.)) * (*data + (-130.)) / 2) +
+       params[1] * exp(-(params[2] * (*data * (0.01)) - params[3] *
+       ((*data) * (0.01)) * ((*data) * (0.01))));
 }
+
 //This code is totally backwards compatible
 TF1 *f = new TF1(”fvCore”, func, 100, 200, 4);
 f->SetParameters(1, 1000, 7.5, 1.5);
@@ -92,3 +107,9 @@ h1f.FillRandom(”fvCore”, 1000000);
 //Added multithreaded fit option
 h1f.Fit(f, ”MULTITHREAD”);
 ```
+
+As you see, the changes to user code are minimal. However, behind the scenes, the fitting operation exploits SIMD principles to speed up the execution of your code. 
+
+# Exercises
+
+This section in principle has no exercises, but you are encouraged to try run the above examples using both the scalar and vectorized implementation of the fitting routine, and see if there is indeed a speed benefit. 
