@@ -55,8 +55,11 @@ Vectorization can be very useful, but for very specific problems, e.g. when
 
 - The same value is being added to (or subtracted from) a large number of data points. This is an often used application of SIMD: for example when changing the brightness of an image where each pixel of an image consists of three values for the brightness of the red (R), green (G) and blue (B) portions of the color and a common value is added to (or subtracted from) them
 
+{% callout "Why not vectorize the world .. ? " %}
+Not all algorithms can be vectorized easily! Additionally, vectorization is labor-intensive: implementing an algorithm with SIMD instructions usually requires human intervention as most compilers do not generate SIMD instructions from a typical C/C++/etc program. 
 
-Not all algorithms can be vectorized easily though! Additinally, vectorization is labor-intensive: implementing an algorithm with SIMD instructions usually requires human labor as most compilers don't generate SIMD instructions from a typical C program. Automatic vectorization in compilers is an active area of computer science research. Modern graphics processing units (GPUs) are often wide SIMD implementations, capable of branches, loads, and stores on 128 or 256 bits at a time.
+Automatic vectorization in compilers is an active area of computer science research, as e.g. modern graphics processing units (GPUs) are often wide SIMD implementations, capable of branches, loads, and stores on 128 or 256 bits at a time. 
+{% endcallout %}
 
 # Vectorization support in ROOT
 
