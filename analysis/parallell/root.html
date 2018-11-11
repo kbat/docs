@@ -159,38 +159,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../newf2/introexer.html">
-            
-                <a href="../newf2/introexer.html">
-            
-                    
-                    A quick refresher
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="../newf2/smartp.html">
+        <li class="chapter " data-level="1.4.2" data-path="../newf2/smartp.html">
             
                 <a href="../newf2/smartp.html">
             
                     
                     Smart pointers
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.4" data-path="../newf2/exer.html">
-            
-                <a href="../newf2/exer.html">
-            
-                    
-                    Exercises
             
                 </a>
             
@@ -608,7 +582,7 @@
 <p>A thread is an independent flow of control that operates within the same address space as other independent flows of controls within a process. In most UNIX systems, thread and process characteristics are grouped into a single entity called a process. Sometimes, threads are called &#x201C;lightweight processes&#x2019;&#x2019;.</p>
 <h2 id="threads-and-processes">Threads and Processes</h2>
 <p>In traditional single-threaded process systems, a process has a set of properties. In multi-threaded systems, these properties are divided between processes and threads.</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4152983090);" id="process-properties"><i class="fa fa-info-circle"></i> Process properties<span id="heading-4152983090"></span></h3></div><div class="panel-body" id="panel-4152983090"><p>A process in a multi-threaded system is the changeable entity. It must be considered as an execution frame. It has all traditional process attributes, such as:</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9671230402);" id="process-properties"><i class="fa fa-info-circle"></i> Process properties<span id="heading-9671230402"></span></h3></div><div class="panel-body" id="panel-9671230402"><p>A process in a multi-threaded system is the changeable entity. It must be considered as an execution frame. It has all traditional process attributes, such as:</p>
 <ul>
 <li><p>Process ID, process group ID, user ID, and group ID</p>
 </li>
@@ -629,7 +603,7 @@
 </li>
 </ul>
 </div></div></p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2989603602);" id="thread-properties"><i class="fa fa-info-circle"></i> Thread properties<span id="heading-2989603602"></span></h3></div><div class="panel-body" id="panel-2989603602"><p>A thread is the schedulable entity. It has only those properties that are required to ensure its independent flow of control. These include the following properties:</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6736149988);" id="thread-properties"><i class="fa fa-info-circle"></i> Thread properties<span id="heading-6736149988"></span></h3></div><div class="panel-body" id="panel-6736149988"><p>A thread is the schedulable entity. It has only those properties that are required to ensure its independent flow of control. These include the following properties:</p>
 <ul>
 <li><p>Stack</p>
 </li>
@@ -692,7 +666,7 @@ ROOT::TProcessExecutor::Map</p>
 </ul>
 <p>For either signature, func is executed as many times as needed by a pool of fNWorkers workers; the number of workers can be passed to the constructor or set via SetNWorkers. It defaults to the number of cores.
 A collection containing the result of each execution is returned.
-<div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6860850715);" id="beware"><i class="fa fa-info-circle"></i> Beware<span id="heading-6860850715"></span></h3></div><div class="panel-body" id="panel-6860850715"><p>Note: the user is responsible for the deletion of any object that might be created upon execution of func, returned objects included: ROOT::TProcessExecutor never deletes what it returns, it simply forgets it.
+<div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9735890919);" id="beware"><i class="fa fa-info-circle"></i> Beware<span id="heading-9735890919"></span></h3></div><div class="panel-body" id="panel-9735890919"><p>Note: the user is responsible for the deletion of any object that might be created upon execution of func, returned objects included: ROOT::TProcessExecutor never deletes what it returns, it simply forgets it.
 Note: that the usage of ROOT::TProcessExecutor::Map is indicated only when the task to be executed takes more than a few seconds, otherwise the overhead introduced by Map will outrun the benefits of parallel execution on most machines.</p>
 </div></div></p>
 <p>Parameters</p>
@@ -906,7 +880,7 @@ const UInt_t nWorkers = 4U;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Parallellism with ROOT","level":"1.5.4","depth":2,"next":{"title":"Part 5 - 5 to 6: changes to user code","level":"1.6","depth":1,"path":"analysis/changes.md","ref":"analysis/changes.md","articles":[]},"previous":{"title":"What can go wrong?","level":"1.5.3","depth":2,"path":"analysis/parallell/caveats.md","ref":"analysis/parallell/caveats.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/root.md","mtime":"2018-11-07T16:08:39.416Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-07T16:33:05.338Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Parallellism with ROOT","level":"1.5.4","depth":2,"next":{"title":"Part 5 - 5 to 6: changes to user code","level":"1.6","depth":1,"path":"analysis/changes.md","ref":"analysis/changes.md","articles":[]},"previous":{"title":"What can go wrong?","level":"1.5.3","depth":2,"path":"analysis/parallell/caveats.md","ref":"analysis/parallell/caveats.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/root.md","mtime":"2018-11-07T16:33:16.560Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T13:48:58.827Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="exer.html" />
+    <link rel="next" href="../parallellism.html" />
     
     
-    <link rel="prev" href="introexer.html" />
+    <link rel="prev" href="intro.html" />
     
 
     </head>
@@ -159,38 +159,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="introexer.html">
-            
-                <a href="introexer.html">
-            
-                    
-                    A quick refresher
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.4.3" data-path="smartp.html">
+        <li class="chapter active" data-level="1.4.2" data-path="smartp.html">
             
                 <a href="smartp.html">
             
                     
                     Smart pointers
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.4" data-path="exer.html">
-            
-                <a href="exer.html">
-            
-                    
-                    Exercises
             
                 </a>
             
@@ -604,32 +578,42 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction">Introduction</h1>
-<h2 id="what-is-a-pointer">What is a pointer?</h2>
-<p><img src="Pointers.png" alt="Pointer"></p>
-<p>A pointer is an object whose value &#x201C;points to&#x201D; another value stored
+                                <h1 id="smart-pointers">Smart pointers</h1>
+<p>In the previous section, we have talked about pointers and memory management. As you probably know, dynamic memory management can bring quite some headaches, such as</p>
+<ul>
+<li>memory leaks, when allocated memory is not deallocated</li>
+<li>ownership issues: who is in charge of deallocating memory? </li>
+</ul>
+<p>Luckily, C++11 comes with <strong>smart pointers</strong>, aimed at helping you out in exactly those situations. </p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7090781200);" id="pointers"><i class="fa fa-info-circle"></i> Pointers<span id="heading-7090781200"></span></h3></div><div class="panel-body" id="panel-7090781200"><p>A pointer is an object whose value &#x201C;points to&#x201D; another value stored
 somewhere else in memory</p>
 <ul>
-<li><p>it contains a <strong>memory address</strong></p>
-</li>
-<li><p>obtaining the stored at the pointed location</p>
-</li>
-<li><p>very flexible and powerful tool</p>
-</li>
+<li>it contains a <strong>memory address</strong></li>
+<li>obtaining the stored at the pointed location</li>
+<li>very flexible and powerful tool</li>
 </ul>
-<h2 id="using-a-pointer">Using a pointer</h2>
-<pre><code class="lang-cpp">    <span class="hljs-comment">/* Defining a pointer */</span>
-    <span class="hljs-keyword">int</span>* a; <span class="hljs-comment">// declares a pointer that can point to an integer value</span>
-    <span class="hljs-comment">//DANGER: the pointer points to a random memory portion!</span>
-
-    <span class="hljs-keyword">int</span>* b = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">// OK, pointer is initialised to a null memory address</span>
-
-    <span class="hljs-keyword">int</span>* c = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>; <span class="hljs-comment">// allocate memory for an integer value in the heap</span>
+</div></div></p>
+<h2 id="pitfalls-of-pointers">Pitfalls of pointers</h2>
+<p>Let&apos;s look at some use cases of pointers:</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2707339042);" id="declaring-a-pointer---whats-wrong-"><i class="fa fa-square-o"></i> Declaring a pointer - what&apos;s wrong? <span id="heading-2707339042"></span></h3></div><div class="panel-body" id="panel-2707339042"><pre><code class="lang-cpp">    <span class="hljs-keyword">int</span>* a; <span class="hljs-comment">// declares a pointer that can point to an integer value</span>
+</code></pre>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7284757299);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-7284757299">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-7284757299"><p>The pointer points to a random address in memory! To avoid this, always initialize to NULL:</p>
+<pre><code class="lang-cpp">    <span class="hljs-keyword">int</span>* b = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">// OK, pointer is initialised to a null memory address</span>
+</code></pre>
+</div></div></div></div></p>
+<p>We can use pointers to allocate memory on the heap</p>
+<pre><code class="lang-cpp">    <span class="hljs-keyword">int</span>* c = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>; <span class="hljs-comment">// allocate memory for an integer value in the heap</span>
     <span class="hljs-comment">//and assign its memory address to this pointer</span>
-
-    <span class="hljs-keyword">int</span>** d = &amp;a; <span class="hljs-comment">// this pointer points to a pointer to an integer value</span>
-
-    MyObject* e = <span class="hljs-keyword">new</span> MyObject(); <span class="hljs-comment">// allocate memory for MyObject</span>
+</code></pre>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2416814234);" id="-what-does-this-do"><i class="fa fa-square-o"></i>  What does this do?<span id="heading-2416814234"></span></h3></div><div class="panel-body" id="panel-2416814234"><pre><code class="lang-cpp">    <span class="hljs-keyword">int</span>** d = &amp;a;
+</code></pre>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6877990121);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-6877990121">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-6877990121"><p>This points to a pointer ...</p>
+<pre><code class="lang-cpp">    <span class="hljs-keyword">int</span>** d = &amp;a; <span class="hljs-comment">// this pointer points to a pointer to an integer value</span>
+</code></pre>
+<p>Because, why not?</p>
+</div></div></div></div></p>
+<p>And then there are of course pointers to objects </p>
+<pre><code class="lang-cpp">    MyObject* e = <span class="hljs-keyword">new</span> MyObject(); <span class="hljs-comment">// allocate memory for MyObject</span>
     <span class="hljs-comment">// and assign its memory address to the pointer e</span>
 
     <span class="hljs-comment">/* Using a pointer */</span>
@@ -640,9 +624,9 @@ somewhere else in memory</p>
     <span class="hljs-comment">// the method DoSomething() of the instance of MyObject</span>
     <span class="hljs-comment">// pointed by e</span>
 </code></pre>
-<h1 id="why-a-raw-pointer-is-hard-to-love">Why a raw pointer is hard to love</h1>
 <h2 id="memory-leaks">Memory leaks</h2>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6809114049);" id="-what-is-the-problem-with-this-code"><i class="fa fa-square-o"></i>  What is the problem with this code?<span id="heading-6809114049"></span></h3></div><div class="panel-body" id="panel-6809114049"><p>Below is a snippet of analysis code. What is wrong with it ? </p>
+<p>memory leak is a type of resource leak that occurs when a computer program incorrectly manages memory allocations in such a way that memory which is no longer needed is not released. A memory leak may also happen when an object is stored in memory but cannot be accessed by the running code. A memory leak has symptoms similar to a number of other problems and generally can only be diagnosed by a programmer with access to the program&apos;s source code. </p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1273722143);" id="-what-is-the-problem-with-this-code"><i class="fa fa-square-o"></i>  What is the problem with this code?<span id="heading-1273722143"></span></h3></div><div class="panel-body" id="panel-1273722143"><p>Below is a snippet of analysis code. What is wrong with it ? </p>
 <pre><code class="lang-cpp">    <span class="hljs-keyword">void</span> MyAnalysisTask::UserExec()
     {
       TLorentzVector* v = <span class="hljs-literal">nullptr</span>;
@@ -659,13 +643,13 @@ somewhere else in memory</p>
       <span class="hljs-keyword">delete</span> v;
     }
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1162630901);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1162630901">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1162630901"><p>Array or single value?</p>
-<ul>
-<li>A pointer can point to a single value or to an array, there is 
-no way to infer it from its declaration</li>
-<li>Different syntax to destroy (= deallocate, free) the pointed object
-for arrays and single objects</li>
-</ul>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1982168578);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1982168578">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1982168578"><p>Look at the line</p>
+<pre><code class="lang-cpp">v = <span class="hljs-keyword">new</span> TLorentzVector(track-&gt;Px(), 
+</code></pre>
+<p>For each iteration the loop, a new instance of <code>TLorentzVector</code> is created. Only the last instance is deleted via the <code>delete</code> call at the end of the code. The memory of the other instances is not deleted, and cannot be deleted anymore (the pointers to it are overwritten in the loop). </p>
+</div></div></div></div></p>
+<h2 id="array-or-single-value">Array or single value?</h2>
+<p>Besides being at a risk of memory leaks, pointers can lead to truly ambiguous situations when using <em>arrays</em>, since a pointer can point to a single value or to an array, there is  no way to infer it from its declaration. There is a different syntax to destroy (= deallocate, free) the pointed object for arrays and single objects as we have seen in the previous section. Look at the following snippet of code, that illustrates this ambiguity: </p>
 <pre><code class="lang-cpp">    <span class="hljs-function">AliVTrack* <span class="hljs-title">FilterTracks</span><span class="hljs-params">()</span></span>;
 
     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UserExec</span><span class="hljs-params">()</span>
@@ -681,7 +665,7 @@ for arrays and single objects</li>
       <span class="hljs-keyword">delete</span> returnValue; <span class="hljs-comment">// or should I use delete[] ??</span>
     }
 </code></pre>
-<p>Double deletes</p>
+<h2 id="ownership-issues-double-deletes">Ownership issues: double deletes</h2>
 <ul>
 <li><p>Each memory allocation should match a corresponding deallocation</p>
 </li>
@@ -705,7 +689,6 @@ of the same object may occur</p>
       <span class="hljs-comment">//or was it already deleted by AnalyzeTracks?</span>
     }
 </code></pre>
-</div></div></div></div></p>
 <h1 id="smart-pointers">Smart Pointers</h1>
 <ul>
 <li><p>Clear (<em>shared</em> or <em>exclusive</em>) <strong>ownership</strong> of the pointed object</p>
@@ -728,7 +711,7 @@ when its <code>reset(T* ptr)</code> method is called</p>
 <li><p>Only one <code>unique_ptr</code> can point to the same memory address</p>
 </li>
 </ul>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1472382758);" id="unique-pointers-in-the-wild"><i class="fa fa-info-circle"></i> Unique pointers in the wild<span id="heading-1472382758"></span></h3></div><div class="panel-body" id="panel-1472382758"><p>Example 1</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9929232519);" id="unique-pointers-in-the-wild"><i class="fa fa-info-circle"></i> Unique pointers in the wild<span id="heading-9929232519"></span></h3></div><div class="panel-body" id="panel-9929232519"><p>Example 1</p>
 <pre><code class="lang-cpp">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyFunction</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;TLorentzVector&gt; <span class="hljs-built_in">vector</span>(<span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));
       <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;TLorentzVector&gt; vector2(<span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));
@@ -780,7 +763,7 @@ scope or when it is re-assigned</p>
 </li>
 </ul>
 <p><img src="Sharedptr.png" alt="SharedPtr"></p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8792441676);" id="shared-pointers-in-the-wild"><i class="fa fa-info-circle"></i> Shared pointers in the wild<span id="heading-8792441676"></span></h3></div><div class="panel-body" id="panel-8792441676"><p>Example 1</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(755071301);" id="shared-pointers-in-the-wild"><i class="fa fa-info-circle"></i> Shared pointers in the wild<span id="heading-755071301"></span></h3></div><div class="panel-body" id="panel-755071301"><p>Example 1</p>
 <pre><code class="lang-cpp">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyFunction</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;TLorentzVector&gt; <span class="hljs-built_in">vector</span>(<span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));
       <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;TLorentzVector&gt; vector2(<span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));
@@ -821,7 +804,7 @@ scope or when it is re-assigned</p>
 </code></pre>
 </div></div></p>
 <h2 id="some-word-of-caution-on-sharedptr">Some word of caution on `shared_ptr&apos;</h2>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2313426133);" id="what-is-the-problem-in-this-case"><i class="fa fa-square-o"></i> What is the problem in this case?<span id="heading-2313426133"></span></h3></div><div class="panel-body" id="panel-2313426133"><p>You have crated smart code, using smart pointers. It looks like this</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5237049244);" id="what-is-the-problem-in-this-case"><i class="fa fa-square-o"></i> What is the problem in this case?<span id="heading-5237049244"></span></h3></div><div class="panel-body" id="panel-5237049244"><p>You have crated smart code, using smart pointers. It looks like this</p>
 <pre><code class="lang-cpp">    <span class="hljs-keyword">void</span> MyClass::MyFunction() {
       <span class="hljs-keyword">auto</span> ptr = <span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
 
@@ -831,7 +814,7 @@ scope or when it is re-assigned</p>
     }
 </code></pre>
 <p>still, something is wrong with it, do you know what ?</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1161420032);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1161420032">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1161420032"><p>A possible way of solving this:</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6502591048);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-6502591048">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-6502591048"><p>A possible way of solving this:</p>
 <pre><code class="lang-cpp">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MyFunction</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-keyword">auto</span> ptr = <span class="hljs-keyword">new</span> TLorentzVector(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
 
@@ -857,18 +840,147 @@ scope or when it is re-assigned</p>
 </code></pre>
 <p>The lesson to learn: use raw pointers only when absolutely needed (if at all)</p>
 </div></div></div></div></p>
-<h1 id="final-remarks">Final remarks</h1>
-<ul>
-<li><p>When the extra-flexibility of a pointer is not needed, do not use it</p>
-</li>
-<li><p>Alternative to pointers: arguments by reference (not covered here)</p>
-</li>
-<li><p>Avoid raw pointers whenever possible!</p>
-</li>
-<li><p>Smart pointers (<code>unique_ptr</code> and <code>shared_ptr</code>) should cover most use
-cases and provide a much more robust and safe memory management</p>
-</li>
-</ul>
+<h1 id="exercise">Exercise</h1>
+<p>Below is a very long page of exercises related to using smart pointers, varying in difficulty. Click on &apos;solution&apos; to see the answer to the questions. You can put the questions &apos;in action&apos; by writing small C++ programs, but they are also answerable by just inspecting the code snippets.  </p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2453878065);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-2453878065"></span></h3></div><div class="panel-body" id="panel-2453878065"><p>The following contains a mistake.  Fix it, and explain why it was wrong.</p>
+<pre><code class="lang-c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p1(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>(<span class="hljs-number">42</span>));
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p2(p1.get());
+</code></pre>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9839154029);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-9839154029">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-9839154029"><p><code>p1</code> and <code>p2</code> will both attempt to delete the same pointer, without knowing the other exists.  A <code>shared_ptr</code> counts the number of pointers referencing the same pointer and deallocates that pointer once no one is referencing it.  With code like the previous, we get the following:</p>
+<pre><code class="lang-c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p1(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>(<span class="hljs-number">42</span>));<span class="hljs-comment">//p1 references the new pointer, reference count = 1</span>
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p2(p1.get());<span class="hljs-comment">//p2 thinks it&apos;s the only guy looking at the pointer, reference count = 1</span>
+<span class="hljs-comment">//(automatically called) p2.~shared_ptr&lt;int&gt;() -- deletes the pointer in p2</span>
+<span class="hljs-comment">//(automatically called) p1.~shared_ptr&lt;int&gt;() -- Oops, p1&apos;s pointer was already deleted!</span>
+</code></pre>
+<p>The correct way to ensure the reference counts are correct is to copy the shared_ptr, not just the underlying pointer:</p>
+<pre><code class="lang-c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p1(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>(<span class="hljs-number">42</span>));<span class="hljs-comment">//p1 references the new pointer, reference count = 1</span>
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p2(p1);<span class="hljs-comment">//p2 references p1&apos;s pointer &amp; p1&apos;s reference count, reference count = 2</span>
+<span class="hljs-comment">//(automatically called) p2.~shared_ptr&lt;int&gt;() -- decrements the reference count ( = 1 )</span>
+<span class="hljs-comment">//(automatically called) p1.~shared_ptr&lt;int&gt;() -- decrements the reference count to zero and deletes the pointer.</span>
+</code></pre>
+</div></div></div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6947464905);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-6947464905"></span></h3></div><div class="panel-body" id="panel-6947464905"><p>The following contains a mistake.  Fix it, and explain why it was wrong.</p>
+<pre><code class="lang-c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p3(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">42</span>]);
+</code></pre>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9097992401);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-9097992401">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-9097992401"><p><code>std::unique_ptr&lt;T&gt;</code> will call <code>delete</code> on its pointer -- that means the pointer should be allocated using <code>new</code>.  If we want to use <code>new[N]</code>, we should store it in <code>std::unique_ptr&lt;T[]&gt;</code>, which will correctly call <code>delete[]</code>.  Furthermore, it offers <code>operator[]</code> and disallows <code>operator*</code> &amp; <code>operator-&gt;</code>, which makes it less awkward to index elements after the first.</p>
+</div></div></div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2337745417);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-2337745417"></span></h3></div><div class="panel-body" id="panel-2337745417"><p>When would you use a <code>unique_ptr</code> versus a <code>shared_ptr</code>?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1926668444);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1926668444">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1926668444"><p>Use <code>shared_ptr</code> when you know that ownership of the pointer must be shared in more than one place.  Note that <em>ownership</em> == <em>responsability to deallocate the pointer</em>.
+Use <code>unique_ptr</code> when you don&apos;t know that ownership of the pointer must be shared.</p>
+</div></div></div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6902236104);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-6902236104"></span></h3></div><div class="panel-body" id="panel-6902236104"><p>Suppose you have a class which returns a pointer which the user <em>may</em> wish to store in a <code>shared_ptr</code>.  What type should you return?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7043460828);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-7043460828">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-7043460828"><p>Return a <code>unique_ptr</code> to that type.  <code>unique_ptr</code>s are convertible to <code>shared_ptr</code>s, so returning a <code>unique_ptr</code> prevents memory leaks without restricting how that pointer is used later.
+Returning a raw pointer instead would certainly work, but goes against, e.g., Scott Meyers&apos;s advice to &quot;make interfaces easy to use correctly and hard to use incorrectly.&quot;  (See Item 18 of Effective C++.)</p>
+</div></div></div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9786459686);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-9786459686"></span></h3></div><div class="panel-body" id="panel-9786459686"><p>The following code opens a handle to a file using the C-style <code>FILE*</code> interface
+and closes the handle before returning.</p>
+<pre><code class="lang-c++">
+  FILE* pFin = <span class="hljs-literal">NULL</span>;
+  <span class="hljs-keyword">try</span>
+  {
+    <span class="hljs-built_in">std</span>::<span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">filename</span><span class="hljs-params">(<span class="hljs-string">&quot;c:\\Windows\\win.ini&quot;</span>)</span></span>;
+    pFin = <span class="hljs-built_in">std</span>::fopen(filename.c_str(), <span class="hljs-string">&quot;r&quot;</span>);
+    <span class="hljs-keyword">if</span> (!pFin)
+      <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">char</span> data[<span class="hljs-number">10</span>];
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">std</span>::fread(data, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>, pFin) &lt;= <span class="hljs-number">0</span>)
+    {
+      <span class="hljs-built_in">std</span>::fclose(pFin);
+      <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-built_in">std</span>::fclose(pFin);
+  }
+  <span class="hljs-keyword">catch</span> (...)
+  {
+    <span class="hljs-keyword">if</span> (pFin)
+      <span class="hljs-built_in">std</span>::fclose(pFin);
+    <span class="hljs-keyword">throw</span>;  <span class="hljs-comment">//rethrow after closing file</span>
+  }
+</code></pre>
+<p>We could change it to use
+iostreams, but for this exercise, change the code to just use a smart
+pointer (<code>std::shared_ptr</code>) to <code>FILE</code> with a custom deleter, so that the
+<code>fclose()</code> call doesn&apos;t have to appear in so many places, and eliminate the
+try-catch block.</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(994961057);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-994961057">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-994961057"><p>:</p>
+<pre><code class="lang-c++">    <span class="hljs-built_in">std</span>::<span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">filename</span><span class="hljs-params">(<span class="hljs-string">&quot;c:\\Windows\\win.ini&quot;</span>)</span></span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;FILE&gt; pFin(<span class="hljs-built_in">std</span>::fopen(filename.c_str(), <span class="hljs-string">&quot;r&quot;</span>), &amp;<span class="hljs-built_in">std</span>::fclose);
+    <span class="hljs-keyword">if</span> (!pFin)
+      <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">char</span> data[<span class="hljs-number">10</span>];
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">std</span>::fread(data, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>, pFin.get()) &lt;= <span class="hljs-number">0</span>)
+    {
+      <span class="hljs-keyword">return</span>;
+    }
+</code></pre>
+<p>Notice that not only do the <code>fclose()</code> calls go away, but also the try/catch block goes away, since there&apos;s no longer a need to call <code>fclose()</code> and then re-throw.</p>
+</div></div></div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(997232473);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-997232473"></span></h3></div><div class="panel-body" id="panel-997232473"><pre><code class="lang-c++"><span class="hljs-keyword">auto</span> p_unique = get_unique_ptr(my_lib.open_handle(),
+[&amp;](<span class="hljs-keyword">int</span>* p_handle) { my_lib.close_handle(p_handle); });
+
+<span class="hljs-comment">//Now suppose we need to change to a shared_ptr:</span>
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p_shared(p_unique.release());
+</code></pre>
+<p>What&apos;s wrong with the conversion to <code>shared_ptr</code> and why does it cause a
+crash?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9574553015);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-9574553015">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-9574553015"><p>The custom deleter is not transferred from the <code>unique_ptr</code> to the <code>shared_ptr</code> when you use <code>release()</code>.  Therefore, when the <code>shared_ptr</code> goes out of scope, it calls delete on the raw pointer instead of the custom deleter.</p>
+</div></div></div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5466979335);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-5466979335"></span></h3></div><div class="panel-body" id="panel-5466979335"><p>The fix for the above looks like this:</p>
+<pre><code class="lang-c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p_shared(<span class="hljs-built_in">std</span>::move(p_unique));
+</code></pre>
+<p>Rewrite the code above. Why do you have to use <code>std::move()</code>?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8492288264);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-8492288264">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-8492288264"><p>:
+<code>unique_ptr</code> cannot be copied, as that would not provide unique ownership
+of the pointer.  <code>unique_ptr</code> can be moved from.  This allows <code>unique_ptr</code> to
+be returned from functions, used in std containers, and more.  <code>std::move</code>
+explicitly moves the pointer out of <code>p_unique</code> into <code>p_shared</code>.</p>
+</div></div></div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5063538655);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-5063538655"></span></h3></div><div class="panel-body" id="panel-5063538655"><p>When we copied a <code>shared_ptr</code> to another <code>shared_ptr</code>, we didn&apos;t have to use
+<code>std::move()</code>. Why not?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8316790835);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-8316790835">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-8316790835"><p>Because <code>shared_ptrs</code> are copy assignable whereas <code>unique_ptr</code>s are not.  With
+a <code>unique_ptr</code>, we have to help transfer ownership through the move because
+ownership can not be copied.</p>
+<p>It seems that explicitly calling <code>std::move</code> is usually only necessary when
+writing move constructors and move assignment operators.  (There are other
+cases, like when writing algorithms, but moves are usually safest
+(and fastest!) when implicitly generated.)</p>
+</div></div></div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5060361823);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-5060361823"></span></h3></div><div class="panel-body" id="panel-5060361823"><pre><code class="lang-c++"><span class="hljs-comment">//We have a unique_ptr to const and we want to switch to a unique_ptr to</span>
+<span class="hljs-comment">// non-const:</span>
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&gt; p_const_unique(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>(<span class="hljs-number">5</span>));
+<span class="hljs-comment">//std::unique_ptr&lt;int&gt; p_my_non_const_int(std::move(p_const_unique));</span>
+</code></pre>
+<p>If you uncomment the line above, it won&apos;t compile.  Why not?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9366811203);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-9366811203">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-9366811203"><p>Just as with raw pointers, converting a pointer to <code>const</code> to a pointer to
+non-<code>const</code> will fail.</p>
+<p>From a higher-level point of view, if this conversion were allowed, 
+then the following could happen.</p>
+<pre><code class="lang-c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&gt; p_const_unique(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>(<span class="hljs-number">5</span>));
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; p_my_non_const_int(<span class="hljs-built_in">std</span>::move(p_const_unique));
+<span class="hljs-comment">// We are changing the value of something originally declared const!</span>
+*p_my_non_const_int = <span class="hljs-number">4</span>;
+</code></pre>
+</div></div></div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8227306149);" id="question"><i class="fa fa-square-o"></i> Question<span id="heading-8227306149"></span></h3></div><div class="panel-body" id="panel-8227306149"><p>Consider the following code:</p>
+<pre><code class="lang-c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">throw</span> <span class="hljs-built_in">std</span>::runtime_error(<span class="hljs-string">&quot;Normally conditional&quot;</span>);  <span class="hljs-keyword">return</span> <span class="hljs-number">5</span>; }
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span> val)</span>
+</span>{}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">example2</span><span class="hljs-params">()</span>
+</span>{
+  bar(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>(<span class="hljs-number">42</span>)), foo());
+}
+</code></pre>
+<p>Why could calling example2 result in a memory leak?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9684164606);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-9684164606">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-9684164606"><p>C++ arguments may be evaluated in unspecified order.  In the previous, the <code>shared_ptr</code> constructor and <code>foo()</code> must both be evaluated before <code>bar</code> is called, but there is no requirement that the <code>shared_ptr</code> constructor be called before <code>foo()</code> is evaluated.  Thus the order of operations could be:
+<code>new int(42)</code>
+<code>foo()</code>
+and the <code>shared_ptr</code> constructor might never be called, as <code>foo()</code> threw and exception.</p>
+</div></div></div></div></p>
 
                                 
                                 </section>
@@ -896,12 +1008,12 @@ cases and provide a much more robust and safe memory management</p>
 
             
                 
-                <a href="introexer.html" class="navigation navigation-prev " aria-label="Previous page: A quick refresher">
+                <a href="intro.html" class="navigation navigation-prev " aria-label="Previous page: Pointers, the absolute basics">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="exer.html" class="navigation navigation-next " aria-label="Next page: Exercises">
+                <a href="../parallellism.html" class="navigation navigation-next " aria-label="Next page: Part 4 - Parallellism">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -912,7 +1024,7 @@ cases and provide a much more robust and safe memory management</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Smart pointers","level":"1.4.3","depth":2,"next":{"title":"Exercises","level":"1.4.4","depth":2,"path":"analysis/newf2/exer.md","ref":"analysis/newf2/exer.md","articles":[]},"previous":{"title":"A quick refresher","level":"1.4.2","depth":2,"path":"analysis/newf2/introexer.md","ref":"analysis/newf2/introexer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/smartp.md","mtime":"2018-11-07T16:08:39.413Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-07T16:33:05.338Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Smart pointers","level":"1.4.2","depth":2,"next":{"title":"Part 4 - Parallellism","level":"1.5","depth":1,"path":"analysis/parallellism.md","ref":"analysis/parallellism.md","articles":[{"title":"Threads and processes","level":"1.5.1","depth":2,"path":"analysis/parallell/intro.md","ref":"analysis/parallell/intro.md","articles":[]},{"title":"Posix multithreading","level":"1.5.2","depth":2,"path":"analysis/parallell/example.md","ref":"analysis/parallell/example.md","articles":[]},{"title":"What can go wrong?","level":"1.5.3","depth":2,"path":"analysis/parallell/caveats.md","ref":"analysis/parallell/caveats.md","articles":[]},{"title":"Parallellism with ROOT","level":"1.5.4","depth":2,"path":"analysis/parallell/root.md","ref":"analysis/parallell/root.md","articles":[]}]},"previous":{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"path":"analysis/newf2/intro.md","ref":"analysis/newf2/intro.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/smartp.md","mtime":"2018-11-11T13:48:17.579Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T13:48:58.827Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

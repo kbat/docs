@@ -159,38 +159,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../newf2/introexer.html">
-            
-                <a href="../newf2/introexer.html">
-            
-                    
-                    A quick refresher
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="../newf2/smartp.html">
+        <li class="chapter " data-level="1.4.2" data-path="../newf2/smartp.html">
             
                 <a href="../newf2/smartp.html">
             
                     
                     Smart pointers
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.4" data-path="../newf2/exer.html">
-            
-                <a href="../newf2/exer.html">
-            
-                    
-                    Exercises
             
                 </a>
             
@@ -756,13 +730,13 @@ calling the method, but can optionally override it.</p>
 <span class="hljs-meta">&gt;&gt;&gt; </span>run_method(len, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])
 <span class="hljs-number">3</span>
 </code></pre>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4670223055);" id="methods-returning-methods"><i class="fa fa-square-o"></i> Methods returning methods<span id="heading-4670223055"></span></h3></div><div class="panel-body" id="panel-4670223055"><p>What does this method do?</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7265053850);" id="methods-returning-methods"><i class="fa fa-square-o"></i> Methods returning methods<span id="heading-7265053850"></span></h3></div><div class="panel-body" id="panel-7265053850"><p>What does this method do?</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_incrementor</span><span class="hljs-params">(increment)</span>:</span>
 <span class="hljs-meta">... </span>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span><span class="hljs-params">(var)</span>:</span>
 <span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> var + increment
 <span class="hljs-meta">... </span>    <span class="hljs-keyword">return</span> func
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5728837236);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-5728837236">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-5728837236"><p>It returns a function whose <code>increment</code> value has been filled by the argument
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1758225324);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1758225324">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1758225324"><p>It returns a function whose <code>increment</code> value has been filled by the argument
 to <code>make_incrementor</code>. If we called <code>make_incrementor(3)</code>, then <code>increment</code> has
 the value 3, and we can fill in the returned method in our heads.</p>
 <pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span><span class="hljs-params">(var)</span>:</span>
@@ -850,9 +824,9 @@ Person thor <span class="hljs-keyword">is</span> <span class="hljs-number">5000<
 <p>The order of the keyword arguments used to call the method are not necessarily
 the same as those that the function block sees!
 This is because dictionaries are unordered, and the <code>**</code> syntax effectively creates a dictionary.</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(354854072);" id="the-most-generic-method"><i class="fa fa-square-o"></i> The most generic method<span id="heading-354854072"></span></h3></div><div class="panel-body" id="panel-354854072"><p>The most generic method would take any number of positional arguments <em>and</em> any
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(676537032);" id="the-most-generic-method"><i class="fa fa-square-o"></i> The most generic method<span id="heading-676537032"></span></h3></div><div class="panel-body" id="panel-676537032"><p>The most generic method would take any number of positional arguments <em>and</em> any
 number of keyword arguments. What would this method look like?</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2035556378);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-2035556378">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2035556378"><p>It would use both <code>*</code> and <code>**</code> syntax in defining the arguments.</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1868713277);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1868713277">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1868713277"><p>It would use both <code>*</code> and <code>**</code> syntax in defining the arguments.</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">generic</span><span class="hljs-params">(*args, **kwargs)</span>:</span>
 <span class="hljs-meta">... </span>    <span class="hljs-keyword">print</span> <span class="hljs-string">&apos;Got args: {0}&apos;</span>.format(args)
 <span class="hljs-meta">... </span>    <span class="hljs-keyword">print</span> <span class="hljs-string">&apos;Got kwargs: {0}&apos;</span>.format(kwargs)
@@ -898,12 +872,12 @@ variable just like any other object.</p>
 [<span class="hljs-number">0.0</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.5</span>, <span class="hljs-number">2.0</span>]
 </code></pre>
 <p>Note that we got real numbers back because we are using Python 2 with <code>from __future__ import division</code>.</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1001350818);" id="sum-in-quadrature"><i class="fa fa-square-o"></i> Sum in quadrature<span id="heading-1001350818"></span></h3></div><div class="panel-body" id="panel-1001350818"><p>Write a method that accepts an arbitrary number of arguments, and returns the
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2960252988);" id="sum-in-quadrature"><i class="fa fa-square-o"></i> Sum in quadrature<span id="heading-2960252988"></span></h3></div><div class="panel-body" id="panel-2960252988"><p>Write a method that accepts an arbitrary number of arguments, and returns the
 sum of the arguments computed in quadrature. A &#x201C;sum in quadrature&#x201D; is the
 square root of the sum of the squares of each number. You should use <code>lambda</code>
 to define a squaring and a square root function, and <code>map</code> to apply the
 squaring method.</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1711252670);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1711252670">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1711252670"><p>We need a little square root method and a method to square its input.</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1222865571);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1222865571">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1222865571"><p>We need a little square root method and a method to square its input.</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>square = <span class="hljs-keyword">lambda</span> x: x*x
 <span class="hljs-meta">&gt;&gt;&gt; </span>sqrt = <span class="hljs-keyword">lambda</span> x: x**<span class="hljs-number">0.5</span>
 </code></pre>
@@ -925,8 +899,8 @@ arguments. Then we can call <code>sum</code> on the result, and then <code>sqrt<
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>filter(<span class="hljs-keyword">lambda</span> x: x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>, range(<span class="hljs-number">10</span>))   <span class="hljs-comment"># filter and return the even numbers only</span>
 [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>]
 </code></pre>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5663614751);" id="list-comprehension"><i class="fa fa-square-o"></i> List comprehension<span id="heading-5663614751"></span></h3></div><div class="panel-body" id="panel-5663614751"><p>How would you rewrite the <code>filter</code> example above using a list comprehension?</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5658256942);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-5658256942">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-5658256942"><pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>[ x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>) <span class="hljs-keyword">if</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> ]
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(856822969);" id="list-comprehension"><i class="fa fa-square-o"></i> List comprehension<span id="heading-856822969"></span></h3></div><div class="panel-body" id="panel-856822969"><p>How would you rewrite the <code>filter</code> example above using a list comprehension?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4722985614);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-4722985614">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-4722985614"><pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>[ x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>) <span class="hljs-keyword">if</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> ]
 [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>]
 </code></pre>
 </div></div></div></div></p>
@@ -976,7 +950,7 @@ to them, and they become unwieldy when there&#x2019;s complex logic.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Methods","level":"1.9.8","depth":2,"next":{"title":"Scripting","level":"1.9.9","depth":2,"path":"analysis/python/scripting.md","ref":"analysis/python/scripting.md","articles":[]},"previous":{"title":"Conditions","level":"1.9.7","depth":2,"path":"analysis/python/conditions.md","ref":"analysis/python/conditions.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/python/methods.md","mtime":"2018-11-07T16:08:39.421Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-07T16:33:05.338Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Methods","level":"1.9.8","depth":2,"next":{"title":"Scripting","level":"1.9.9","depth":2,"path":"analysis/python/scripting.md","ref":"analysis/python/scripting.md","articles":[]},"previous":{"title":"Conditions","level":"1.9.7","depth":2,"path":"analysis/python/conditions.md","ref":"analysis/python/conditions.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/python/methods.md","mtime":"2018-11-07T16:33:16.561Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T13:48:58.827Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
