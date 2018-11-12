@@ -1,7 +1,7 @@
 
 ----
 * [Part 1 - Introduction](analysis/introduction.md)
-* [Part 2 - New C++ features 1](analysis/feat1.md)
+* [Part 2 - New C++ features](analysis/feat1.md)
 * [Part 3 - Smart (and dumb) pointers](analysis/feat2.md)
   * [Pointers, the absolute basics](analysis/newf2/intro.md)
   * [Smart pointers](analysis/newf2/smartp.md)
