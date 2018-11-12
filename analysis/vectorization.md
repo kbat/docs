@@ -113,6 +113,23 @@ h1f.Fit(f, ”MULTITHREAD”);
 
 As you see, the changes to user code are minimal. However, behind the scenes, the fitting operation exploits SIMD principles to speed up the execution of your code. 
 
+{% callout "Support for vector types in C++" %}
+C++ supports vector types through e.g. `Vc`
+
+```cpp
+#include <Vc/Vc>
+using float_v = Vc::float_v;
+...
+for (; i < ksize - K; i += S) {
+    // interpret data as vector and do some operations
+   sum += float_v(&a[i]) * float_v(&b[i]);
+}
+```
+see [https://github.com/VcDevel/Vc] for more information. 
+{% endcallout %}
+
 # Exercises
 
 This section in principle has no exercises, but you are encouraged to try run the above examples using both the scalar and vectorized implementation of the fitting routine, and see if there is indeed a speed benefit. 
+
+
