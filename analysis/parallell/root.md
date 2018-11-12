@@ -1,64 +1,12 @@
-# Threads with ROOT
-
-A thread is an independent flow of control that operates within the same address space as other independent flows of controls within a process. In most UNIX systems, thread and process characteristics are grouped into a single entity called a process. Sometimes, threads are called “lightweight processes’’.
-
-## Threads and Processes
-
-In traditional single-threaded process systems, a process has a set of properties. In multi-threaded systems, these properties are divided between processes and threads.
-
-{% callout "Process properties" %}
-
-A process in a multi-threaded system is the changeable entity. It must be considered as an execution frame. It has all traditional process attributes, such as:
-
-*    Process ID, process group ID, user ID, and group ID
-
-*    Environment
-
-*    Working directory
-
-A process also provides a common address space and common system resources:
-
-*    File descriptors
-
-*    Signal actions
-
-*    Shared libraries
-
-*    Inter-process communication tools (such as message queues, pipes, semaphores, or shared memory)
-
-{% endcallout %}
-
-{% callout "Thread properties" %} 
-
-A thread is the schedulable entity. It has only those properties that are required to ensure its independent flow of control. These include the following properties:
-
-*    Stack
-
-*    Scheduling properties (such as policy or priority)
-
-*    Set of pending and blocked signals
-
-*    Some thread-specific data (TSD)
-{% endcallout %}
-
-An example of thread-specific data is the error indicator, errno. In multi-threaded systems, errno is no longer a global variable, but usually a subroutine returning a thread-specific errno value. Some other systems may provide other implementations of errno. With respect to ROOT, a thread specific data is for example the gPad pointer, which is treated in a different way, whether it is accessed from any thread or the main thread.
-
-Threads within a process must not be considered as a group of processes (even though in Linux each thread receives an own process id, so that it can be scheduled by the kernel scheduler). All threads share the same address space. This means that two pointers having the same value in two threads refer to the same data. Also, if any thread changes one of the shared system resources, all threads within the process are affected. For example, if a thread closes a file, the file is closed for all threads.
-
-## The Initial Thread
-
-When a process is created, one thread is automatically created. This thread is called the initial thread or the main thread. The initial thread executes the main routine in multi-threaded programs.
-
-Note: At the end of this chapter is a glossary of thread specific terms
-
 # Parallallism in ROOT
 
-
-
-The `TThread` class has been developed to provide a platform independent interface to threads for ROOT. However, ROOT6 provides us with many ways to easily access *implicit* parallellism, which makes our lives much easier than defining `posix` threads by hand.
-
+The `TThread` class has been developed to provide a platform independent interface to threads for ROOT. However, ROOT6 provides us with many ways to easily access *implicit* parallellism, which makes our lives much easier than defining `POSIX`-like threads by hand.
 
 ## Implicit multi threading
+
+The easiest way to learn about ROOT's implicit multi threading, is to look at an example. Say we want to read some information from a tree. This is a process that can very easily be multi threaded: operations on branches (like I/O, decompression, etc) are **independent** and can be carried out concurrently. 
+
+To tell ROOT6 to operate on our tree in a multithreaded way, all we have to do is enable implicit multithreading:
 
 ```cpp
    // First enable implicit multi-threading globally, so that the implicit parallelisation is on.
@@ -93,36 +41,35 @@ The `TThread` class has been developed to provide a platform independent interfa
       tree->GetEntry(i); // sequential read
    }
 ```
+
+{% callout "Exercise" %}
+Run the above example using a single-threaded or multi threaded approach. Time how quickly the tree is read (use e.g. the `TStopWatch` class), using different numbers of threads. 
+{% endcallout %}
+
 ## TProcessExecutor
 
-This class provides a simple interface to execute the same task multiple times in parallel, possibly with different arguments every time. This mimics the behaviour of python's pool.Map method.
-ROOT::TProcessExecutor::Map
+Our first example was very easy - we did not have to do anything except for telling ROOT to enable multi threading. However, we have fancier tools to use, namely the `TProcessExecutor`. 
 
-This class inherits its interfaces from ROOT::TExecutor
-. The two possible usages of the Map method are:
+The `TProcessExecutor` uses multi processing (as the name implies). It provides a simple interface to execute the same task multiple times in parallel, possibly with different arguments every time (this mimics the behaviour of python's pool.Map method). 
 
-*    Map(F func, unsigned nTimes): func is executed nTimes with no arguments
-*    Map(F func, T& args): func is executed on each element of the collection of arguments args
+This class inherits its interfaces from ROOT::`TExecutor`.  The two possible usages of the Map method are:
 
-For either signature, func is executed as many times as needed by a pool of fNWorkers workers; the number of workers can be passed to the constructor or set via SetNWorkers. It defaults to the number of cores.
-A collection containing the result of each execution is returned.
+*    `Map(F func, unsigned nTimes)`: func is executed nTimes with no arguments
+*    `Map(F func, T& args)`: func is executed on each element of the collection of arguments `args`
+
+For either signature, `func` is executed as many times as needed by a pool of `fNWorkers` workers; the number of workers can be passed to the constructor or set via SetNWorkers. It defaults to the number of cores. A collection containing the result of each execution is returned.
+
 {% callout "Beware" %}
-Note: the user is responsible for the deletion of any object that might be created upon execution of func, returned objects included: ROOT::TProcessExecutor never deletes what it returns, it simply forgets it.
-Note: that the usage of ROOT::TProcessExecutor::Map is indicated only when the task to be executed takes more than a few seconds, otherwise the overhead introduced by Map will outrun the benefits of parallel execution on most machines.
+Note: the user is responsible for the deletion of any object that might be created upon execution of `func`, returned objects included: `ROOT::TProcessExecutor` never deletes what it returns, it simply forgets it.
+Note: that the usage of `ROOT::TProcessExecutor::Map` is indicated only when the task to be executed takes more than a few seconds, otherwise the overhead introduced by `Map` will outrun the benefits of parallel execution on most machines.
 
 {% endcallout %}
 
+Let's take a closer look at how we can construct our processes. What we need are the following parameters
+*    `func`	a lambda expression, an std::function, a loaded macro, a functor class or a function that takes zero arguments (for the first signature) or one (for the second signature).
+*    `args`	a standard vector, a `ROOT::TSeq` of integer type or an initializer list for the second signature. 
 
-
-Parameters
-*    func	a lambda expression, an std::function, a loaded macro, a functor class or a function that takes zero arguments (for the first signature) or one (for the second signature).
-    args	a standard vector, a ROOT::TSeq of integer type or an initializer list for the second signature. An integer only for the first.
-
-Note: in cases where the function to be executed takes more than zero/one argument but all are fixed except zero/one, the function can be wrapped in a lambda or via std::bind to give it the right signature.
-Note: the user should take care of initializing random seeds differently in each process (e.g. using the process id in the seed). Otherwise several parallel executions might generate the same sequence of pseudo-random numbers.
-Return value:
-
-An std::vector. The elements in the container will be the objects returned by func.
+For example, using a lambda expression and an initializer list for the `ROOT::TSeq`, our process executor could look like
 
 ```cpp
 ROOT::TProcessExecutor pool(2); auto squares = pool.Map([](int a) { return a*a; }, {1,2,3});
@@ -153,16 +100,25 @@ const UInt_t nWorkers = 4U;
    ROOT::TProcessExecutor workers(nWorkers);
    // Fill the pool with work
    workers.Map(workItem, ROOT::TSeqI(nWorkers));
-
 ```
+
+{% callout "Exercise" %}
+
+First, run the example that is shown above. Then, think of a macro that you have somewhere on your laptop, and see if you can multi process it. 
+
+{% endcallout %}
 
 ## TTreeProcessorMT
 
-ethod provides an implicit parallelisation of the reading and processing of a TTree. In particular, when invoking Process, the user provides a function that iterates on a subrange of the tree via a TTreeReader. Multiple tasks will be spawned, one for each sub-range, so that the processing of the tree is parallelised. Since two invocations of the user function can potentially run in parallel, the function code must be thread safe. The example also introduces a new class, ROOT::TThreadedObject, which makes objects thread private. With the help of this class, histograms can be filled safely inside the user function and then merged at the end to get the final result.
+A lot of the work that we do, involves manipulation trees. The `TTreeProcessorMT` method provides an implicit parallelisation of the reading and processing of a `TTree`. In particular, when invoking `Process`, the user provides a function that iterates on a subrange of the tree via a `TTreeReader`. Multiple tasks will be spawned, one for each sub-range, so that the processing of the tree is parallelised.
 
-By means of its Process method, ROOT::TTreeProcessorMT provides a way to process the entries of a TTree in parallel. When invoking TTreeProcessor::Process, the user passes a function whose only parameter is a TTreeReader. The function iterates on a subrange of entries by using that TTreeReader.
+Since two invocations of the user function can potentially run in parallel, the function code must be **thread safe** (remember the discussion on race conditions and deadlocks). For this, we can use, `ROOT::TThreadedObject`, which makes objects thread private. With the help of this class, histograms can be filled safely inside the user function and then merged at the end to get the final result.
 
-The implementation of ROOT::TTreeProcessorMT parallelizes the processing of the subranges, each corresponding to a cluster in the TTree. This is possible thanks to the use of a ROOT::TThreadedObject, so that each thread works with its own TFile and TTree objects. 
+By means of its `Process` method, `ROOT::TTreeProcessorMT` provides a way to process the entries of a `TTree` in parallel. When invoking `TTreeProcessor::Process`, the user passes a function whose only parameter is a `TTreeReader`. The function iterates on a subrange of entries by using that `TTreeReader`.
+
+The implementation of `ROOT::TTreeProcessorMT` parallelizes the processing of the subranges, each corresponding to a cluster in the `TTree`. This is possible thanks to the use of a `ROOT::TThreadedObject`, so that each thread works with its own `TFile` and `TTree` objects. 
+
+Yet again, let's give it a whirl!
 
 ```cpp
    // First enable implicit multi-threading globally, so that the implicit parallelisation is on.
@@ -203,8 +159,19 @@ The implementation of ROOT::TTreeProcessorMT parallelizes the processing of the 
    auto pzHistMerged = pzHist.Merge();
    auto pxpyHistMerged = pxpyHist.Merge();
 ```
+{% callout "Exercise" %}
+The exercise here is the same as before: run the code snippet above, and play with the number of threads. You can of course plot the histograms by simply doing
+```
+ptHistMerged->DrawCopy()
+```
+{% endcallout %}
+
+
 
 ## Multi core reading of TChain data
+
+If time permits, let's look at a few more things. Below, it is illustrated how we can use a `TTreeProcessorMP` (so a multi **processed** version of the `TTreeReader` to delegate reading of TChain data to multiple cores
+
 
 ```cpp
    // No nuisance for batch execution
@@ -242,9 +209,77 @@ The implementation of ROOT::TTreeProcessorMT parallelizes the processing of the 
    auto sumHistogram = workers.Process(inputChain, workItem, "multiCore");
    sumHistogram->Fit("gaus", 0);
 ```
+{% challenge "Exercise" %}
+Run the above code snippet. Note, that it needs some input! This can be generated by the mp101_fillNtuples.C macro, which is given below. 
+{% solution "generate your trees..." %}
+```cpp
+// Total amount of numbers
+const UInt_t nNumbers = 20000000U;
+
+// The number of workers
+const UInt_t nWorkers = 4U;
+
+// We split the work in equal parts
+const auto workSize = nNumbers / nWorkers;
+
+// A simple function to fill ntuples randomly
+void fillRandom(TNtuple &ntuple, TRandom3 &rndm, UInt_t n)
+{
+   for (auto i : ROOT::TSeqI(n))
+      ntuple.Fill(rndm.Gaus());
+}
+
+Int_t mp101_fillNtuples()
+{
+
+   // No nuisance for batch execution
+   gROOT->SetBatch();
+
+   //---------------------------------------
+   // Perform the operation sequentially
+
+   // Create a random generator and and Ntuple to hold the numbers
+   TRandom3 rndm(1);
+   TFile ofile("mp101_singleCore.root", "RECREATE");
+   TNtuple randomNumbers("singleCore", "Random Numbers", "r");
+   fillRandom(randomNumbers, rndm, nNumbers);
+   randomNumbers.Write();
+   ofile.Close();
+
+   //---------------------------------------
+   // We now go MP!
+
+   // We define our work item
+   auto workItem = [](UInt_t workerID) {
+      // One generator, file and ntuple per worker
+      TRandom3 workerRndm(workerID); // Change the seed
+      TFile ofile(Form("mp101_multiCore_%u.root", workerID), "RECREATE");
+      TNtuple workerRandomNumbers("multiCore", "Random Numbers", "r");
+      fillRandom(workerRandomNumbers, workerRndm, workSize);
+      workerRandomNumbers.Write();
+      return 0;
+   };
+
+   // Create the pool of workers
+   ROOT::TProcessExecutor workers(nWorkers);
+
+   // Fill the pool with work
+   workers.Map(workItem, ROOT::TSeqI(nWorkers));
+
+   return 0;
+}
+```
+{% endchallenge %}
+
+
 ## TTaskGroup
 
-Calculate Fibonacci numbers exploiting nested parallellism through TTaskGroup
+The last item that we will illustrate, is the `TTaskGroup`. TTask is a base class that can be used to build a complex tree of Tasks. Each TTask derived class may contain other TTasks that can be executed recursively, such that a complex program can be dynamically built and executed by invoking the services of the top level Task or one of its subtasks. If you do analysis in ALICE, you surely know `TTasks`, since they form the base class of `AliAnalysisTaskSE`. 
+
+`TTaskGroup` provides a way to manage the asynchronous execution of work items. A TTaskGroup represents concurrent execution of a group of tasks. Tasks may be dynamically added to the group as it is executing. 
+
+Below an example of usage of the `TTaskGroup` for calculating Fibonacci series. See if you can run. And who knows, maybe in a few years, your analysis will benefit from paralellism as well ...
+
 ```cpp
 int Fibonacci(int n)
 {
@@ -265,12 +300,24 @@ void mt302_TTaskGroupNested()
    cout << "Fibonacci(33) = " << Fibonacci(33) << endl;
 }
 ```
+
+You will have to store the above example in a macro, let's call it fib.C, and load it in a ROOT session to execute it:
+
+```
+root .L fib.C 
+root [1] mt302_TTaskGroupNested()
+Fibonacci(33) = 3524578
+```
+
+{% callout "ROOT::Experimental" %}
+You might notice, that in the code snippet above, we use items from the `ROOT::Experimental` namespace. As the name implies, these are experimental features. Depending on your ROOT6 version, these features might have been moved from the `Experimental` namespace to a general namespace, in which case, the `T` that starts the class name, might have been changed into an `R` to avoid namespace clashes. 
+{% endcallout %}
+
 ## Enabling thread safety
 
-Enables the global mutex to make ROOT thread safe/aware.
+In the previous section, we have talked quite a bit about race conditions and thread safety. How are these taken care of in the ROOT landscape? 
 
-The following becomes safe:
-
+ROOT provides a global mutex to make ROOT thread safe/aware. By enabling it, the following processes are ensured to be safe
 *    concurrent construction and destruction of TObjects, including the ones registered in ROOT's global lists (e.g. gROOT->GetListOfCleanups(), gROOT->GetListOfFiles())
 *    concurrent usage of different ROOT objects from different threads, including ones with global state (e.g. TFile, TTree, TChain) with the exception of graphics classes (e.g. TCanvas)
 *    concurrent calls to ROOT's type system classes, e.g. TClass and TEnum
@@ -281,6 +328,7 @@ In addition, gDirectory, gFile and gPad become a thread-local variable. In all t
 
 Note that there is no DisableThreadSafety(). ROOT's thread-safety features cannot be disabled once activated. 
 
+Below is an example of parallell execution in ROOT, guaranteeing thread safety:
 
 
 ```cpp
@@ -306,3 +354,9 @@ Int_t mtbb201_parallelHistoFill()
    return 0;
 }
 ```
+
+{% callout "General exercises" %}
+As already mentioned in the text, exercises here comprise running the examples, and looking for good candidates in your own macros that you could re-write in a multi threaded or multi processed way. 
+
+It is always good to test whether or not multi threading / processing actually helps: both come with overhead, and depending on the task at hand, can either speed up execution or your program, slow it down, or do nothing at all. 
+{% endcallout %}

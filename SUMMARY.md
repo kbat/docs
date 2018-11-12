@@ -8,7 +8,6 @@
 * [Part 4 - Parallellism](analysis/parallellism.md)
   * [Threads and processes](analysis/parallell/intro.md)
   * [Posix multithreading](analysis/parallell/example.md)
-  * [What can go wrong?](analysis/parallell/caveats.md)
   * [Parallellism with ROOT](analysis/parallell/root.md)
 * [Part 5 - 5 to 6: changes to user code](analysis/changes.md)
 * [Part 6 - Vectorization](analysis/vectorization.md)
