@@ -1,2 +1,2 @@
 #Declarative programming
-Some pseudo code or examples in root, maybe use code that was used before in the tutorial and do the same in a TDF?
+In this chapter we want to give a short introduction to the idea of declarative programming and its implementation in ROOT, that comes as the TDataFrame.
