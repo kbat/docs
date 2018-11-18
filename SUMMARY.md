@@ -14,6 +14,7 @@
 * [Part 7 - Declarative analysis](analysis/tdf/declarative.md)
   * [Declarative programming](analysis/tdf/concept.md)
   * [TDataFrame](analysis/tdf/TDataFrame.md)
+  * [Additional material](analysis/tdf/more.md)
 * [Part 8 - Python](analysis/python/README.md)
   * [Running](analysis/python/running.md)
   * [Objects and operators](analysis/python/operators.md)
