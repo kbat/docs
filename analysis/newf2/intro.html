@@ -301,6 +301,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.8.3" data-path="../tdf/more.html">
+            
+                <a href="../tdf/more.html">
+            
+                    
+                    Additional material
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -609,7 +622,7 @@
 <pre><code class="lang-cpp">foo = &amp;myfar;
 </code></pre>
 <p>This assigns the <em>address</em> of variable <code>myvar</code> to <code>foo</code>; by preceding the name of the variable <code>myvar</code> with the address-of operator (&amp;), we are no longer assigning the content of the variable itself to foo, but its address.</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1032278049);" id="runtime"><i class="fa fa-info-circle"></i> Runtime<span id="heading-1032278049"></span></h3></div><div class="panel-body" id="panel-1032278049"><p>The actual address of a variable in memory cannot be known before runtime, but let&apos;s assume, in order to help clarify some concepts, that myvar is placed during runtime in the memory address 1776.</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8722029455);" id="runtime"><i class="fa fa-info-circle"></i> Runtime<span id="heading-8722029455"></span></h3></div><div class="panel-body" id="panel-8722029455"><p>The actual address of a variable in memory cannot be known before runtime, but let&apos;s assume, in order to help clarify some concepts, that myvar is placed during runtime in the memory address 1776.</p>
 </div></div></p>
 <p>Consider the following code fragment</p>
 <pre><code class="lang-cpp">myvar = <span class="hljs-number">25</span>;
@@ -626,7 +639,7 @@ bar = myvar;
 </ul>
 <p><img src="reference_operator.png" alt="reference_operator"></p>
 <p>The main difference between the second and third statements is the appearance of the address-of operator (&amp;).</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5830622682);" id="pointers"><i class="fa fa-info-circle"></i> Pointers<span id="heading-5830622682"></span></h3></div><div class="panel-body" id="panel-5830622682"><p>The variable that stores the address of another variable (like foo in the previous example) is what in C++ is called a <strong>pointer</strong>. Pointers are said to &quot;point to&quot; the variable whose address they store.</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4583794762);" id="pointers"><i class="fa fa-info-circle"></i> Pointers<span id="heading-4583794762"></span></h3></div><div class="panel-body" id="panel-4583794762"><p>The variable that stores the address of another variable (like foo in the previous example) is what in C++ is called a <strong>pointer</strong>. Pointers are said to &quot;point to&quot; the variable whose address they store.</p>
 </div></div></p>
 <h2 id="dereference-operator-">Dereference operator *</h2>
 <p>Pointers can be used to access the variable they point to directly. This is done by preceding the pointer name with the <strong>dereference operator</strong> (*). The operator itself can be read as &quot;value pointed to by&quot;.</p>
@@ -645,7 +658,7 @@ baz = *foo;  <span class="hljs-comment">// baz equal to value pointed to by foo 
 <li>* is the dereference operator, and can be read as &quot;value pointed to by&quot;</li>
 </ul>
 <p>Thus, they have sort of opposite meanings: An address obtained with &amp; can be dereferenced with *.</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(768553455);" id="example-of-pointers"><i class="fa fa-square-o"></i> Example of pointers<span id="heading-768553455"></span></h3></div><div class="panel-body" id="panel-768553455"><p>What will this program return ? </p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3269565378);" id="example-of-pointers"><i class="fa fa-square-o"></i> Example of pointers<span id="heading-3269565378"></span></h3></div><div class="panel-body" id="panel-3269565378"><p>What will this program return ? </p>
 <pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
 
@@ -666,7 +679,7 @@ baz = *foo;  <span class="hljs-comment">// baz equal to value pointed to by foo 
   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2303176216);" id="-solutionclick-to-expand"><i class="fa fa-line-chart"></i>  Solution<span id="heading-2303176216">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2303176216"><p>The solution is</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2841315069);" id="-solutionclick-to-expand"><i class="fa fa-line-chart"></i>  Solution<span id="heading-2841315069">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2841315069"><p>The solution is</p>
 <pre><code class="lang-cpp">firstvalue is <span class="hljs-number">10</span>
 secondvalue is <span class="hljs-number">20</span>
 </code></pre>
@@ -674,12 +687,12 @@ secondvalue is <span class="hljs-number">20</span>
 <h2 id="void-pointers">Void pointers</h2>
 <p>The void type of pointer is a <strong>special type of pointer</strong> that represents the <strong>absence of type</strong>. Void pointers are pointers that point to a value that has no type , an undetermined length and undetermined dereferencing properties.</p>
 <p>Void pointers are <strong>flexible</strong>:  by being able to point to any data type, from an integer value or a float to a string of characters. In exchange, they have a great <strong>limitation</strong>: the data pointed to by them cannot be directly dereferenced.</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7968351667);" id="-dereferencing-void-pointers"><i class="fa fa-square-o"></i>  Dereferencing void pointers<span id="heading-7968351667"></span></h3></div><div class="panel-body" id="panel-7968351667"><p>Why can&apos;t a void pointer directly be dereferenced? </p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(869328326);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-869328326">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-869328326"><p>Since void pointers have no type to dereference to, any address in a void pointer needs to be transformed into some other pointer type that points to a concrete data type before being dereferenced.</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1472423434);" id="-dereferencing-void-pointers"><i class="fa fa-square-o"></i>  Dereferencing void pointers<span id="heading-1472423434"></span></h3></div><div class="panel-body" id="panel-1472423434"><p>Why can&apos;t a void pointer directly be dereferenced? </p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2484038327);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-2484038327">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2484038327"><p>Since void pointers have no type to dereference to, any address in a void pointer needs to be transformed into some other pointer type that points to a concrete data type before being dereferenced.</p>
 </div></div></div></div></p>
 <h3 id="usage-of-void-pointers">Usage of void pointers</h3>
 <p>One of its possible uses may be to pass generic parameters to a function. We will later see (in the parallellisation section) that this comes in handy, but here is already an example.  </p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6785858151);" id="what-does-this-code-do"><i class="fa fa-square-o"></i> What does this code do?<span id="heading-6785858151"></span></h3></div><div class="panel-body" id="panel-6785858151"><p>One of the possible uses of void pointers is passing generic parameters to a function:</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(516889759);" id="what-does-this-code-do"><i class="fa fa-square-o"></i> What does this code do?<span id="heading-516889759"></span></h3></div><div class="panel-body" id="panel-516889759"><p>One of the possible uses of void pointers is passing generic parameters to a function:</p>
 <pre><code class="lang-cpp"><span class="hljs-comment">// increaser</span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
@@ -702,7 +715,7 @@ secondvalue is <span class="hljs-number">20</span>
   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4124383982);" id="solution-click-to-expand"><i class="fa fa-line-chart"></i> Solution <span id="heading-4124383982">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-4124383982"><p>The solution is</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8409639358);" id="solution-click-to-expand"><i class="fa fa-line-chart"></i> Solution <span id="heading-8409639358">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-8409639358"><p>The solution is</p>
 <pre><code class="lang-cpp">y, <span class="hljs-number">1603</span>
 </code></pre>
 </div></div></div></div></p>
@@ -713,7 +726,7 @@ secondvalue is <span class="hljs-number">20</span>
 <li>Pointers to functions are declared with the same syntax as a regular function declaration, except that the name of the function is enclosed between parentheses () and an asterisk (*) is inserted before the name</li>
 </ul>
 <p>The easiest way to familiarize yourself with function pointers is to look at an example:</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7085798878);" id="-function-pointers-"><i class="fa fa-square-o"></i>  Function pointers <span id="heading-7085798878"></span></h3></div><div class="panel-body" id="panel-7085798878"><p>This is an example of a function pointer</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4578071273);" id="-function-pointers-"><i class="fa fa-square-o"></i>  Function pointers <span id="heading-4578071273"></span></h3></div><div class="panel-body" id="panel-4578071273"><p>This is an example of a function pointer</p>
 <pre><code class="lang-cpp">// pointer to functions
 #include &lt;iostream&gt;
 using namespace std;
@@ -742,12 +755,12 @@ int main () {
   return 0;
 }
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3340825797);" id="-solutionclick-to-expand"><i class="fa fa-line-chart"></i>  Solution<span id="heading-3340825797">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-3340825797"><p>And the output is</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2910132743);" id="-solutionclick-to-expand"><i class="fa fa-line-chart"></i>  Solution<span id="heading-2910132743">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-2910132743"><p>And the output is</p>
 <pre><code class="lang-cpp"><span class="hljs-number">8</span>
 </code></pre>
 </div></div></div></div></p>
 <p>Again, we will see, when we are multi-processing and multi-threading our code, how function pointers can be very handy. </p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3895774805);" id="functors"><i class="fa fa-info-circle"></i> Functors<span id="heading-3895774805"></span></h3></div><div class="panel-body" id="panel-3895774805"><p>Despite the names being very similar, <em>function pointers</em> are not the same as <em>functors</em>. Functors, instead, are 
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5725931834);" id="functors"><i class="fa fa-info-circle"></i> Functors<span id="heading-5725931834"></span></h3></div><div class="panel-body" id="panel-5725931834"><p>Despite the names being very similar, <em>function pointers</em> are not the same as <em>functors</em>. Functors, instead, are 
 <em>object functions</em>. Take a look at the following example:</p>
 <pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> add_x {
   add_x(<span class="hljs-keyword">int</span> x) : x(x) {}
@@ -798,31 +811,31 @@ assert(out[i] == in[i] + <span class="hljs-number">1</span>); <span class="hljs-
 <img src="f.png" alt="f">
 <img src="g.png" alt="g">
 <img src="h.png" alt="h"></p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2320127862);" id="dynamic-memory-in-c"><i class="fa fa-info-circle"></i> Dynamic memory in C<span id="heading-2320127862"></span></h3></div><div class="panel-body" id="panel-2320127862"><p>C++ integrates the operators new and delete for allocating dynamic memory. But these were not available in the C language; instead, it used a library solution, with the functions malloc, calloc, realloc and free, defined in the header <cstdlib> (known as &lt;stdlib.h&gt; in C). The functions are also available in C++ and can also be used to allocate and deallocate dynamic memory.</cstdlib></p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7114878533);" id="dynamic-memory-in-c"><i class="fa fa-info-circle"></i> Dynamic memory in C<span id="heading-7114878533"></span></h3></div><div class="panel-body" id="panel-7114878533"><p>C++ integrates the operators new and delete for allocating dynamic memory. But these were not available in the C language; instead, it used a library solution, with the functions malloc, calloc, realloc and free, defined in the header <cstdlib> (known as &lt;stdlib.h&gt; in C). The functions are also available in C++ and can also be used to allocate and deallocate dynamic memory.</cstdlib></p>
 <p>Note, though, that the memory blocks allocated by these functions are not necessarily compatible with those returned by new, so they should not be mixed; each one should be handled with its own set of functions or operators.</p>
 </div></div></p>
 <h1 id="exercises">Exercises</h1>
 <p>These are some very basic exercises to refresh you on the basics of pointers. First, go through the problems that were covered in the lecture. If you are interested in learning some more, take a look at the questions below. These questions do not require coding, the snippets of code serve as exapmle to the text (but of course you are free to try them out &apos;in the wild&apos;). </p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9326522245);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-9326522245"></span></h3></div><div class="panel-body" id="panel-9326522245"><p>Considering only performance, when should you pass small objects by value, reference and pointer?</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3191415245);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-3191415245"></span></h3></div><div class="panel-body" id="panel-3191415245"><p>Considering only performance, when should you pass small objects by value, reference and pointer?</p>
 <pre><code class="lang-c++"><span class="hljs-keyword">struct</span> SmallStruct { <span class="hljs-keyword">int</span> i };
 
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(SmallStruct s)</span></span>;
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(SmallStruct&amp; s)</span></span>;
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(SmallStruct* s)</span></span>;
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1872685558);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-1872685558">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1872685558"><p>There was no significant performance difference between passing small objects (or built-ins) by value, reference, or pointer.</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5726697611);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-5726697611">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-5726697611"><p>There was no significant performance difference between passing small objects (or built-ins) by value, reference, or pointer.</p>
 </div></div></div></div></p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7260647427);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-7260647427"></span></h3></div><div class="panel-body" id="panel-7260647427"><p>Considering only performance, when should you pass large objects by value, reference and pointer?</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4005710884);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-4005710884"></span></h3></div><div class="panel-body" id="panel-4005710884"><p>Considering only performance, when should you pass large objects by value, reference and pointer?</p>
 <pre><code class="lang-c++"><span class="hljs-keyword">struct</span> LargeStruct { <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; i };
 
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(LargeStruct s)</span></span>;
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(LargeStruct&amp; s)</span></span>;
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(LargeStruct* s)</span></span>;
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6704951389);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-6704951389">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-6704951389"><p>Passing by value is the slowest since Foo&apos;s copy constructor is invoked for each call. Passing by reference or by pointer essentially copy a machine word &#x2014; there&apos;s no significant difference.</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7523287862);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-7523287862">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-7523287862"><p>Passing by value is the slowest since Foo&apos;s copy constructor is invoked for each call. Passing by reference or by pointer essentially copy a machine word &#x2014; there&apos;s no significant difference.</p>
 </div></div></div></div></p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6507462590);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-6507462590"></span></h3></div><div class="panel-body" id="panel-6507462590"><p>Are there other reasons to prefer one argument-passing mechanism to another (i.e. passing by value, reference or pointer)?</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6551805345);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-6551805345">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-6551805345"><p>The difference between writing <code>-&gt;</code> versus <code>.</code> is trivial. More important is the semantic difference between them.  Consider the following method:</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4029949840);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-4029949840"></span></h3></div><div class="panel-body" id="panel-4029949840"><p>Are there other reasons to prefer one argument-passing mechanism to another (i.e. passing by value, reference or pointer)?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4010086971);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-4010086971">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-4010086971"><p>The difference between writing <code>-&gt;</code> versus <code>.</code> is trivial. More important is the semantic difference between them.  Consider the following method:</p>
 <pre><code class="lang-c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(MyLargObj* p)</span>
 </span>{
     p-&gt;bar();
@@ -846,7 +859,7 @@ assert(out[i] == in[i] + <span class="hljs-number">1</span>); <span class="hljs-
 <p>Which declares via the input type that invalid values for <code>p</code> are not allowed.  Passing by value may also be reasonable, but it depends on if changes to an object should be visible after the function is complete.</p>
 <p>A final consideration is that pointers carry a notion of ownership. Pointers often point to non-stack allocated objects (e.g., allocated using new), and should be deallocated when no longer needed. Lots of comments can be written indicating ownership &#x2014; &quot;Ownership must be passed to this function, it will call <code>delete</code>,&quot; etc. Using references or values can reduce such error-prone commenting burden since they convey no notion of ownership. (Another way to address this, smart pointers, will be covered later. The discussion on the semantic differences between passing by reference and by value still applies in that case, however.)</p>
 </div></div></div></div></p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8101754557);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-8101754557"></span></h3></div><div class="panel-body" id="panel-8101754557"><p>What happens when passing a derived object as a base object?</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3467250288);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-3467250288"></span></h3></div><div class="panel-body" id="panel-3467250288"><p>What happens when passing a derived object as a base object?</p>
 <pre><code class="lang-c++"><span class="hljs-keyword">class</span> Base
 {
     <span class="hljs-keyword">public</span>:
@@ -868,9 +881,9 @@ bar1(d);
 bar2(d);
 bar3(&amp;d);
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1984918246);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-1984918246">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1984918246"><p>All calls do not produce identical output &#x2014; when a derived object is passed by value, only the &apos;base&apos; copy constructor is called. Things that are not copied include the ability to call derived object virtual functions. This is known as the <strong>slicing problem</strong>. </p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7200002282);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-7200002282">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-7200002282"><p>All calls do not produce identical output &#x2014; when a derived object is passed by value, only the &apos;base&apos; copy constructor is called. Things that are not copied include the ability to call derived object virtual functions. This is known as the <strong>slicing problem</strong>. </p>
 </div></div></div></div></p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9770867425);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-9770867425"></span></h3></div><div class="panel-body" id="panel-9770867425"><p>What are the correctness concerns of using a local static to return by reference?</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5937609944);" id="-question-"><i class="fa fa-square-o"></i>  Question <span id="heading-5937609944"></span></h3></div><div class="panel-body" id="panel-5937609944"><p>What are the correctness concerns of using a local static to return by reference?</p>
 <pre><code class="lang-c++"><span class="hljs-function">Foo&amp; <span class="hljs-title">return_by_reference</span><span class="hljs-params">()</span>
 </span>{
     <span class="hljs-comment">// let&apos;s for some reason declare this static</span>
@@ -883,7 +896,7 @@ Foo&amp; f1 = return_by_reference();
 Foo&amp; f2 = return_by_reference();
 <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Are f1 and f2 equal? &quot;</span>
 </code></pre>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8392530618);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-8392530618">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-8392530618"><p>If the first entry of f1 and f2 are different when printed, why do they compare equal? Since f1 refers to the same object as f2, f1 and f2 will always compare equal, and the line below will always return &apos;true&apos;:</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4529131265);" id="-solution-click-to-expand"><i class="fa fa-line-chart"></i>  Solution <span id="heading-4529131265">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-4529131265"><p>If the first entry of f1 and f2 are different when printed, why do they compare equal? Since f1 refers to the same object as f2, f1 and f2 will always compare equal, and the line below will always return &apos;true&apos;:</p>
 <pre><code class="lang-cpp"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-built_in">std</span>::boolalpha &lt;&lt; (f1 == f2) &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
 </code></pre>
 </div></div></div></div></p>
@@ -930,7 +943,7 @@ Foo&amp; f2 = return_by_reference();
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"next":{"title":"Smart pointers","level":"1.4.2","depth":2,"path":"analysis/newf2/smartp.md","ref":"analysis/newf2/smartp.md","articles":[]},"previous":{"title":"Part 3 - Smart (and dumb) pointers","level":"1.4","depth":1,"path":"analysis/feat2.md","ref":"analysis/feat2.md","articles":[{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"path":"analysis/newf2/intro.md","ref":"analysis/newf2/intro.md","articles":[]},{"title":"Smart pointers","level":"1.4.2","depth":2,"path":"analysis/newf2/smartp.md","ref":"analysis/newf2/smartp.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/intro.md","mtime":"2018-11-14T12:35:14.739Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-14T14:59:38.602Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"next":{"title":"Smart pointers","level":"1.4.2","depth":2,"path":"analysis/newf2/smartp.md","ref":"analysis/newf2/smartp.md","articles":[]},"previous":{"title":"Part 3 - Smart (and dumb) pointers","level":"1.4","depth":1,"path":"analysis/feat2.md","ref":"analysis/feat2.md","articles":[{"title":"Pointers, the absolute basics","level":"1.4.1","depth":2,"path":"analysis/newf2/intro.md","ref":"analysis/newf2/intro.md","articles":[]},{"title":"Smart pointers","level":"1.4.2","depth":2,"path":"analysis/newf2/smartp.md","ref":"analysis/newf2/smartp.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/newf2/intro.md","mtime":"2018-11-14T14:59:49.165Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-18T11:22:59.412Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

@@ -301,6 +301,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.8.3" data-path="../tdf/more.html">
+            
+                <a href="../tdf/more.html">
+            
+                    
+                    Additional material
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -634,7 +647,7 @@
       tree-&gt;GetEntry(i); <span class="hljs-comment">// sequential read</span>
    }
 </code></pre>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7919582603);" id="exercise"><i class="fa fa-info-circle"></i> Exercise<span id="heading-7919582603"></span></h3></div><div class="panel-body" id="panel-7919582603"><p>Run the above example using a single-threaded or multi threaded approach. Time how quickly the tree is read (use e.g. the <code>TStopWatch</code> class), using different numbers of threads. </p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1216886953);" id="exercise"><i class="fa fa-info-circle"></i> Exercise<span id="heading-1216886953"></span></h3></div><div class="panel-body" id="panel-1216886953"><p>Run the above example using a single-threaded or multi threaded approach. Time how quickly the tree is read (use e.g. the <code>TStopWatch</code> class), using different numbers of threads. </p>
 </div></div></p>
 <h2 id="tprocessexecutor">TProcessExecutor</h2>
 <p>Our first example was very easy - we did not have to do anything except for telling ROOT to enable multi threading. However, we have fancier tools to use, namely the <code>TProcessExecutor</code>. </p>
@@ -645,7 +658,7 @@
 <li><code>Map(F func, T&amp; args)</code>: func is executed on each element of the collection of arguments <code>args</code></li>
 </ul>
 <p>For either signature, <code>func</code> is executed as many times as needed by a pool of <code>fNWorkers</code> workers; the number of workers can be passed to the constructor or set via SetNWorkers. It defaults to the number of cores. A collection containing the result of each execution is returned.</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7212012234);" id="beware"><i class="fa fa-info-circle"></i> Beware<span id="heading-7212012234"></span></h3></div><div class="panel-body" id="panel-7212012234"><p>Note: the user is responsible for the deletion of any object that might be created upon execution of <code>func</code>, returned objects included: <code>ROOT::TProcessExecutor</code> never deletes what it returns, it simply forgets it.
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4204450449);" id="beware"><i class="fa fa-info-circle"></i> Beware<span id="heading-4204450449"></span></h3></div><div class="panel-body" id="panel-4204450449"><p>Note: the user is responsible for the deletion of any object that might be created upon execution of <code>func</code>, returned objects included: <code>ROOT::TProcessExecutor</code> never deletes what it returns, it simply forgets it.
 Note: that the usage of <code>ROOT::TProcessExecutor::Map</code> is indicated only when the task to be executed takes more than a few seconds, otherwise the overhead introduced by <code>Map</code> will outrun the benefits of parallel execution on most machines.</p>
 </div></div></p>
 <p>Let&apos;s take a closer look at how we can construct our processes. What we need are the following parameters</p>
@@ -680,7 +693,7 @@ const UInt_t nWorkers = 4U;
    // Fill the pool with work
    workers.Map(workItem, ROOT::TSeqI(nWorkers));
 </code></pre>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4591849326);" id="exercise"><i class="fa fa-info-circle"></i> Exercise<span id="heading-4591849326"></span></h3></div><div class="panel-body" id="panel-4591849326"><p>First, run the example that is shown above. Then, think of a macro that you have somewhere on your laptop, and see if you can multi process it. </p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4691983430);" id="exercise"><i class="fa fa-info-circle"></i> Exercise<span id="heading-4691983430"></span></h3></div><div class="panel-body" id="panel-4691983430"><p>First, run the example that is shown above. Then, think of a macro that you have somewhere on your laptop, and see if you can multi process it. </p>
 </div></div></p>
 <h2 id="ttreeprocessormt">TTreeProcessorMT</h2>
 <p>A lot of the work that we do, involves manipulation trees. The <code>TTreeProcessorMT</code> method provides an implicit parallelisation of the reading and processing of a <code>TTree</code>. In particular, when invoking <code>Process</code>, the user provides a function that iterates on a subrange of the tree via a <code>TTreeReader</code>. Multiple tasks will be spawned, one for each sub-range, so that the processing of the tree is parallelised.</p>
@@ -726,7 +739,7 @@ const UInt_t nWorkers = 4U;
    <span class="hljs-keyword">auto</span> pzHistMerged = pzHist.Merge();
    <span class="hljs-keyword">auto</span> pxpyHistMerged = pxpyHist.Merge();
 </code></pre>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6716895180);" id="exercise"><i class="fa fa-info-circle"></i> Exercise<span id="heading-6716895180"></span></h3></div><div class="panel-body" id="panel-6716895180"><p>The exercise here is the same as before: run the code snippet above, and play with the number of threads. You can of course plot the histograms by simply doing</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5274298815);" id="exercise"><i class="fa fa-info-circle"></i> Exercise<span id="heading-5274298815"></span></h3></div><div class="panel-body" id="panel-5274298815"><p>The exercise here is the same as before: run the code snippet above, and play with the number of threads. You can of course plot the histograms by simply doing</p>
 <pre><code>ptHistMerged-&gt;DrawCopy()
 </code></pre></div></div></p>
 <h2 id="multi-core-reading-of-tchain-data">Multi core reading of TChain data</h2>
@@ -766,8 +779,8 @@ const UInt_t nWorkers = 4U;
    <span class="hljs-keyword">auto</span> sumHistogram = workers.Process(inputChain, workItem, <span class="hljs-string">&quot;multiCore&quot;</span>);
    sumHistogram-&gt;Fit(<span class="hljs-string">&quot;gaus&quot;</span>, <span class="hljs-number">0</span>);
 </code></pre>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4329466569);" id="exercise"><i class="fa fa-square-o"></i> Exercise<span id="heading-4329466569"></span></h3></div><div class="panel-body" id="panel-4329466569"><p>Run the above code snippet. Note, that it needs some input! This can be generated by the mp101_fillNtuples.C macro, which is given below. </p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9708083034);" id="generate-your-treesclick-to-expand"><i class="fa fa-line-chart"></i> generate your trees...<span id="heading-9708083034">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-9708083034"><pre><code class="lang-cpp">// Total amount of numbers
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4424979245);" id="exercise"><i class="fa fa-square-o"></i> Exercise<span id="heading-4424979245"></span></h3></div><div class="panel-body" id="panel-4424979245"><p>Run the above code snippet. Note, that it needs some input! This can be generated by the mp101_fillNtuples.C macro, which is given below. </p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(69990349);" id="generate-your-treesclick-to-expand"><i class="fa fa-line-chart"></i> generate your trees...<span id="heading-69990349">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-69990349"><pre><code class="lang-cpp">// Total amount of numbers
 const UInt_t nNumbers = 20000000U;
 
 // The number of workers
@@ -851,7 +864,7 @@ Int_t mp101_fillNtuples()
 <pre><code>root .L fib.C 
 root [1] mt302_TTaskGroupNested()
 Fibonacci(33) = 3524578
-</code></pre><p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3778326785);" id="rootexperimental"><i class="fa fa-info-circle"></i> ROOT::Experimental<span id="heading-3778326785"></span></h3></div><div class="panel-body" id="panel-3778326785"><p>You might notice, that in the code snippet above, we use items from the <code>ROOT::Experimental</code> namespace. As the name implies, these are experimental features. Depending on your ROOT6 version, these features might have been moved from the <code>Experimental</code> namespace to a general namespace, in which case, the <code>T</code> that starts the class name, might have been changed into an <code>R</code> to avoid namespace clashes. </p>
+</code></pre><p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5885242195);" id="rootexperimental"><i class="fa fa-info-circle"></i> ROOT::Experimental<span id="heading-5885242195"></span></h3></div><div class="panel-body" id="panel-5885242195"><p>You might notice, that in the code snippet above, we use items from the <code>ROOT::Experimental</code> namespace. As the name implies, these are experimental features. Depending on your ROOT6 version, these features might have been moved from the <code>Experimental</code> namespace to a general namespace, in which case, the <code>T</code> that starts the class name, might have been changed into an <code>R</code> to avoid namespace clashes. </p>
 </div></div></p>
 <h2 id="enabling-thread-safety">Enabling thread safety</h2>
 <p>In the previous section, we have talked quite a bit about race conditions and thread safety. How are these taken care of in the ROOT landscape? </p>
@@ -888,7 +901,7 @@ Fibonacci(33) = 3524578
    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6706943197);" id="general-exercises"><i class="fa fa-info-circle"></i> General exercises<span id="heading-6706943197"></span></h3></div><div class="panel-body" id="panel-6706943197"><p>As already mentioned in the text, exercises here comprise running the examples, and looking for good candidates in your own macros that you could re-write in a multi threaded or multi processed way. </p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7444886755);" id="general-exercises"><i class="fa fa-info-circle"></i> General exercises<span id="heading-7444886755"></span></h3></div><div class="panel-body" id="panel-7444886755"><p>As already mentioned in the text, exercises here comprise running the examples, and looking for good candidates in your own macros that you could re-write in a multi threaded or multi processed way. </p>
 <p>It is always good to test whether or not multi threading / processing actually helps: both come with overhead, and depending on the task at hand, can either speed up execution or your program, slow it down, or do nothing at all. </p>
 </div></div></p>
 
@@ -934,7 +947,7 @@ Fibonacci(33) = 3524578
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Parallellism with ROOT","level":"1.5.3","depth":2,"next":{"title":"Part 5 - 5 to 6: changes to user code","level":"1.6","depth":1,"path":"analysis/changes.md","ref":"analysis/changes.md","articles":[]},"previous":{"title":"Posix multithreading","level":"1.5.2","depth":2,"path":"analysis/parallell/example.md","ref":"analysis/parallell/example.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/root.md","mtime":"2018-11-14T12:35:14.742Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-14T14:59:38.602Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Parallellism with ROOT","level":"1.5.3","depth":2,"next":{"title":"Part 5 - 5 to 6: changes to user code","level":"1.6","depth":1,"path":"analysis/changes.md","ref":"analysis/changes.md","articles":[]},"previous":{"title":"Posix multithreading","level":"1.5.2","depth":2,"path":"analysis/parallell/example.md","ref":"analysis/parallell/example.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/root.md","mtime":"2018-11-14T14:59:49.166Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-18T11:22:59.412Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
