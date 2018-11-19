@@ -721,9 +721,9 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="posix-multi-threading">POSIX multi-threading</h1>
-<p>C++ does not contain any built-in support for multithreaded applications. Instead, it relies entirely upon the operating system to provide this feature.</p>
-<p>This tutorial assumes that you are working on Linux OS and we are going to write multi-threaded C++ program using POSIX. POSIX Threads, or Pthreads provides API which are available on many Unix-like POSIX systems such as GNU/Linux, Mac OS X.</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4807037669);" id="posix"><i class="fa fa-info-circle"></i> POSIX<span id="heading-4807037669"></span></h3></div><div class="panel-body" id="panel-4807037669"><p>The Portable Operating System Interface (POSIX) is a family of standards specified by the IEEE Computer Society for maintaining compatibility between operating systems. POSIX defines the application programming interface (API), along with command line shells and utility interfaces, for software compatibility with variants of Unix and other operating systems.</p>
+<p>C++ (contrary to what people sometimes think) <strong>does not contain any built-in support for multithreaded applications</strong>. Instead, it relies entirely upon the operating system to provide this feature.</p>
+<p>This following assumes that you are working on Linux OS, as we are going to write multi-threaded C++ program using POSIX. POSIX Threads, or Pthreads, provides APIs which are available on many Unix-like POSIX systems such as GNU/Linux, Mac OS X.</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7559450614);" id="posix"><i class="fa fa-info-circle"></i> POSIX<span id="heading-7559450614"></span></h3></div><div class="panel-body" id="panel-7559450614"><p>The Portable Operating System Interface (POSIX) is a family of standards specified by the IEEE Computer Society for maintaining compatibility between operating systems. POSIX defines the application programming interface (API), along with command line shells and utility interfaces, for software compatibility with variants of Unix and other operating systems.</p>
 </div></div></p>
 <h2 id="creating-threads">Creating threads</h2>
 <p>The following routine is used to create a POSIX thread</p>
@@ -732,10 +732,10 @@ pthread_create (thread, attr, start_routine, arg)
 </code></pre>
 <p>Here, <code>pthread_create</code> creates a new thread and makes it executable. This routine can be called any number of times from anywhere within your code. The arguments of the function are the following</p>
 <ul>
-<li><code>thread</code>: a unique identifier for the new thread returned by the subroutine</li>
-<li><code>attr</code>: an attribute object that may be used to set thread attributes. You can specify NULL for the default values.     </li>
+<li><code>thread</code>: a unique identifier for the new thread</li>
+<li><code>attr</code>: an attribute object, specify NULL for the default values (with attributes, we can e.g. define the thread&apos;s scheduling policy or thread stack-size, details that are too complicated for this tutorial, we will just look at <em>joinable</em> and <em>detached threads</em> later)</li>
 <li><code>start_routine</code>: the C++ routine that the thread will execute once it is created</li>
-<li><code>arg</code>: A single argument that may be passed to start_routine. It must be passed by reference as a pointer cast of type void. NULL may be used if no argument is to be passed</li>
+<li><code>arg</code>: a single argument that may be passed to start_routine. It must be passed by reference as a pointer cast of type void. NULL may be used if no argument is to be passed</li>
 </ul>
 <p>The maximum number of threads that may be created by a process is implementation dependent. Once created, threads are peers, and may create other threads. <strong>There is no implied hierarchy or dependency between threads</strong>.</p>
 <h2 id="terminating-threads">Terminating threads</h2>
@@ -860,13 +860,14 @@ Thread ID : 4 Message : This is message
 <p>A thread can run in two modes: </p>
 <ul>
 <li><strong>Joinable mode (default)</strong>. A joinable thread will not release any resource even after the end of thread function, until some other thread calls <code>pthread_join()</code> with its ID. </li>
-<li>Detached mode. A Detached thread automatically releases it allocated resources on exit. No other thread needs to join it. </li>
+<li><strong>Detached mode</strong>. A Detached thread automatically releases it allocated resources on exit. No other thread needs to join it. </li>
 </ul>
-<p>The detached attribute merely determines the behavior of the system when the thread terminates; it does not prevent the thread from being terminated if the process terminates using exit (or equivalently, if the main thread returns). The pthread_detach() function marks the thread identified by thread as detached. When a detached thread terminates, its resources are automatically released back to the system without the need for another thread to join with the terminated thread.</p>
-<p>There are following two routines which we can use to join or detach threads</p>
-<pre><code class="lang-cpp">pthread_join (threadid, status) 
-pthread_detach (threadid)
-</code></pre>
+<p>The <strong>detached</strong> attribute determines the behavior of the system when the thread terminates; </p>
+<ul>
+<li>it <strong>does not</strong> prevent the thread from being terminated if the process terminates using exit (or equivalently, if the main thread returns). </li>
+<li>The <code>pthread_detach()</code> function marks the thread identified by thread as detached. </li>
+</ul>
+<p><strong>When a detached thread terminates, its resources are automatically released back to the system without the need for another thread to join with the terminated thread.</strong></p>
 <p>In practice, an example of using joinable threads is e.g.</p>
 <pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
@@ -922,61 +923,60 @@ pthread_detach (threadid)
 }
 </code></pre>
 <p>conversely, with detached threads, one can write</p>
-<pre><code class="lang-cpp">#include &lt;iostream&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-#include &lt;pthread.h&gt;
+<pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;</span></span>
 
-#include &lt;unistd.h&gt;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
 
-void * threadFunc(void * arg)
-{
-    std::cout &lt;&lt; &quot;Thread Function :: Start&quot; &lt;&lt; std::endl;
-    // Sleep for 2 seconds
-    sleep(2);
-    std::cout &lt;&lt; &quot;Thread Function :: End&quot; &lt;&lt; std::endl;
-    // Return value from thread
-    return new int(6);
+<span class="hljs-function"><span class="hljs-keyword">void</span> * <span class="hljs-title">threadFunc</span><span class="hljs-params">(<span class="hljs-keyword">void</span> * arg)</span>
+</span>{
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Thread Function :: Start&quot;</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    <span class="hljs-comment">// Sleep for 2 seconds</span>
+    sleep(<span class="hljs-number">2</span>);
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Thread Function :: End&quot;</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    <span class="hljs-comment">// Return value from thread</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>(<span class="hljs-number">6</span>);
 }
 
-int main()
-{
-    // Thread id
-    pthread_t threadId;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-comment">// Thread id</span>
+    <span class="hljs-keyword">pthread_t</span> threadId;
 
-    // Create a thread that will funtion threadFunc()
-    int err = pthread_create(&amp;threadId, NULL, &amp;threadFunc, NULL);
-    // Check if thread is created sucessfuly
-    if (err)
+    <span class="hljs-comment">// Create a thread that will funtion threadFunc()</span>
+    <span class="hljs-keyword">int</span> err = pthread_create(&amp;threadId, <span class="hljs-literal">NULL</span>, &amp;threadFunc, <span class="hljs-literal">NULL</span>);
+    <span class="hljs-comment">// Check if thread is created sucessfuly</span>
+    <span class="hljs-keyword">if</span> (err)
     {
-        std::cout &lt;&lt; &quot;Thread creation failed : &quot; &lt;&lt; strerror(err);
-        return err;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Thread creation failed : &quot;</span> &lt;&lt; strerror(err);
+        <span class="hljs-keyword">return</span> err;
     }
-    else
-        std::cout &lt;&lt; &quot;Thread Created with ID : &quot; &lt;&lt; threadId &lt;&lt; std::endl;
-    // Do some stuff
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Thread Created with ID : &quot;</span> &lt;&lt; threadId &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    <span class="hljs-comment">// Do some stuff</span>
 
-    void * ptr = NULL;
-    std::cout &lt;&lt; &quot;Waiting for thread to exit&quot; &lt;&lt; std::endl;
-    // Wait for thread to exit
+    <span class="hljs-keyword">void</span> * ptr = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Waiting for thread to exit&quot;</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    <span class="hljs-comment">// Wait for thread to exit</span>
     err = pthread_join(threadId, &amp;ptr);
-    if (err)
+    <span class="hljs-keyword">if</span> (err)
     {
-        std::cout &lt;&lt; &quot;Failed to join Thread : &quot; &lt;&lt; strerror(err) &lt;&lt; std::endl;
-        return err;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Failed to join Thread : &quot;</span> &lt;&lt; strerror(err) &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+        <span class="hljs-keyword">return</span> err;
     }
 
-i
-    if (ptr)
-        std::cout &lt;&lt; &quot; value returned by thread : &quot; &lt;&lt; *(int *) ptr
-                &lt;&lt; std::endl;
+    <span class="hljs-keyword">if</span> (ptr)
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot; value returned by thread : &quot;</span> &lt;&lt; *(<span class="hljs-keyword">int</span> *) ptr
+                &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
 
-    delete (int *) ptr;
-    return 0;
+    <span class="hljs-keyword">delete</span> (<span class="hljs-keyword">int</span> *) ptr;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5195946529);" id="openmp-and-c11-stdthread"><i class="fa fa-info-circle"></i> OpenMP and C++11 std::thread<span id="heading-5195946529"></span></h3></div><div class="panel-body" id="panel-5195946529"><p>POSIX mutli threading is powerful, but not exactly easy. Two other approaches are mentioned here for completeness, they are easier to implement. </p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7248546819);" id="openmp-and-c11-stdthread"><i class="fa fa-info-circle"></i> OpenMP and C++11 std::thread<span id="heading-7248546819"></span></h3></div><div class="panel-body" id="panel-7248546819"><p>POSIX multi threading is powerful, but not exactly easy. Two other approaches are mentioned here for completeness, they are easier to implement. </p>
 <h3 id="thread-support-in-std-in-c-11">Thread support in std in C++11</h3>
 <p>Since C++11, the std library offers thread support:</p>
 <pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_main</span><span class="hljs-params">()</span> </span>{
@@ -1009,8 +1009,10 @@ Hello, world.
 Hello, world.
 Hello, world.
 </code></pre>
-<p>(although, since the threads all share the same standard output, it&apos;s more likely that you end up in a race condition and see something like <code>Hello, wHello, woorld.rld.Hello, wHello, woorld.rld.</code>....)</p>
 </div></div></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(575685924);" id="the-ultimate-question-"><i class="fa fa-square-o"></i> The ultimate question ...<span id="heading-575685924"></span></h3></div><div class="panel-body" id="panel-575685924"><p>What is wrong with the above output?</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1996702891);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1996702891">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1996702891"><p>Since the threads all share the same standard output, it&apos;s more likely that you end up in a race condition and see something like <code>Hello, wHello, woorld.rld.Hello, wHello, woorld.rld.</code>....</p>
+</div></div></div></div></p>
 <h1 id="exercises">Exercises</h1>
 <p>First of all, try to go through the examples that were shown in the lecture: copy the code snippets, and try to compile and execute them. You can also</p>
 <ul>
@@ -1032,8 +1034,8 @@ Hello, world.
 </code></pre>
 <p>The point being, y could be 10, or it could be anything, depending on whether another thread changed x in between the check and act. You have no real way of knowing.</p>
 <p>Alternatively, you can create a race condition (or deadlock) by giving the threads access to shared memory (e.g. global variables or structs). Write a program that breaks itself! That will serve as an excellent motivation for the next session: handing over the headaches of multi threading to ROOT. </p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7194031856);" id="hint-"><i class="fa fa-square-o"></i> Hint ...<span id="heading-7194031856"></span></h3></div><div class="panel-body" id="panel-7194031856"><p>Below a program that creates a race condition</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1126553934);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-1126553934">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-1126553934"><pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2330701683);" id="hint-"><i class="fa fa-square-o"></i> Hint ...<span id="heading-2330701683"></span></h3></div><div class="panel-body" id="panel-2330701683"><p>Below a program that creates a race condition</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6362368878);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-6362368878">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-6362368878"><pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
@@ -1268,7 +1270,7 @@ Hello, world.
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Posix multithreading","level":"1.5.2","depth":2,"next":{"title":"Parallellism with ROOT","level":"1.5.3","depth":2,"path":"analysis/parallell/root.md","ref":"analysis/parallell/root.md","articles":[]},"previous":{"title":"Threads and processes","level":"1.5.1","depth":2,"path":"analysis/parallell/intro.md","ref":"analysis/parallell/intro.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/example.md","mtime":"2018-11-19T15:07:56.314Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-19T15:34:09.406Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Posix multithreading","level":"1.5.2","depth":2,"next":{"title":"Parallellism with ROOT","level":"1.5.3","depth":2,"path":"analysis/parallell/root.md","ref":"analysis/parallell/root.md","articles":[]},"previous":{"title":"Threads and processes","level":"1.5.1","depth":2,"path":"analysis/parallell/intro.md","ref":"analysis/parallell/intro.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/example.md","mtime":"2018-11-19T16:39:41.024Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-19T16:50:57.196Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
