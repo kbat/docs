@@ -390,26 +390,3 @@ bar3(&d);
 All calls do not produce identical output — when a derived object is passed by value, only the 'base' copy constructor is called. Things that are not copied include the ability to call derived object virtual functions. This is known as the **slicing problem**. 
 
 {% endchallenge %}
-
-
-{% challenge " Question " %}
-What are the correctness concerns of using a local static to return by reference?
-```c++
-Foo& return_by_reference()
-{
-    // let's for some reason declare this static
-    static Foo s_f;
-    s_f = Foo();
-    return s_f;
-}
-
-Foo& f1 = return_by_reference();
-Foo& f2 = return_by_reference();
-std::cout << "Are f1 and f2 equal? "
-```
-{% solution " Solution " %}
-If the first entry of f1 and f2 are different when printed, why do they compare equal? Since f1 refers to the same object as f2, f1 and f2 will always compare equal, and the line below will always return 'true':
-```cpp
-std::cout << std::boolalpha << (f1 == f2) << std::endl;
-```
-{% endchallenge %}
