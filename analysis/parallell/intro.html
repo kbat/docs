@@ -119,25 +119,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="../feat1.html">
-            
-                <a href="../feat1.html">
-            
-                    
-                    Part 2 - New C++ features
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="../feat2.html">
+        <li class="chapter " data-level="1.3" data-path="../feat2.html">
             
                 <a href="../feat2.html">
             
                     
-                    Part 3 - Smart (and dumb) pointers
+                    Part 2 - Smart (and dumb) pointers
             
                 </a>
             
@@ -146,7 +133,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../newf2/intro.html">
+        <li class="chapter " data-level="1.3.1" data-path="../newf2/intro.html">
             
                 <a href="../newf2/intro.html">
             
@@ -159,12 +146,135 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../newf2/smartp.html">
+        <li class="chapter " data-level="1.3.2" data-path="../newf2/smartp.html">
             
                 <a href="../newf2/smartp.html">
             
                     
                     Smart pointers
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../cpp11.html">
+            
+                <a href="../cpp11.html">
+            
+                    
+                    Part 3 - New C++11 features
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../cpp11/nullptr.html">
+            
+                <a href="../cpp11/nullptr.html">
+            
+                    
+                    nullptr
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../cpp11/initlists.html">
+            
+                <a href="../cpp11/initlists.html">
+            
+                    
+                    Initializer lists
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../cpp11/auto.html">
+            
+                <a href="../cpp11/auto.html">
+            
+                    
+                    Implicit typing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../cpp11/rangebasediterators.html">
+            
+                <a href="../cpp11/rangebasediterators.html">
+            
+                    
+                    Range-based iterators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../cpp11/stl.html">
+            
+                <a href="../cpp11/stl.html">
+            
+                    
+                    Standard library
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../cpp11/lambda.html">
+            
+                <a href="../cpp11/lambda.html">
+            
+                    
+                    lambda functions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../cpp11/variadic.html">
+            
+                <a href="../cpp11/variadic.html">
+            
+                    
+                    Variadic templates
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../cpp11/move.html">
+            
+                <a href="../cpp11/move.html">
+            
+                    
+                    Move semantics
             
                 </a>
             
@@ -658,7 +768,7 @@
 <li>Threads may also require mutually exclusive operations (often implemented using <code>mutexes</code>) in order to prevent common data from being simultaneously modified or read while in the process of being modified</li>
 <li>Thread crashes a process: an illegal operation performed by a thread crashes the entire process; therefore, one misbehaving thread can disrupt the processing of all the other threads in the application.</li>
 </ul>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5290321715);" id="race-conditions-and-mutexes"><i class="fa fa-info-circle"></i> Race conditions and mutexes<span id="heading-5290321715"></span></h3></div><div class="panel-body" id="panel-5290321715"><p>Threads in the same process share the same address space. This allows concurrently running code to efficiently  exchange data without the overhead or complexity of an IPC. When shared between threads, however, even simple data structures become prone to <strong>race conditions</strong> if they require more than one CPU instruction to update: two threads may end up attempting to update the data structure at the same time and find it unexpectedly changing underfoot. Bugs caused by race conditions can be very difficult to reproduce and isolate.</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6917561254);" id="race-conditions-and-mutexes"><i class="fa fa-info-circle"></i> Race conditions and mutexes<span id="heading-6917561254"></span></h3></div><div class="panel-body" id="panel-6917561254"><p>Threads in the same process share the same address space. This allows concurrently running code to efficiently  exchange data without the overhead or complexity of an IPC. When shared between threads, however, even simple data structures become prone to <strong>race conditions</strong> if they require more than one CPU instruction to update: two threads may end up attempting to update the data structure at the same time and find it unexpectedly changing underfoot. Bugs caused by race conditions can be very difficult to reproduce and isolate.</p>
 <p><img src="cs.jpg" alt="cs"></p>
 <p>Let&apos;s look at this in practice and assume that two threads want to increment the value of a global integer variable by one. Ideally, the following sequence of operations would take place</p>
 <p><img src="tab1.png" alt="tab1"></p>
@@ -726,7 +836,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Threads and processes","level":"1.5.1","depth":2,"next":{"title":"Posix multithreading","level":"1.5.2","depth":2,"path":"analysis/parallell/example.md","ref":"analysis/parallell/example.md","articles":[]},"previous":{"title":"Part 4 - Parallellism","level":"1.5","depth":1,"path":"analysis/parallellism.md","ref":"analysis/parallellism.md","articles":[{"title":"Threads and processes","level":"1.5.1","depth":2,"path":"analysis/parallell/intro.md","ref":"analysis/parallell/intro.md","articles":[]},{"title":"Posix multithreading","level":"1.5.2","depth":2,"path":"analysis/parallell/example.md","ref":"analysis/parallell/example.md","articles":[]},{"title":"Parallellism with ROOT","level":"1.5.3","depth":2,"path":"analysis/parallell/root.md","ref":"analysis/parallell/root.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/intro.md","mtime":"2018-11-14T14:59:49.166Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-18T11:22:59.412Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Threads and processes","level":"1.5.1","depth":2,"next":{"title":"Posix multithreading","level":"1.5.2","depth":2,"path":"analysis/parallell/example.md","ref":"analysis/parallell/example.md","articles":[]},"previous":{"title":"Part 4 - Parallellism","level":"1.5","depth":1,"path":"analysis/parallellism.md","ref":"analysis/parallellism.md","articles":[{"title":"Threads and processes","level":"1.5.1","depth":2,"path":"analysis/parallell/intro.md","ref":"analysis/parallell/intro.md","articles":[]},{"title":"Posix multithreading","level":"1.5.2","depth":2,"path":"analysis/parallell/example.md","ref":"analysis/parallell/example.md","articles":[]},{"title":"Parallellism with ROOT","level":"1.5.3","depth":2,"path":"analysis/parallell/root.md","ref":"analysis/parallell/root.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/parallell/intro.md","mtime":"2018-11-18T11:23:14.060Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-19T15:07:27.813Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
