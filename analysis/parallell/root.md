@@ -1,5 +1,7 @@
 # Parallallism in ROOT
 
+By now, we have seen that multi threading (and also multi processing) is powerful but quite complicated. Our analyses are often particularity well-suited for multi threading though: we often repeat independent tasks almost indefinitely. Luckily, ROOT provides us with a simple interface to perform fast and safe multi threading and multi processing. 
+
 The `TThread` class has been developed to provide a platform independent interface to threads for ROOT. However, ROOT6 provides us with many ways to easily access *implicit* parallellism, which makes our lives much easier than defining `POSIX`-like threads by hand.
 
 ## Implicit multi threading
@@ -7,6 +9,12 @@ The `TThread` class has been developed to provide a platform independent interfa
 The easiest way to learn about ROOT's implicit multi threading, is to look at an example. Say we want to read some information from a tree. This is a process that can very easily be multi threaded: operations on branches (like I/O, decompression, etc) are **independent** and can be carried out concurrently. 
 
 To tell ROOT6 to operate on our tree in a multithreaded way, all we have to do is enable implicit multithreading:
+
+```cpp
+   ROOT::EnableImplicitMT(nthreads);
+```
+
+Let's look at this in a real world example. 
 
 ```cpp
    // First enable implicit multi-threading globally, so that the implicit parallelisation is on.
@@ -52,7 +60,16 @@ Our first example was very easy - we did not have to do anything except for tell
 
 The `TProcessExecutor` uses multi processing (as the name implies). It provides a simple interface to execute the same task multiple times in parallel, possibly with different arguments every time (this mimics the behaviour of python's pool.Map method). 
 
-This class inherits its interfaces from ROOT::`TExecutor`.  The two possible usages of the Map method are:
+This class inherits its interfaces from ROOT::`TExecutor`. To use it, we have to identify a **pool** of workers, which we provide with a task, in the form of a lambda expression, via a **Map** method:
+
+```cpp
+// define a pool of size two 
+ROOT::TProcessExecutor pool(2); 
+// define what the workers in the pool have to do
+auto squares = pool.Map([](int a) { return a*a; }, {1,2,3});
+```
+
+The two possible usages of the Map method are:
 
 *    `Map(F func, unsigned nTimes)`: func is executed nTimes with no arguments
 *    `Map(F func, T& args)`: func is executed on each element of the collection of arguments `args`
@@ -72,7 +89,8 @@ Let's take a closer look at how we can construct our processes. What we need are
 For example, using a lambda expression and an initializer list for the `ROOT::TSeq`, our process executor could look like
 
 ```cpp
-ROOT::TProcessExecutor pool(2); auto squares = pool.Map([](int a) { return a*a; }, {1,2,3});
+ROOT::TProcessExecutor pool(2); 
+auto squares = pool.Map([](int a) { return a*a; }, {1,2,3});
 ```
 
 This looks more complicated than it is. Let's look at an example in the wild, where we fill four histograms with random numbers simultaneously:
@@ -110,7 +128,15 @@ First, run the example that is shown above. Then, think of a macro that you have
 
 ## TTreeProcessorMT
 
-A lot of the work that we do, involves manipulation trees. The `TTreeProcessorMT` method provides an implicit parallelisation of the reading and processing of a `TTree`. In particular, when invoking `Process`, the user provides a function that iterates on a subrange of the tree via a `TTreeReader`. Multiple tasks will be spawned, one for each sub-range, so that the processing of the tree is parallelised.
+A lot of the work that we do, involves manipulation trees. The `TTreeProcessorMT` method provides an implicit parallelisation of 
+- the reading and 
+- processing 
+
+of a `TTree`. 
+
+In particular, when invoking `Process`, the user provides a function that iterates on a subrange of the tree via a `TTreeReader`. Multiple tasks will be spawned, one for each sub-range, so that the processing of the tree is parallelised.
+
+### Thread safety
 
 Since two invocations of the user function can potentially run in parallel, the function code must be **thread safe** (remember the discussion on race conditions and deadlocks). For this, we can use, `ROOT::TThreadedObject`, which makes objects thread private. With the help of this class, histograms can be filled safely inside the user function and then merged at the end to get the final result.
 
@@ -274,7 +300,10 @@ Int_t mp101_fillNtuples()
 
 ## TTaskGroup
 
-The last item that we will illustrate, is the `TTaskGroup`. TTask is a base class that can be used to build a complex tree of Tasks. Each TTask derived class may contain other TTasks that can be executed recursively, such that a complex program can be dynamically built and executed by invoking the services of the top level Task or one of its subtasks. If you do analysis in ALICE, you surely know `TTasks`, since they form the base class of `AliAnalysisTaskSE`. 
+The last item that we will illustrate, is the `TTaskGroup`. TTask is a base class that can be used to build a complex tree of Tasks. Each TTask derived class may contain other TTasks that can be executed recursively, such that a complex program can be dynamically built and executed by invoking the services of the top level Task or one of its subtasks. 
+{% callout "TTasks in ALICE" %}
+If you do analysis in ALICE, you surely know `TTasks`, since they form the base class of `AliAnalysisTaskSE`. 
+{% endcallout %}
 
 `TTaskGroup` provides a way to manage the asynchronous execution of work items. A TTaskGroup represents concurrent execution of a group of tasks. Tasks may be dynamically added to the group as it is executing. 
 

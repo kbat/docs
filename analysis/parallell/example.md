@@ -1,8 +1,8 @@
 # POSIX multi-threading
 
-C++ does not contain any built-in support for multithreaded applications. Instead, it relies entirely upon the operating system to provide this feature.
+C++ (contrary to what people sometimes think) **does not contain any built-in support for multithreaded applications**. Instead, it relies entirely upon the operating system to provide this feature.
 
-This tutorial assumes that you are working on Linux OS and we are going to write multi-threaded C++ program using POSIX. POSIX Threads, or Pthreads provides API which are available on many Unix-like POSIX systems such as GNU/Linux, Mac OS X.
+This following assumes that you are working on Linux OS, as we are going to write multi-threaded C++ program using POSIX. POSIX Threads, or Pthreads, provides APIs which are available on many Unix-like POSIX systems such as GNU/Linux, Mac OS X.
 
 {% callout "POSIX" %}
 The Portable Operating System Interface (POSIX) is a family of standards specified by the IEEE Computer Society for maintaining compatibility between operating systems. POSIX defines the application programming interface (API), along with command line shells and utility interfaces, for software compatibility with variants of Unix and other operating systems.
@@ -21,10 +21,10 @@ pthread_create (thread, attr, start_routine, arg)
 
 Here, `pthread_create` creates a new thread and makes it executable. This routine can be called any number of times from anywhere within your code. The arguments of the function are the following
 
-* `thread`: a unique identifier for the new thread returned by the subroutine
-* `attr`: an attribute object that may be used to set thread attributes. You can specify NULL for the default values. 	
+* `thread`: a unique identifier for the new thread
+* `attr`: an attribute object, specify NULL for the default values (with attributes, we can e.g. define the thread's scheduling policy or thread stack-size, details that are too complicated for this tutorial, we will just look at *joinable* and *detached threads* later)
 * `start_routine`: the C++ routine that the thread will execute once it is created
-* `arg`: A single argument that may be passed to start_routine. It must be passed by reference as a pointer cast of type void. NULL may be used if no argument is to be passed
+* `arg`: a single argument that may be passed to start_routine. It must be passed by reference as a pointer cast of type void. NULL may be used if no argument is to be passed
 
 The maximum number of threads that may be created by a process is implementation dependent. Once created, threads are peers, and may create other threads. **There is no implied hierarchy or dependency between threads**.
 
@@ -179,18 +179,14 @@ As we have seen before, threads execute independent from one another. For a prog
 A thread can run in two modes: 
 
 - **Joinable mode (default)**. A joinable thread will not release any resource even after the end of thread function, until some other thread calls `pthread_join()` with its ID. 
-- Detached mode. A Detached thread automatically releases it allocated resources on exit. No other thread needs to join it. 
+- **Detached mode**. A Detached thread automatically releases it allocated resources on exit. No other thread needs to join it. 
 
 
-The detached attribute merely determines the behavior of the system when the thread terminates; it does not prevent the thread from being terminated if the process terminates using exit (or equivalently, if the main thread returns). The pthread_detach() function marks the thread identified by thread as detached. When a detached thread terminates, its resources are automatically released back to the system without the need for another thread to join with the terminated thread.
+The **detached** attribute determines the behavior of the system when the thread terminates; 
+- it **does not** prevent the thread from being terminated if the process terminates using exit (or equivalently, if the main thread returns). 
+- The `pthread_detach()` function marks the thread identified by thread as detached. 
 
-
-There are following two routines which we can use to join or detach threads
-
-```cpp
-pthread_join (threadid, status) 
-pthread_detach (threadid) 
-```
+**When a detached thread terminates, its resources are automatically released back to the system without the need for another thread to join with the terminated thread.**
 
 In practice, an example of using joinable threads is e.g.
 
@@ -297,7 +293,6 @@ int main()
 		return err;
 	}
  
-i
 	if (ptr)
 		std::cout << " value returned by thread : " << *(int *) ptr
 				<< std::endl;
@@ -309,7 +304,7 @@ i
 
 {% callout "OpenMP and C++11 std::thread" %}
 
-POSIX mutli threading is powerful, but not exactly easy. Two other approaches are mentioned here for completeness, they are easier to implement. 
+POSIX multi threading is powerful, but not exactly easy. Two other approaches are mentioned here for completeness, they are easier to implement. 
 
 ### Thread support in std in C++11 
 
@@ -352,11 +347,16 @@ Hello, world.
 Hello, world.
 ```
 
-(although, since the threads all share the same standard output, it's more likely that you end up in a race condition and see something like `Hello, wHello, woorld.rld.Hello, wHello, woorld.rld.`....)
-
-
 
 {% endcallout %}
+
+{% challenge "The ultimate question ..." %}
+What is wrong with the above output?
+{% solution "Solution" %}
+Since the threads all share the same standard output, it's more likely that you end up in a race condition and see something like `Hello, wHello, woorld.rld.Hello, wHello, woorld.rld.`....
+{% endchallenge %}
+
+
 
 
 # Exercises
