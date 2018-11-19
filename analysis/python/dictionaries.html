@@ -798,7 +798,7 @@ TypeError: unhashable type: <span class="hljs-string">&apos;list&apos;</span>
 <p>In essence, keys must not be mutable. This includes numbers, strings, and
 tuples, but not lists. This restriction is a trade-off that allows Python to
 make accessing values in a dictionary by key very fast.</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7247445844);" id="hashing"><i class="fa fa-info-circle"></i> Hashing<span id="heading-7247445844"></span></h3></div><div class="panel-body" id="panel-7247445844"><p>Immutable data types in Python have a <code>__hash__()</code> function, you can test it
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4698194261);" id="hashing"><i class="fa fa-info-circle"></i> Hashing<span id="heading-4698194261"></span></h3></div><div class="panel-body" id="panel-4698194261"><p>Immutable data types in Python have a <code>__hash__()</code> function, you can test it
 yourself:</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>s = <span class="hljs-string">&quot;a string&quot;</span>
 <span class="hljs-meta">&gt;&gt;&gt; </span>s.__hash__()
@@ -830,7 +830,7 @@ excellent index : &lt;built-<span class="hljs-keyword">in</span> function sin&gt
 </code></pre>
 <p>We have already seen how to iterate over values (using <code>d.values()</code>) or keys
 and values simultaneously (using <code>d.items()</code>).</p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2366365112);" id="on-the-efficiency-of-items"><i class="fa fa-info-circle"></i> On the efficiency of items()<span id="heading-2366365112"></span></h3></div><div class="panel-body" id="panel-2366365112"><p>In Python 2, using items copies the keys and values of a dictionary, and gives
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4492133663);" id="on-the-efficiency-of-items"><i class="fa fa-info-circle"></i> On the efficiency of items()<span id="heading-4492133663"></span></h3></div><div class="panel-body" id="panel-4492133663"><p>In Python 2, using items copies the keys and values of a dictionary, and gives
 you back those copies. This can be problematic for large dictionaries as the
 amount of memory your program uses can double. Python 3 uses a much more
 memory-efficient way of implementing items so that you don&apos;t have to worry.</p>
@@ -841,7 +841,7 @@ memory-efficient way of implementing items so that you don&apos;t have to worry.
 available from
 Python 2.7.</p>
 </div></div></p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7071570520);" id="alphabet-mapping"><i class="fa fa-square-o"></i> Alphabet mapping<span id="heading-7071570520"></span></h3></div><div class="panel-body" id="panel-7071570520"><p>Map each letter of the alphabet to a number with a dictionary comprehension,
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3132310986);" id="alphabet-mapping"><i class="fa fa-square-o"></i> Alphabet mapping<span id="heading-3132310986"></span></h3></div><div class="panel-body" id="panel-3132310986"><p>Map each letter of the alphabet to a number with a dictionary comprehension,
 starting with <code>0</code> for <code>a</code> and ending with <code>25</code> for <code>z</code>.</p>
 <p>You can get a string containing the letters of the alphabet like this:</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> string
@@ -859,7 +859,7 @@ z
 </code></pre>
 <p>Then, create the &quot;reverse&quot; dictionary, again with a comprehension, mapping
 letters to numbers.</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(9802506547);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-9802506547">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-9802506547"><p>You need to have a list containing one number per letter, and to loop over that
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(7726817397);" id="solutionclick-to-expand"><i class="fa fa-line-chart"></i> Solution<span id="heading-7726817397">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-7726817397"><p>You need to have a list containing one number per letter, and to loop over that
 list along with the characters in the string. This is exactly the same as
 looping over items in a list alongside the index, so we can use <code>enumerate</code>.</p>
 <pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>alphabet_map = {i: c <span class="hljs-keyword">for</span> i, c <span class="hljs-keyword">in</span> enumerate(string.ascii_lowercase)}
@@ -912,7 +912,7 @@ comprehension.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Dictionaries","level":"1.9.6","depth":2,"next":{"title":"Conditions","level":"1.9.7","depth":2,"path":"analysis/python/conditions.md","ref":"analysis/python/conditions.md","articles":[]},"previous":{"title":"Lists and looping","level":"1.9.5","depth":2,"path":"analysis/python/lists.md","ref":"analysis/python/lists.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/python/dictionaries.md","mtime":"2018-11-19T15:34:22.326Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-19T16:50:57.196Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Dictionaries","level":"1.9.6","depth":2,"next":{"title":"Conditions","level":"1.9.7","depth":2,"path":"analysis/python/conditions.md","ref":"analysis/python/conditions.md","articles":[]},"previous":{"title":"Lists and looping","level":"1.9.5","depth":2,"path":"analysis/python/lists.md","ref":"analysis/python/lists.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/python/dictionaries.md","mtime":"2018-11-19T16:51:15.574Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-19T17:03:46.519Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
