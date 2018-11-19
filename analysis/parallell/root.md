@@ -63,10 +63,10 @@ The `TProcessExecutor` uses multi processing (as the name implies). It provides 
 This class inherits its interfaces from ROOT::`TExecutor`. To use it, we have to identify a **pool** of workers, which we provide with a task, in the form of a lambda expression, via a **Map** method:
 
 ```cpp
-// define a pool of size two 
-ROOT::TProcessExecutor pool(2); 
+// define a pool of n workers
+ROOT::TProcessExecutor pool(n); 
 // define what the workers in the pool have to do
-auto squares = pool.Map([](int a) { return a*a; }, {1,2,3});
+auto result = pool.Map([](lamda arguments) { function }, map arguments);
 ```
 
 The two possible usages of the Map method are:
@@ -74,7 +74,7 @@ The two possible usages of the Map method are:
 *    `Map(F func, unsigned nTimes)`: func is executed nTimes with no arguments
 *    `Map(F func, T& args)`: func is executed on each element of the collection of arguments `args`
 
-For either signature, `func` is executed as many times as needed by a pool of `fNWorkers` workers; the number of workers can be passed to the constructor or set via SetNWorkers. It defaults to the number of cores. A collection containing the result of each execution is returned.
+For either signature, `func` is executed as many times as needed by a pool of `n` workers; the number of workers can be passed to the constructor or set via `SetNWorkers`. It defaults to the number of cores. A collection containing the result of each execution is returned.
 
 {% callout "Beware" %}
 Note: the user is responsible for the deletion of any object that might be created upon execution of `func`, returned objects included: `ROOT::TProcessExecutor` never deletes what it returns, it simply forgets it.
@@ -89,7 +89,9 @@ Let's take a closer look at how we can construct our processes. What we need are
 For example, using a lambda expression and an initializer list for the `ROOT::TSeq`, our process executor could look like
 
 ```cpp
-ROOT::TProcessExecutor pool(2); 
+// define a pool of two workers
+ROOT::TProcessExecutor pool(2);
+// define our method: it will simply return the square of each element of a vector 
 auto squares = pool.Map([](int a) { return a*a; }, {1,2,3});
 ```
 
