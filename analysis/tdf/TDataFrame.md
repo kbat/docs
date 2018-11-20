@@ -170,6 +170,11 @@ Simple as that, enjoy your speed-up.
 
 ---
 ###Exercise
-Now it's your turn. Use an existing macro you have to perfom analysis on a tree and rewrite it to utilise the TDataFrame. If you want to start from scratch to get the basics try the following:
+Now it's your turn. Use an existing macro you have to perfom analysis on a tree and rewrite it to utilise the TDataFrame.
+
+If you want to start from scratch to get the basics try the following:
 
 Use the TDataFrame to calculate an invariant mass spectrum for three provided csv files and compare their outputs. Check if you can speed up the calculation when using multi threading.
+If you want to just use a tree and not a csv go back to the macro in Part 4: Parallelism in ROOT, and create a tree.
+
+Have fun!
