@@ -8,7 +8,7 @@ class Foo {
     Foo(int i) : val(i) {}
     std::vector<int> val;
 };
-Foo getBigFoo(i) { Foo foo(100000); return foo; }
+Foo getBigFoo() { Foo foo(100000); return foo; }
 int main() {
   Foo foo = getBigFoo();
 }
