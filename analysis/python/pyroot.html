@@ -191,7 +191,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../cpp11/initlists.html">
+        <li class="chapter " data-level="1.4.2" data-path="../cpp11/enums.html">
+            
+                <a href="../cpp11/enums.html">
+            
+                    
+                    Strongly typed enums
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../cpp11/initlists.html">
             
                 <a href="../cpp11/initlists.html">
             
@@ -204,7 +217,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="../cpp11/auto.html">
+        <li class="chapter " data-level="1.4.4" data-path="../cpp11/auto.html">
             
                 <a href="../cpp11/auto.html">
             
@@ -217,12 +230,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="../cpp11/rangebasediterators.html">
+        <li class="chapter " data-level="1.4.5" data-path="../cpp11/rangebasediterators.html">
             
                 <a href="../cpp11/rangebasediterators.html">
             
                     
-                    Range-based iterators
+                    Range-based iterations
             
                 </a>
             
@@ -230,7 +243,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.5" data-path="../cpp11/stl.html">
+        <li class="chapter " data-level="1.4.6" data-path="../cpp11/stl.html">
             
                 <a href="../cpp11/stl.html">
             
@@ -243,12 +256,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.6" data-path="../cpp11/lambda.html">
+        <li class="chapter " data-level="1.4.7" data-path="../cpp11/lambda.html">
             
                 <a href="../cpp11/lambda.html">
             
                     
-                    lambda functions
+                    lambda expressions
             
                 </a>
             
@@ -256,7 +269,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.7" data-path="../cpp11/variadic.html">
+        <li class="chapter " data-level="1.4.8" data-path="../cpp11/variadic.html">
             
                 <a href="../cpp11/variadic.html">
             
@@ -269,7 +282,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.8" data-path="../cpp11/move.html">
+        <li class="chapter " data-level="1.4.9" data-path="../cpp11/move.html">
             
                 <a href="../cpp11/move.html">
             
@@ -724,7 +737,7 @@
 <p>In the previous sections, we have introduced some basics of Python to you. Now, it&apos;s time to make the connection between ROOT and Python, and see why Python can be pretty convenient. </p>
 <h2 id="python-bindings">Python bindings</h2>
 <p>Many existing third-party applications and libraries have so-called &quot;Python bindings&quot;. </p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2050441054);" id="bindings"><i class="fa fa-info-circle"></i> Bindings<span id="heading-2050441054"></span></h3></div><div class="panel-body" id="panel-2050441054"><p>Binding generally refers to a mapping of one thing to another. In the context of software libraries, bindings are wrapper libraries that bridge two programming languages, so that a library written for one language can be used in another language.</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1984893123);" id="bindings"><i class="fa fa-info-circle"></i> Bindings<span id="heading-1984893123"></span></h3></div><div class="panel-body" id="panel-1984893123"><p>Binding generally refers to a mapping of one thing to another. In the context of software libraries, bindings are wrapper libraries that bridge two programming languages, so that a library written for one language can be used in another language.</p>
 <p>Many software libraries are written in system programming languages such as C or C++. To use such libraries from another language, usually of higher-level, a binding to the library must be created in that language, possibly requiring recompiling the language&apos;s code, depending on the amount of modification needed. However, most languages offer a foreign function interface, such as Python&apos;s ctypes.</p>
 </div></div></p>
 <p>PyROOT provides Python bindings for ROOT: it enables cross-calls from ROOT/Cling into Python and vice versa, the intermingling of the two interpreters, and the transport of user-level objects from one interpreter to the other. PyROOT enables access from ROOT to any application or library that itself has Python bindings, and it makes all ROOT functionality directly available from the python interpreter.</p>
@@ -745,7 +758,7 @@ hpx = TH1F(<span class="hljs-string">&apos;hpx&apos;</span>,<span class="hljs-st
 hpx.Draw()
 c1.Update()
 </code></pre>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2769174777);" id="make-sure-that-pyroot-is-enabled"><i class="fa fa-info-circle"></i> Make sure that PyROOT is enabled<span id="heading-2769174777"></span></h3></div><div class="panel-body" id="panel-2769174777"><p>To make use of the Python Bindings of ROOT, make sure that the build of the PyROOT module is enabeled when you compile ROOT. If you use ROOT through aliBuild, ROOT6 is built with python support out-of-the-box. For ROOT5 based builds, PyROOT support is disabeled by default in aliBuild. For a manual build of ROOT, Python bindings are enabled by default, but can be disabled via the CMake options.</p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5294522046);" id="make-sure-that-pyroot-is-enabled"><i class="fa fa-info-circle"></i> Make sure that PyROOT is enabled<span id="heading-5294522046"></span></h3></div><div class="panel-body" id="panel-5294522046"><p>To make use of the Python Bindings of ROOT, make sure that the build of the PyROOT module is enabeled when you compile ROOT. If you use ROOT through aliBuild, ROOT6 is built with python support out-of-the-box. For ROOT5 based builds, PyROOT support is disabeled by default in aliBuild. For a manual build of ROOT, Python bindings are enabled by default, but can be disabled via the CMake options.</p>
 <p>To load the ROOT module in your Python code, make sure that <code>libPyROOT.so</code> and the <code>ROOT.py</code> module can be resolved by the system by entering your (Ali)ROOT environment. </p>
 </div></div></p>
 <h2 id="access-to-root-classes">Access to ROOT classes</h2>
@@ -785,13 +798,13 @@ f.Draw()
 </code></pre>
 <h2 id="fitting-a-histogram">Fitting a histogram</h2>
 <p>You have seen in the previous section that we can resolve all ROOT classes through python bindings. </p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(478037579);" id="fitting-a-histogram"><i class="fa fa-square-o"></i> Fitting a histogram<span id="heading-478037579"></span></h3></div><div class="panel-body" id="panel-478037579"><p>Take the code example from the previous section as a starting point, and write a simple piece of python code that</p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4156932318);" id="fitting-a-histogram"><i class="fa fa-square-o"></i> Fitting a histogram<span id="heading-4156932318"></span></h3></div><div class="panel-body" id="panel-4156932318"><p>Take the code example from the previous section as a starting point, and write a simple piece of python code that</p>
 <ul>
 <li>defines a linear function</li>
 <li>fills a histogram with some linearly distributed data</li>
 <li>fits the linear function to the histogram</li>
 </ul>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(4917079533);" id="click-to-check-possible-solutionclick-to-expand"><i class="fa fa-line-chart"></i> Click to check possible solution<span id="heading-4917079533">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-4917079533"><pre><code class="lang-python"><span class="hljs-keyword">from</span> ROOT <span class="hljs-keyword">import</span> TF1, TH1F, TCanvas
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(846391558);" id="click-to-check-possible-solutionclick-to-expand"><i class="fa fa-line-chart"></i> Click to check possible solution<span id="heading-846391558">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-846391558"><pre><code class="lang-python"><span class="hljs-keyword">from</span> ROOT <span class="hljs-keyword">import</span> TF1, TH1F, TCanvas
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Linear</span>:</span>
     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__call__</span><span class="hljs-params">( self, x, par )</span>:</span>
@@ -816,8 +829,8 @@ print(<span class="hljs-string">&apos;fit results: const =&apos;</span>, par[<sp
 <h2 id="advanced-examples-working-with-trees">Advanced examples: working with trees</h2>
 <p>Next to making histograms, working with trees is probably the most common part of any analysis. The TTree implementation uses pointers and dedicated buffers to reduce the memory usage and to speed up access. Consequently, mapping TTree functionality to Python is not straightforward.</p>
 <p>Let us assume that you have a file containing TTrees, TChains, or TNtuples and want to read the contents for use in your analysis code. The following example code outlines the main steps :</p>
-<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(1110545752);" id="but-first--create-a-tree"><i class="fa fa-square-o"></i> But first ... create a tree<span id="heading-1110545752"></span></h3></div><div class="panel-body" id="panel-1110545752"><p>To run the Python code below, you need a small tree</p>
-<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5820057104);" id="click-here-for-a-generic-example-which-fills-a-suitable-treeclick-to-expand"><i class="fa fa-line-chart"></i> Click here for a generic example which fills a suitable tree<span id="heading-5820057104">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-5820057104"><p>Place the following in a file called <code>tree1.C</code></p>
+<p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5102952618);" id="but-first--create-a-tree"><i class="fa fa-square-o"></i> But first ... create a tree<span id="heading-5102952618"></span></h3></div><div class="panel-body" id="panel-5102952618"><p>To run the Python code below, you need a small tree</p>
+<div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8168456104);" id="click-here-for-a-generic-example-which-fills-a-suitable-treeclick-to-expand"><i class="fa fa-line-chart"></i> Click here for a generic example which fills a suitable tree<span id="heading-8168456104">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-8168456104"><p>Place the following in a file called <code>tree1.C</code></p>
 <pre><code class="lang-cpp">
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;TROOT.h&quot;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;TFile.h&quot;</span></span>
@@ -976,11 +989,11 @@ m_value = value;
 </code></pre>
 <p>Create the shared library using ACLiC:</p>
 <pre><code>root -e &apos;gInterpreter-&gt;LoadMacro(&quot;MyClass.C++o&quot;);&apos; -q
-</code></pre><p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5939111562);" id="optimization-or-debug-symbols-"><i class="fa fa-square-o"></i> Optimization or debug symbols ?<span id="heading-5939111562"></span></h3></div><div class="panel-body" id="panel-5939111562"><p>Anyone have any idea what the difference is between </p>
+</code></pre><p><div class="panel panel-success"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(331204713);" id="optimization-or-debug-symbols-"><i class="fa fa-square-o"></i> Optimization or debug symbols ?<span id="heading-331204713"></span></h3></div><div class="panel-body" id="panel-331204713"><p>Anyone have any idea what the difference is between </p>
 <pre><code>root -e &apos;gInterpreter-&gt;LoadMacro(&quot;MyClass.C++o&quot;);&apos; -q
 </code></pre><p>and</p>
 <pre><code>root -e &apos;gInterpreter-&gt;LoadMacro(&quot;MyClass.C++g&quot;);&apos; -q
-</code></pre><div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6573040981);" id="drum-rollclick-to-expand"><i class="fa fa-line-chart"></i> Drum roll<span id="heading-6573040981">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-6573040981"><p>Using <code>o</code>, we specify to the compiler to use optimization for speed. Using <code>g</code>, we specify to the compiler that we want to enable debug symbols. Confused by this? Check out Part 9 of this tutorial, &apos;Best Practices&apos;, where there is a lot of information about this!</p>
+</code></pre><div class="panel panel-danger"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5044995150);" id="drum-rollclick-to-expand"><i class="fa fa-line-chart"></i> Drum roll<span id="heading-5044995150">Click to expand</span></h3></div><div class="panel-body" style="display: none" id="panel-5044995150"><p>Using <code>o</code>, we specify to the compiler to use optimization for speed. Using <code>g</code>, we specify to the compiler that we want to enable debug symbols. Confused by this? Check out Part 9 of this tutorial, &apos;Best Practices&apos;, where there is a lot of information about this!</p>
 </div></div></div></div></p>
 <p>We have now compiled our class. If we want to access it with Python, we can e.g. do</p>
 <pre><code class="lang-python"><span class="hljs-keyword">from</span> ROOT <span class="hljs-keyword">import</span> gSystem
@@ -1008,7 +1021,7 @@ m = MyClass()
 m.SetValue(<span class="hljs-number">42</span>)
 print(m.GetValue())
 </code></pre>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2383560114);" id="so--why-would-i-use-this"><i class="fa fa-info-circle"></i> So ... why would I use this?<span id="heading-2383560114"></span></h3></div><div class="panel-body" id="panel-2383560114"><p>Whether or not you to use PyROOT is fully up to you: most people find the syntax easier than that of C++, and of course on does not have to worry about memory management when you use Python. </p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3146310035);" id="so--why-would-i-use-this"><i class="fa fa-info-circle"></i> So ... why would I use this?<span id="heading-3146310035"></span></h3></div><div class="panel-body" id="panel-3146310035"><p>Whether or not you to use PyROOT is fully up to you: most people find the syntax easier than that of C++, and of course on does not have to worry about memory management when you use Python. </p>
 <p>With the advent of ROOT6, an attractive feature of PyROOT can be <em>speed</em></p>
 <ul>
 <li>CLING will compile your macro&apos;s line-by-line, which can sometimes lead to sluggish execution</li>
@@ -1059,7 +1072,7 @@ print(m.GetValue())
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PyROOT","level":"1.9.12","depth":2,"next":{"title":"Part 9 - Best Practices","level":"1.10","depth":1,"path":"analysis/bestprac/best_prac.md","ref":"analysis/bestprac/best_prac.md","articles":[{"title":"Preparing your code for debugging","level":"1.10.1","depth":2,"path":"analysis/bestprac/preparing.md","ref":"analysis/bestprac/preparing.md","articles":[]},{"title":"Some general programming tips","level":"1.10.2","depth":2,"path":"analysis/bestprac/general.md","ref":"analysis/bestprac/general.md","articles":[]},{"title":"Where does my code crash","level":"1.10.3","depth":2,"path":"analysis/bestprac/crash.md","ref":"analysis/bestprac/crash.md","articles":[]},{"title":"Finding memory leaks","level":"1.10.4","depth":2,"path":"analysis/bestprac/memory.md","ref":"analysis/bestprac/memory.md","articles":[]}]},"previous":{"title":"Learning more","level":"1.9.11","depth":2,"path":"analysis/python/learning.md","ref":"analysis/python/learning.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/python/pyroot.md","mtime":"2018-11-19T17:03:59.901Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-20T19:43:38.985Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PyROOT","level":"1.9.12","depth":2,"next":{"title":"Part 9 - Best Practices","level":"1.10","depth":1,"path":"analysis/bestprac/best_prac.md","ref":"analysis/bestprac/best_prac.md","articles":[{"title":"Preparing your code for debugging","level":"1.10.1","depth":2,"path":"analysis/bestprac/preparing.md","ref":"analysis/bestprac/preparing.md","articles":[]},{"title":"Some general programming tips","level":"1.10.2","depth":2,"path":"analysis/bestprac/general.md","ref":"analysis/bestprac/general.md","articles":[]},{"title":"Where does my code crash","level":"1.10.3","depth":2,"path":"analysis/bestprac/crash.md","ref":"analysis/bestprac/crash.md","articles":[]},{"title":"Finding memory leaks","level":"1.10.4","depth":2,"path":"analysis/bestprac/memory.md","ref":"analysis/bestprac/memory.md","articles":[]}]},"previous":{"title":"Learning more","level":"1.9.11","depth":2,"path":"analysis/python/learning.md","ref":"analysis/python/learning.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/python/pyroot.md","mtime":"2018-11-20T19:43:53.297Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-21T08:32:48.905Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

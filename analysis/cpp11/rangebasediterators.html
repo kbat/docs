@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Range-based iterators · PEP root6 workshop</title>
+        <title>Range-based iterations · PEP root6 workshop</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -191,7 +191,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="initlists.html">
+        <li class="chapter " data-level="1.4.2" data-path="enums.html">
+            
+                <a href="enums.html">
+            
+                    
+                    Strongly typed enums
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="initlists.html">
             
                 <a href="initlists.html">
             
@@ -204,7 +217,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="auto.html">
+        <li class="chapter " data-level="1.4.4" data-path="auto.html">
             
                 <a href="auto.html">
             
@@ -217,12 +230,12 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4.4" data-path="rangebasediterators.html">
+        <li class="chapter active" data-level="1.4.5" data-path="rangebasediterators.html">
             
                 <a href="rangebasediterators.html">
             
                     
-                    Range-based iterators
+                    Range-based iterations
             
                 </a>
             
@@ -230,7 +243,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.5" data-path="stl.html">
+        <li class="chapter " data-level="1.4.6" data-path="stl.html">
             
                 <a href="stl.html">
             
@@ -243,12 +256,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.6" data-path="lambda.html">
+        <li class="chapter " data-level="1.4.7" data-path="lambda.html">
             
                 <a href="lambda.html">
             
                     
-                    lambda functions
+                    lambda expressions
             
                 </a>
             
@@ -256,7 +269,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.7" data-path="variadic.html">
+        <li class="chapter " data-level="1.4.8" data-path="variadic.html">
             
                 <a href="variadic.html">
             
@@ -269,7 +282,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.8" data-path="move.html">
+        <li class="chapter " data-level="1.4.9" data-path="move.html">
             
                 <a href="move.html">
             
@@ -705,7 +718,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >Range-based iterators</a>
+        <a href="../.." >Range-based iterations</a>
     </h1>
 </div>
 
@@ -720,7 +733,32 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="range-based-iterators">Range-based iterators</h1>
+                                <h1 id="range-based-iterations">Range-based iterations</h1>
+<p>Range-based for loops provide a simple and intuitive way to loop over iterable types like stl containers or C arrays.</p>
+<pre><code class="lang-cpp"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v{<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>};
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; val : v) <span class="hljs-built_in">cout</span> &lt;&lt; val &lt;&lt; <span class="hljs-built_in">endl</span>;
+
+
+<span class="hljs-keyword">float</span> arr[] = {<span class="hljs-number">4.</span>,<span class="hljs-number">5.</span>,<span class="hljs-number">6.</span>};
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; val : arr) <span class="hljs-built_in">cout</span> &lt;&lt; val &lt;&lt; <span class="hljs-built_in">endl</span>;
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> val : arr) val*=val;
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; val : arr) <span class="hljs-built_in">cout</span> &lt;&lt; val &lt;&lt; <span class="hljs-built_in">endl</span>;
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; val : arr) val*=val;
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; val : arr) <span class="hljs-built_in">cout</span> &lt;&lt; val &lt;&lt; <span class="hljs-built_in">endl</span>;
+</code></pre>
+<p>Can also be used with ROOT containers (returns pointer to TObject!):</p>
+<pre><code class="lang-cpp"><span class="hljs-function">TClonesArray <span class="hljs-title">arr</span><span class="hljs-params">(<span class="hljs-string">&quot;TParticle&quot;</span>)</span></span>;
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; ++i) {
+  TParticle&amp; part = *<span class="hljs-keyword">static_cast</span>&lt;TParticle*&gt;(arr.ConstructedAt(i));
+  part.SetPdgCode(i);
+}
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> o : arr) {
+  TParticle&amp; part = *<span class="hljs-keyword">static_cast</span>&lt;TParticle*&gt;(o);
+  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Pdg code: &quot;</span> &lt;&lt;  part.GetPdgCode() &lt;&lt; <span class="hljs-string">&apos;\n&apos;</span>;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -764,7 +802,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Range-based iterators","level":"1.4.4","depth":2,"next":{"title":"Standard library","level":"1.4.5","depth":2,"path":"analysis/cpp11/stl.md","ref":"analysis/cpp11/stl.md","articles":[]},"previous":{"title":"Implicit typing","level":"1.4.3","depth":2,"path":"analysis/cpp11/auto.md","ref":"analysis/cpp11/auto.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/cpp11/rangebasediterators.md","mtime":"2018-11-19T17:03:59.900Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-20T19:43:38.985Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Range-based iterations","level":"1.4.5","depth":2,"next":{"title":"Standard library","level":"1.4.6","depth":2,"path":"analysis/cpp11/stl.md","ref":"analysis/cpp11/stl.md","articles":[]},"previous":{"title":"Implicit typing","level":"1.4.4","depth":2,"path":"analysis/cpp11/auto.md","ref":"analysis/cpp11/auto.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/cpp11/rangebasediterators.md","mtime":"2018-11-21T08:32:35.641Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-21T08:32:48.905Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
