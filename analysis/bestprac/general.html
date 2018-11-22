@@ -766,9 +766,6 @@ limits</li>
 <li><strong>cache trashing</strong>, <em>i.e.</em> the constant invalidation of the caches that are
 supposed to speed up code execution</li>
 </ul>
-<p>A bad example that uses massively string comparisons has been found inside ROOT
-thanks to the IgProf profiler, and the code has been amended, as we will see
-later on.</p>
 <p>To improve lookups in large collections, please consider
 <a href="http://root.cern.ch/root/html/THashList.html" target="_blank">THashList</a> instead of TList: a
 &quot;hash&quot; is a fixed-size byte sequence (usually an integer) associated to each
@@ -866,18 +863,6 @@ are contiguous collections of elements</strong> in memory.</p>
 impairing when applied to a very large collection: use a <code>TList</code> in such a
 case.</p>
 <h3 id="root-io-and-objects">ROOT I/O and objects</h3>
-<p>A note about ROOT objects (<em>i.e.</em> objects inheriting from <code>TObject</code>, <em>i.e.</em>
-most likely <strong>your own</strong> objects): ROOT as you know needs a default constructor
-for I/O that takes no arguments. You should create at least <strong>two
-constructors</strong> in your code for clarity:</p>
-<ul>
-<li>The default one, needed by ROOT, that should be called only by ROOT when
-storing or restoring object from a file, and should never be used by the
-programmer directly: <strong>do not write any memory allocation instruction there</strong>,
-leave it as empty as possible!</li>
-<li>The &quot;explicit&quot; one, taking at least one argument, which should do the actual
-stuff and should be used by the programmer when creating a new object.</li>
-</ul>
 <p>Histograms or trees obtained from a file with statements like:</p>
 <pre><code class="lang-c++">TH1F *histo = (TH1F *)myFile-&gt;Get(<span class="hljs-string">&quot;myHist&quot;</span>);
 </code></pre>
@@ -943,10 +928,6 @@ have for sure recognized the logic errors in the code.</li>
 <li>Warnings clog compilation output and make more difficult to detect actual
 errors when they occur.</li>
 </ul>
-<p>Note that by default aliBuild conceals the compilation output. You need to pass
-the <code>--debug</code> option to actually see the warnings popping up:</p>
-<pre><code class="lang-bash">aliBuild build AliPhysics --debug
-</code></pre>
 <h3 id="when-to-use-pointers">When to use pointers</h3>
 <p>As a general rule, it is not always a good idea to use pointers to objects as
 data members of your class. If objects are big you are forced to use it, but
@@ -1066,7 +1047,7 @@ like:</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Some general programming tips","layout":"tweet","createtoc":true,"parnumbers":true,"level":"1.10.2","depth":2,"next":{"title":"Where does my code crash","level":"1.10.3","depth":2,"path":"analysis/bestprac/crash.md","ref":"analysis/bestprac/crash.md","articles":[]},"previous":{"title":"Preparing your code for debugging","level":"1.10.1","depth":2,"path":"analysis/bestprac/preparing.md","ref":"analysis/bestprac/preparing.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/bestprac/general.md","mtime":"2018-11-22T08:53:25.444Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-22T10:59:58.511Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Some general programming tips","layout":"tweet","createtoc":true,"parnumbers":true,"level":"1.10.2","depth":2,"next":{"title":"Where does my code crash","level":"1.10.3","depth":2,"path":"analysis/bestprac/crash.md","ref":"analysis/bestprac/crash.md","articles":[]},"previous":{"title":"Preparing your code for debugging","level":"1.10.1","depth":2,"path":"analysis/bestprac/preparing.md","ref":"analysis/bestprac/preparing.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/bestprac/general.md","mtime":"2018-11-22T13:32:37.733Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-22T14:30:33.494Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
