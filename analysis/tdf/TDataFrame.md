@@ -155,7 +155,7 @@ ROOT::EnableImplicitMT();
 ```
 ![speedup](speedup.png)
 
-Simple as that, enjoy your speed-up.
+Simple as that, enjoy your speed-up. Or a crash...
 
 ###### Demo on TDF and CSV
 
