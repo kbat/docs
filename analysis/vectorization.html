@@ -743,7 +743,7 @@
 <li>MISD: multiple instruction streams, single data stream</li>
 <li>MIMD: multiple instruction streams, multiple data streams (basically a distributed system)</li>
 </ul>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2802149350);" id="-misd-"><i class="fa fa-info-circle"></i>  MISD? <span id="heading-2802149350"></span></h3></div><div class="panel-body" id="panel-2802149350"><p>The MISD architecture might seem very strange, but is used in application where fault tolerance is extremely important, such as the flight control computer of the Space Shuttle program. </p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3149352791);" id="-misd-"><i class="fa fa-info-circle"></i>  MISD? <span id="heading-3149352791"></span></h3></div><div class="panel-body" id="panel-3149352791"><p>The MISD architecture might seem very strange, but is used in application where fault tolerance is extremely important, such as the flight control computer of the Space Shuttle program. </p>
 </div></div></p>
 <p>Vectorization relies on the properties of SIMD: single instruction stream, multiple data streams. </p>
 <h2 id="what-is-vectorization">What is vectorization?</h2>
@@ -752,45 +752,51 @@
 <li>scalar implementation, which processes a single pair of operands at a time, to a </li>
 <li>vector implementation, which processes one operation on multiple pairs of operands at once. </li>
 </ul>
-<p>Conventional computers typically have vector operations that simultaneously perform operations via SIMD or SPMD hardware. How does this work? Say we want to multiply two vectors of numeric data. A scalar approach would be something like: </p>
+<p><strong>Conventional computers typically can perform SIMD tasks</strong>. How does this work? Say we want to multiply two vectors of numeric data. A scalar approach would be something like: </p>
 <pre><code class="lang-cpp"> <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1024</span>; i++)
     C[i] = A[i]*B[i];
 </code></pre>
-<p>The loop is executed 1024 times. Not only that, but for each iteration, and new and independent data pool and instruction pool are required. </p>
-<p>This could be vectorized to look something like: </p>
+<p>The loop is executed 1024 times. Not only that, but <strong>for each iteration, and new and independent data pool and instruction pool</strong> are required. </p>
+<p>This could be <strong>vectorized</strong> to look something like: </p>
 <pre><code class="lang-cpp">  <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1024</span>; i+=<span class="hljs-number">4</span>)
      C[i:i+<span class="hljs-number">3</span>] = A[i:i+<span class="hljs-number">3</span>]*B[i:i+<span class="hljs-number">3</span>];
 </code></pre>
-<p>Here, C[i:i+3] represents the four array elements from C[i] to C[i+3] and the vector processor can perform four operations for a single vector instruction. The loop is only evaluated 256 times, and since the four vector operations complete in roughly the same time as one scalar instruction (for each iteration, one data pool and one instruction pool are required), the vector approach can run up to four times faster than the original code.</p>
+<p>Here, </p>
+<ul>
+<li>C[i:i+3] represents the four array elements from C[i] to C[i+3] and </li>
+<li>the vector processor can perform four operations for a single vector instruction</li>
+<li>the loop is <strong>only evaluated 256 times</strong>, and </li>
+<li>since the four vector operations complete in roughly the same time as one scalar instruction (for each iteration, one data pool and one instruction pool are required), the vector approach can <strong>run up to four times faster</strong> than the original code.</li>
+</ul>
 <h2 id="how-is-this-helpful-">How is this helpful ?</h2>
 <p>Vectorization uses <strong>data level parallelism</strong> but not concurrency: </p>
 <ul>
 <li>there are simultaneous (parallel) computations, but </li>
 <li>only a single process (instruction) at a given moment. </li>
 </ul>
-<p>SIMD is particularly applicable to common tasks such as adjusting the contrast in a digital image or adjusting the volume of digital audio. Most modern CPU designs include SIMD instructions to improve the performance of multimedia use. </p>
-<p>Vectorization can be very useful, but for very specific problems, e.g. when</p>
+<p>So vectorization can be very useful, but for very specific problems, e.g. when the same value is being added to (or subtracted from) a large number of data points. </p>
 <ul>
-<li>The same value is being added to (or subtracted from) a large number of data points. This is an often used application of SIMD: for example when changing the brightness of an image where each pixel of an image consists of three values for the brightness of the red (R), green (G) and blue (B) portions of the color and a common value is added to (or subtracted from) them</li>
+<li>This is an often used application of SIMD: for example when changing the brightness of an image where each pixel of an image consists of three values for the brightness of the red (R), green (G) and blue (B) portions of the color and a common value is added to (or subtracted from) them</li>
 </ul>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6870641807);" id="why-not-vectorize-the-world---"><i class="fa fa-info-circle"></i> Why not vectorize the world .. ? <span id="heading-6870641807"></span></h3></div><div class="panel-body" id="panel-6870641807"><p>Not all algorithms can be vectorized easily! Additionally, vectorization is labor-intensive: implementing an algorithm with SIMD instructions usually requires human intervention as most compilers do not generate SIMD instructions from a typical C/C++/etc program. </p>
-<p>Automatic vectorization in compilers is an active area of computer science research, as e.g. modern graphics processing units (GPUs) are often wide SIMD implementations, capable of branches, loads, and stores on 128 or 256 bits at a time. </p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(3036771769);" id="why-not-vectorize-everything---"><i class="fa fa-info-circle"></i> Why not vectorize everything .. ? <span id="heading-3036771769"></span></h3></div><div class="panel-body" id="panel-3036771769"><p>Not all algorithms can be vectorized easily! Additionally, vectorization is labor-intensive: implementing an algorithm with SIMD instructions usually requires human intervention as most compilers do not generate SIMD instructions from a typical C/C++/etc program. </p>
+<p>Automatic vectorization in compilers is an active area of computer science research, as e.g. modern graphics processing units (GPUs) are often wide SIMD implementations, capable performing tasks on 128 or 256 bits at a time. </p>
 </div></div></p>
 <h1 id="vectorization-support-in-root">Vectorization support in ROOT</h1>
-<p>We would not talk about vectorization if it would not have a direct connection to ROOT. Also in physics, some problems might benefit from vectorization. Therefore, ROOT has introduced built-in vector types: <code>Float_v</code> and <code>Double_v</code>, which look like normal types (<code>float</code> and <code>double</code>), but the suffix <code>_v</code> tells us that they are vector types. </p>
+<p>We would not talk about vectorization if it would not have a direct connection to ROOT. Also in physics, some problems might benefit from vectorization. </p>
+<p>ROOT6 has introduced built-in vector types: <code>Float_v</code> and <code>Double_v</code>, which look like normal types (<code>float</code> and <code>double</code>), <strong>but the suffix <code>_v</code> tells us that they are vector types</strong>. </p>
 <p>Vectorization support in ROOT comprises the following:</p>
 <ul>
-<li>Integration of VecCore in ROOT as the common vector abstraction in HEP<ul>
-<li>Definition of new ROOT SIMD types: ROOT::Double_v, ROOT::Float_v.</li>
-</ul>
-</li>
+<li>Definition of new ROOT SIMD types: ROOT::Double_v, ROOT::Float_v (via the VecCore library)</li>
 <li>Adaptation of TF1 to evaluate functions evaluating over vector types.</li>
 <li>Adaptation of the fitting classes and interfaces in ROOT to accept the new</li>
-<li>SIMD types and functions implementing them.</li>
 <li>Parallelization of the fitting objective functions (Max. Likelihood, Least
 Squares)</li>
 </ul>
-<p>TFormula supports vectorization. All the TF1 objected created with a formula expression can have a vectorized signature using ROOT::Double_v: TF1::EvalPar( ROOT::Double_v <em> x, double </em> p). The vectorization can then be used to speed-up fitting. It is not enabled by default, but it can be enabled by callig TF1::SetVectorized(true) or using the &quot;VEC&quot; option in the constructor of TF1, when ROOT has been built with VecCore and one vectorization library such as Vc.</p>
+<p>TFormula supports vectorization. </p>
+<ul>
+<li>All the TF1 objected created with a formula expression can have a vectorized signature using <code>ROOT::Double_v: TF1::EvalPar( ROOT::Double_v * x, double * p).</code> </li>
+<li>The vectorization can then be used to speed-up fitting</li>
+</ul>
 <pre><code class="lang-cpp"><span class="hljs-comment">//Higgs Fit: Implementation of the scalar function</span>
 <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> *data, <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> *params)</span> </span>{
    <span class="hljs-keyword">return</span> params[<span class="hljs-number">0</span>] * <span class="hljs-built_in">exp</span>(-(*data + (<span class="hljs-number">-130.</span>)) * (*data + (<span class="hljs-number">-130.</span>)) / <span class="hljs-number">2</span>) +
@@ -821,7 +827,7 @@ h1f.FillRandom(&#x201D;fvCore&#x201D;, <span class="hljs-number">1000000</span>)
 h1f.Fit(f, &#x201D;MULTITHREAD&#x201D;);
 </code></pre>
 <p>As you see, the changes to user code are minimal. However, behind the scenes, the fitting operation exploits SIMD principles to speed up the execution of your code. </p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(8970153906);" id="support-for-vector-types-in-c"><i class="fa fa-info-circle"></i> Support for vector types in C++<span id="heading-8970153906"></span></h3></div><div class="panel-body" id="panel-8970153906"><p>C++ supports vector types through e.g. <code>Vc</code></p>
+<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5607493584);" id="support-for-vector-types-in-c"><i class="fa fa-info-circle"></i> Support for vector types in C++<span id="heading-5607493584"></span></h3></div><div class="panel-body" id="panel-5607493584"><p>C++ supports vector types through e.g. <code>Vc</code></p>
 <pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Vc/Vc&gt;</span></span>
 <span class="hljs-keyword">using</span> float_v = Vc::float_v;
 ...
@@ -877,7 +883,7 @@ h1f.Fit(f, &#x201D;MULTITHREAD&#x201D;);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Part 6 - Vectorization","level":"1.7","depth":1,"next":{"title":"Part 7 - Declarative analysis","level":"1.8","depth":1,"path":"analysis/tdf/declarative.md","ref":"analysis/tdf/declarative.md","articles":[{"title":"Declarative programming","level":"1.8.1","depth":2,"path":"analysis/tdf/concept.md","ref":"analysis/tdf/concept.md","articles":[]},{"title":"TDataFrame","level":"1.8.2","depth":2,"path":"analysis/tdf/TDataFrame.md","ref":"analysis/tdf/TDataFrame.md","articles":[]},{"title":"Additional material","level":"1.8.3","depth":2,"path":"analysis/tdf/more.md","ref":"analysis/tdf/more.md","articles":[]}]},"previous":{"title":"Part 5 - 5 to 6: changes to user code","level":"1.6","depth":1,"path":"analysis/changes.md","ref":"analysis/changes.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/vectorization.md","mtime":"2018-11-21T16:13:34.633Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-22T07:49:32.304Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Part 6 - Vectorization","level":"1.7","depth":1,"next":{"title":"Part 7 - Declarative analysis","level":"1.8","depth":1,"path":"analysis/tdf/declarative.md","ref":"analysis/tdf/declarative.md","articles":[{"title":"Declarative programming","level":"1.8.1","depth":2,"path":"analysis/tdf/concept.md","ref":"analysis/tdf/concept.md","articles":[]},{"title":"TDataFrame","level":"1.8.2","depth":2,"path":"analysis/tdf/TDataFrame.md","ref":"analysis/tdf/TDataFrame.md","articles":[]},{"title":"Additional material","level":"1.8.3","depth":2,"path":"analysis/tdf/more.md","ref":"analysis/tdf/more.md","articles":[]}]},"previous":{"title":"Part 5 - 5 to 6: changes to user code","level":"1.6","depth":1,"path":"analysis/changes.md","ref":"analysis/changes.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/vectorization.md","mtime":"2018-11-22T08:52:06.171Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-22T08:53:13.415Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
