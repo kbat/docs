@@ -6,28 +6,17 @@ Skip to the class reference or keep reading for the user guide.
 
 In a nutshell:
 ```c++
-ROOT::EnableImplicitMT(); // Tell ROOT you want to go parallel
 ROOT::Experimental::TDataFrame d("myTree", file); // Interface to TTree and TChain
 auto myHisto = d.Histo1D("Branch_A"); // This happens in parallel!
 myHisto->Draw();
 ```
 Depending on the ROOT6 version:
 ```c++
-ROOT::EnableImplicitMT(); // Tell ROOT you want to go parallel
 ROOT::RDataFrame d("myTree", file); // Interface to TTree and TChain
 auto myHisto = d.Histo1D("Branch_A"); // This happens in parallel!
 myHisto->Draw();
 ```
-Calculations are expressed in terms of a type-safe functional chain of actions and transformations, TDataFrame takes care of their execution. The implementation automatically puts in place several low level optimisations such as multi-thread parallelisation and caching. The namespace containing the TDataFrame is ROOT::Experimental. This signals the fact that the interfaces may evolve in time.
-
-## Table of Contents
-
-* Introduction
-* Crash course
-* More features
-* Transformations
-* Actions
-* Parallel execution
+Calculations are expressed in terms of a type-safe functional chain of actions and transformations, TDataFrame takes care of their execution. The implementation automatically puts in place several low level optimisations such as multi-thread parallelisation and caching.
 
 ## Introduction
 
@@ -164,17 +153,17 @@ Let's say we would like to run the previous examples in parallel on several core
 ```c++
 ROOT::EnableImplicitMT();
 ```
+![speedup](speedup.png)
+
 Simple as that, enjoy your speed-up.
 
 ###### Demo on TDF and CSV
 
 ---
 ###Exercise
-Now it's your turn. Use an existing macro you have to perfom analysis on a tree and rewrite it to utilise the TDataFrame.
+Now it's your turn. Use an existing macro you have to perfom analysis on a tree and write one that does the same but uses the TDataFrame.
 
-If you want to start from scratch to get the basics try the following:
-
-Use the TDataFrame to calculate an invariant mass spectrum for three provided csv files and compare their outputs. Check if you can speed up the calculation when using multi threading.
-If you want to just use a tree and not a csv go back to the macro in Part 4: Parallelism in ROOT, and create a tree.
+Or look for a csv file online and play around with this.
+Or use the tree maker macro by Redmer in the section on parllelism.
 
 Have fun!
