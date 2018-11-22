@@ -51,9 +51,6 @@ Massive string comparison, even if this is unobvious, leads to:
 * **cache trashing**, *i.e.* the constant invalidation of the caches that are
   supposed to speed up code execution
 
-A bad example that uses massively string comparisons has been found inside ROOT
-thanks to the IgProf profiler, and the code has been amended, as we will see
-later on.
 
 To improve lookups in large collections, please consider
 [THashList](http://root.cern.ch/root/html/THashList.html) instead of TList: a
@@ -181,18 +178,6 @@ case.
 
 ### ROOT I/O and objects
 
-A note about ROOT objects (*i.e.* objects inheriting from `TObject`, *i.e.*
-most likely **your own** objects): ROOT as you know needs a default constructor
-for I/O that takes no arguments. You should create at least **two
-constructors** in your code for clarity:
-
-* The default one, needed by ROOT, that should be called only by ROOT when
-  storing or restoring object from a file, and should never be used by the
-  programmer directly: **do not write any memory allocation instruction there**,
-  leave it as empty as possible!
-* The "explicit" one, taking at least one argument, which should do the actual
-  stuff and should be used by the programmer when creating a new object.
-
 Histograms or trees obtained from a file with statements like:
 
 ```c++
@@ -274,13 +259,6 @@ Two good examples clarifying why warnings should not be ignored:
   have for sure recognized the logic errors in the code.
 * Warnings clog compilation output and make more difficult to detect actual
   errors when they occur.
-
-Note that by default aliBuild conceals the compilation output. You need to pass
-the `--debug` option to actually see the warnings popping up:
-
-```bash
-aliBuild build AliPhysics --debug
-```
 
 
 ### When to use pointers

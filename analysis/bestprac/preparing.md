@@ -4,7 +4,7 @@ Preparing your code for debugging
 In broad terms when building software you typically have the option between
 generating either a **release** or a **debug** build.
 
-This also applies to ROOT (and AliRoot, AliPhysics), and your compiled analysis tasks
+This also applies to ROOT  and your compiled analysis tasks
 and macros. As the name suggests:
 
 * **release** builds are meant for production and should be used when running
@@ -116,7 +116,7 @@ Suppose your analysis task is called `AliAnalysisTaskDummyTask`. In the macro
 you use to load the analysis task, you can do:
 
 ```c++
-gROOT->LoadMacro("AliAnalysisTaskDummyTask.cxx++g");
+gInterpreter->LoadMacro("AliAnalysisTaskDummyTask.cxx++g");
 ```
 
 The "double plus" forces recompilation, while the appended `g` tells ROOT to
@@ -124,7 +124,7 @@ compile the task with debug symbols. Once your code is in production, just
 remove the `g`:
 
 ```c++
-gROOT->LoadMacro("AliAnalysisTaskDummyTask.cxx++");
+gInterpreter->LoadMacro("AliAnalysisTaskDummyTask.cxx++");
 ```
 
 Please note that debug code is considerably slower than production code,

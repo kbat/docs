@@ -117,7 +117,7 @@ valgrind \
   --leak-check=no \
   --num-callers=40 \
   --log-file=/tmp/valgrind_memory.log \
-  aliroot -b -q launchMyAnalysis.C+
+  root -b -q launchMyAnalysis.C+
 ```
 
 A couple of notes.
@@ -149,7 +149,7 @@ presented:
 
 Valgrind has a performance profiler called
 [callgrind](http://valgrind.org/docs/manual/cl-manual.html). Its
-purpose, like IgProf, is to analyze how much time is spent in each
+purpose is to analyze how much time is spent in each
 function. As we have already discussed, being a deterministic tool
 every single function of your program is trapped and captured, which
 makes the tool very precise, but also very slow.
@@ -161,13 +161,13 @@ that can be installed on Ubuntu 14.04 with:
 sudo apt install kcachegrind
 ```
 
-The typical way of invoking Valgrind's callgrind for AliRoot programs is:
+The typical way of invoking Valgrind's callgrind for Root programs is:
 
 ```bash
 valgrind
   --tool=callgrind \
   --log-file=/tmp/valgrind_callgrind.log \
-  aliroot -b -q launchMyAnalysis.C+
+  root -b -q launchMyAnalysis.C+
 ```
 
 The produced output can be browsed interactively by means of KCachegrind. An
