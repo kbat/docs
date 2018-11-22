@@ -24,23 +24,27 @@ Vectorization is a special case of automatic parallelization, where a computer p
 - scalar implementation, which processes a single pair of operands at a time, to a 
 - vector implementation, which processes one operation on multiple pairs of operands at once. 
 
-Conventional computers typically have vector operations that simultaneously perform operations via SIMD or SPMD hardware. How does this work? Say we want to multiply two vectors of numeric data. A scalar approach would be something like: 
+**Conventional computers typically can perform SIMD tasks**. How does this work? Say we want to multiply two vectors of numeric data. A scalar approach would be something like: 
 
 ```cpp
  for (i = 0; i < 1024; i++)
     C[i] = A[i]*B[i];
 ```
 
-The loop is executed 1024 times. Not only that, but for each iteration, and new and independent data pool and instruction pool are required. 
+The loop is executed 1024 times. Not only that, but **for each iteration, and new and independent data pool and instruction pool** are required. 
 
-This could be vectorized to look something like: 
+This could be **vectorized** to look something like: 
 
 ```cpp
   for (i = 0; i < 1024; i+=4)
      C[i:i+3] = A[i:i+3]*B[i:i+3];
 ```
 
-Here, C[i:i+3] represents the four array elements from C[i] to C[i+3] and the vector processor can perform four operations for a single vector instruction. The loop is only evaluated 256 times, and since the four vector operations complete in roughly the same time as one scalar instruction (for each iteration, one data pool and one instruction pool are required), the vector approach can run up to four times faster than the original code.
+Here, 
+- C[i:i+3] represents the four array elements from C[i] to C[i+3] and 
+- the vector processor can perform four operations for a single vector instruction
+- the loop is **only evaluated 256 times**, and 
+- since the four vector operations complete in roughly the same time as one scalar instruction (for each iteration, one data pool and one instruction pool are required), the vector approach can **run up to four times faster** than the original code.
 
 ## How is this helpful ? 
 
@@ -49,33 +53,32 @@ Vectorization uses **data level parallelism** but not concurrency:
 - there are simultaneous (parallel) computations, but 
 - only a single process (instruction) at a given moment. 
 
-SIMD is particularly applicable to common tasks such as adjusting the contrast in a digital image or adjusting the volume of digital audio. Most modern CPU designs include SIMD instructions to improve the performance of multimedia use. 
+So vectorization can be very useful, but for very specific problems, e.g. when the same value is being added to (or subtracted from) a large number of data points. 
+- This is an often used application of SIMD: for example when changing the brightness of an image where each pixel of an image consists of three values for the brightness of the red (R), green (G) and blue (B) portions of the color and a common value is added to (or subtracted from) them
 
-Vectorization can be very useful, but for very specific problems, e.g. when
-
-- The same value is being added to (or subtracted from) a large number of data points. This is an often used application of SIMD: for example when changing the brightness of an image where each pixel of an image consists of three values for the brightness of the red (R), green (G) and blue (B) portions of the color and a common value is added to (or subtracted from) them
-
-{% callout "Why not vectorize the world .. ? " %}
+{% callout "Why not vectorize everything .. ? " %}
 Not all algorithms can be vectorized easily! Additionally, vectorization is labor-intensive: implementing an algorithm with SIMD instructions usually requires human intervention as most compilers do not generate SIMD instructions from a typical C/C++/etc program. 
 
-Automatic vectorization in compilers is an active area of computer science research, as e.g. modern graphics processing units (GPUs) are often wide SIMD implementations, capable of branches, loads, and stores on 128 or 256 bits at a time. 
+Automatic vectorization in compilers is an active area of computer science research, as e.g. modern graphics processing units (GPUs) are often wide SIMD implementations, capable performing tasks on 128 or 256 bits at a time. 
 {% endcallout %}
 
 # Vectorization support in ROOT
 
-We would not talk about vectorization if it would not have a direct connection to ROOT. Also in physics, some problems might benefit from vectorization. Therefore, ROOT has introduced built-in vector types: `Float_v` and `Double_v`, which look like normal types (`float` and `double`), but the suffix `_v` tells us that they are vector types. 
+We would not talk about vectorization if it would not have a direct connection to ROOT. Also in physics, some problems might benefit from vectorization. 
+
+ROOT6 has introduced built-in vector types: `Float_v` and `Double_v`, which look like normal types (`float` and `double`), **but the suffix `_v` tells us that they are vector types**. 
 
 Vectorization support in ROOT comprises the following:
 
-* Integration of VecCore in ROOT as the common vector abstraction in HEP
-  * Definition of new ROOT SIMD types: ROOT::Double_v, ROOT::Float_v.
+* Definition of new ROOT SIMD types: ROOT::Double_v, ROOT::Float_v (via the VecCore library)
 * Adaptation of TF1 to evaluate functions evaluating over vector types.
 * Adaptation of the fitting classes and interfaces in ROOT to accept the new
-* SIMD types and functions implementing them.
 * Parallelization of the fitting objective functions (Max. Likelihood, Least
 Squares)
 
-TFormula supports vectorization. All the TF1 objected created with a formula expression can have a vectorized signature using ROOT::Double_v: TF1::EvalPar( ROOT::Double_v * x, double * p). The vectorization can then be used to speed-up fitting. It is not enabled by default, but it can be enabled by callig TF1::SetVectorized(true) or using the "VEC" option in the constructor of TF1, when ROOT has been built with VecCore and one vectorization library such as Vc.
+TFormula supports vectorization. 
+- All the TF1 objected created with a formula expression can have a vectorized signature using `ROOT::Double_v: TF1::EvalPar( ROOT::Double_v * x, double * p).` 
+- The vectorization can then be used to speed-up fitting
 
 ```cpp
 //Higgs Fit: Implementation of the scalar function
