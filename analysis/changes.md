@@ -51,56 +51,68 @@ into ROOT
 compatible with the C++ standard and coding error free as the compiler will not
 tolerate compiler errors.
 
-In contrast to this *ROOT6* uses a just-in-time compiler called *cling*. A
-just-in-time compiler translates each statement, no matter whether it is a single
+## CLING
+
+In contrast to this *ROOT6* uses a just-in-time compiler called **CLING**. A
+just-in-time compiler 
+- translates each statement, no matter whether it is a single
 command or a complicated macro, into machine code as it would be a program and
-only afterwards runs this piece of code. In order to translate code into machine
-code the compiler must know how to translate every single line. Based on powerful
-compiler library this means for *ROOT6* that all macro must comply to 100% with
-the C++ language standard, and exceptions will not be tolerated. Furthermore this
-also means that all symbols and objects must be known at compile time. This has
+- only afterwards runs this piece of code. 
+
+In order to translate code into machine
+code **the compiler must know** how to translate every single line. Based on powerful
+compiler library this means for *ROOT6* that all macro **must comply to 100% with
+the C++ language standard**, and exceptions will not be tolerated. Furthermore this
+also means that all symbols and objects must be **known at compile time**. This has
 three side effects:
 
-- Loading Functions with `gROOT->LoadMacro(...);`: This function loads all
-  functions it finds within the macro into ROOT during run time. For an interpreter
-  this is sufficient as the functions are used after they are loaded. However the
-  compiler must know all symbols used in a macro at compile time.
-- Loading libraries with `gSystem->Load(...);`: Here we have the same problem:
-  The symbols in the libraries must be known before they are used.
-- Compiling ALICE analysis tasks on the fly with `gROOT->LoadMacro("...+");`:
-  As the analysis task compiled like this will be converted in a library it must be
+- **Loading Functions with `gROOT->LoadMacro(...);`:** This function loads all
+  functions it finds within the macro into ROOT during run time. 
+ - For an interpreter
+  this is sufficient as the functions are used after they are loaded. 
+ - However the  compiler must know all symbols used in a macro at compile time.
+- **Loading libraries with `gSystem->Load(...);`: **
+ - Here we have the same problem!
+ -  The symbols in the libraries must be known before they are used.
+- **Compiling (ALICE analysis) tasks on the fly with `gROOT->LoadMacro("...+");`:**
+ -  As the analysis task compiled like this will be converted in a library it must be
   know to the just-in-time compiler before.
 
 For all three cases exist workarounds which will be discussed in the next
-sections. In general macros which were running under *ROOT5* in the compiled mode
-will also run under *ROOT6*. Macros which were running only in the interpreted
+sections. 
+ -In general macros which were running under *ROOT5* in the compiled mode
+will also run under *ROOT6*. 
+- Macros which were running only in the interpreted
 mode might contain coding errors which were not handled by *ROOT5* and might
-therefore need fixes. However the just-in-time compiler will give precise error
+therefore need fixes. 
+- However the just-in-time compiler will give precise error
 messages leading exactly to the lines which need fixes.
 
 ## How can I call macros inside macros?
 
-Calling macros inside macros is a bit tricky as the result of a macro will be
-available only at runtime. There are however several workarounds which cover the 
+Calling macros inside macros is a bit tricky **as the result of a macro will be
+available only at runtime**. There are however several workarounds which cover the 
 most common use cases:
 
 - Using ROOT's TMacro:
 
-  TMacro is a wrapper class around the macro processing. It is constructed with
+  `TMacro` is a wrapper class around the macro processing. It is constructed with
   the macro path. The macro is run using TMacro::Exec. The result of
-  TMacro::Exec() is a number representing an address in memory where to
+  `TMacro::Exec()` is a number representing an address in memory where to
   find the resulting object. This has to be cast into a pointer to an object of
   the expected type. Example:
 
 ```cpp
-  TMacro physseladd(gSystem->ExpandPathName("$ALICE_PHYSICS/OADB/macros/AddTaskPhysicsSelection.C"));
-  AliPhysicsSelectionTask *physseltask = reinterpret_cast<AliPhysicsSelectionTask *>(physseladd.Exec());
+TMacro physseladd(gSystem->ExpandPathName("$ALICE_PHYSICS/OADB/macros/AddTaskPhysicsSelection.C"));
+AliPhysicsSelectionTask *physseltask = reinterpret_cast<AliPhysicsSelectionTask *>(physseladd.Exec());
 ```
 
-  The macro is still evaluated at runtime, however with the reinterpret_cast to
+  The macro is still evaluated at runtime, however with the **reinterpret_cast** to
   AliPhysicsSelectionTask \* we tell ROOT that the result of the macro
   interpretation must be of type AliPhysicsSelectionTask \*, so the type is known
-  at compile time. TMacro::Exec optionally gets a string representation of the
+  at compile time. 
+
+`TMacro::Exec` optionally gets a string representation of the
   function arguments. This might be a bit complicated to handle, particularly if
   the arguments are dynamic and change at run time. The method works both for
   *ROOT5* and *ROOT6*.
@@ -108,11 +120,15 @@ most common use cases:
 - Using gROOT/gInterpreter->ProcessLine: 
 
   Macro execution can be launched as well via gROOT->ProcessLine() /
-  gInterpreter->ProcessLine(). As with TMacro this method is focused on running
-  a macro and not loading content from it. The ProcessLine method returns a
+  gInterpreter->ProcessLine(). 
+  - As with TMacro this method is focused on running
+  a macro and not loading content from it. 
+  - The ProcessLine method returns a
   long number representing an address in memory where to find the output objects.
-  This number has to be cast to the expected output type using a
-  reinterpret_cast in order to access the content of the output objects. The
+  - This number has to be cast to the expected output type using a
+  reinterpret_cast in order to access the content of the output objects. 
+
+The
   following example runs the add macro for the physics selection task:
 
 ```cpp
@@ -125,8 +141,8 @@ most common use cases:
 
 - Including macros:
 
-  As *ROOT6* compiles the macro it is possible to include macros and treat them
-  as if they were header files. In order for this to work it is essential to tell
+  As *ROOT6* compiles the macro it is possible to **include macros and treat them
+  as if they were header files**. In order for this to work it is essential to tell
   ROOT before where to find the macro. This can be done using the preprocessor
   macro `R_ADD_INCLUDE_PATH(...)`. For the just-in-time compiler macros
   included will look as if they were part of the code itself. The following macro
@@ -390,12 +406,18 @@ indicate how to run *ROOT5*/*ROOT6* specific code:
 ## I heard TF1 has changed fundamentally. Is there something to be aware of?
 
 TF1 is based on TFormula for the formula representation. TFormula got a heavy
-change: In *ROOT5* formulas were always interpreted on-the-fly. With *ROOT6* they
-are compiled by the just-in-time compiler. While this leads to a significant
+change: 
+- In *ROOT5* formulas were always interpreted on-the-fly. 
+- With *ROOT6* they
+are compiled by the just-in-time compiler. 
+
+While this leads to a significant
 speedup in particular when the formula is evaluated multiple times (in fit
 procedures for example) it comes on cost of breaking backward compatibility, for
 which reading TFormula/TF1 object created with *ROOT6* with *ROOT5* will lead to
-errors. For what concerns TFormala a *ROOT5*-compatible version has been added to
+errors. 
+
+For what concerns TFormala a *ROOT5*-compatible version has been added to
 *ROOT6* as `ROOT::v5::TFormula`, however something similar does not exist for
 TF1. In order to read a TF1 object from a ROOT file under *ROOT5* it has to be
 created under *ROOT5*.
