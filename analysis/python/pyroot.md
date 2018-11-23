@@ -7,16 +7,20 @@ In the previous sections, we have introduced some basics of Python to you. Now, 
 Many existing third-party applications and libraries have so-called "Python bindings". 
 
 {% callout "Bindings" %}
-Binding generally refers to a mapping of one thing to another. In the context of software libraries, bindings are wrapper libraries that bridge two programming languages, so that a library written for one language can be used in another language.
+**Binding** generally refers to a **mapping of one thing to another**. In the context of software libraries, bindings are wrapper libraries that bridge two programming languages, so that a **library written for one language can be used in another language**.
 
 Many software libraries are written in system programming languages such as C or C++. To use such libraries from another language, usually of higher-level, a binding to the library must be created in that language, possibly requiring recompiling the language's code, depending on the amount of modification needed. However, most languages offer a foreign function interface, such as Python's ctypes.
 {% endcallout %}
 
 
-PyROOT provides Python bindings for ROOT: it enables cross-calls from ROOT/Cling into Python and vice versa, the intermingling of the two interpreters, and the transport of user-level objects from one interpreter to the other. PyROOT enables access from ROOT to any application or library that itself has Python bindings, and it makes all ROOT functionality directly available from the python interpreter.
+**PyROOT** provides Python bindings for ROOT: 
+- it enables cross-calls from ROOT/Cling into Python and vice versa, 
+- the intermingling of the two interpreters, and the 
+- transport of user-level objects from one interpreter to the other. 
+
+PyROOT enables access from ROOT to any application or library that itself has Python bindings, and **it makes all ROOT functionality** directly available from the python interpreter.
 
 
-The Python scripting language is widely used for scientific programming, including high performance and distributed parallel code (see http://www.scipy.org). It is the second most popular scripting language (after Perl) and enjoys a wide-spread use as a “glue language”: practically every library and application these days comes with Python bindings (and if not, they can be easily written or generated).
 
 PyROOT, a Python extension module, provides the bindings for the ROOT class library in a generic way using the Cling dictionary. This way, it allows the use of any ROOT classes from the Python interpreter, and thus the “glue-ing” of ROOT libraries with any non-ROOT library or applications that provide Python bindings. 
 
@@ -41,16 +45,18 @@ c1.Update()
 ```
 
 {% callout "Make sure that PyROOT is enabled" %}
-To make use of the Python Bindings of ROOT, make sure that the build of the PyROOT module is enabeled when you compile ROOT. If you use ROOT through aliBuild, ROOT6 is built with python support out-of-the-box. For ROOT5 based builds, PyROOT support is disabeled by default in aliBuild. For a manual build of ROOT, Python bindings are enabled by default, but can be disabled via the CMake options.
+To make use of the Python Bindings of ROOT, make sure that the build of the **PyROOT module is enabeled** when you compile ROOT. If you use ROOT through **aliBuild**, ROOT6 is built with python support out-of-the-box. For ROOT5 based builds, PyROOT support is disabeled by default in aliBuild. For a **manual build** of ROOT, Python bindings are enabled by default, but can be disabled via the CMake options.
 
-To load the ROOT module in your Python code, make sure that `libPyROOT.so` and the `ROOT.py` module can be resolved by the system by entering your (Ali)ROOT environment. 
+To load the ROOT module in your Python code, make sure that `libPyROOT.so` and the `ROOT.py` module can be resolved by the system by entering your ROOT environment. 
 
 {% endcallout %}
 
 
 ## Access to ROOT classes
 
-Before a ROOT class can be used from Python, its dictionary needs to be loaded into the current process. This happens automatically for all classes that are declared to the auto-loading mechanism through so-called rootmap files. Effectively, this means that all classes in the ROOT distributions are directly available for import. For example:
+Before a **ROOT class can be used from Python, its dictionary needs to be loaded into the current process**. This happens automatically for all classes that are declared to the auto-loading mechanism through so-called **rootmap** files. Effectively, this means that all classes in the ROOT distributions are directly available for import. 
+
+For example:
 
 ```python
 from ROOT import TCanvas          # available at startup
@@ -131,9 +137,7 @@ print('fit results: const =', par[0], ',pitch =', par[1])
 {% endchallenge %}
 
 ## Advanced examples: working with trees
-Next to making histograms, working with trees is probably the most common part of any analysis. The TTree implementation uses pointers and dedicated buffers to reduce the memory usage and to speed up access. Consequently, mapping TTree functionality to Python is not straightforward.
-
-Let us assume that you have a file containing TTrees, TChains, or TNtuples and want to read the contents for use in your analysis code. The following example code outlines the main steps :
+Next to making histograms, working with trees is probably the most common part of any analysis. The TTree implementation uses **pointers and dedicated buffers** to reduce the memory usage and to speed up access. Consequently, mapping TTree functionality to Python is not straightforward.
 
 {% challenge "But first ... create a tree" %}
 To run the Python code below, you need a small tree
@@ -224,6 +228,7 @@ void tree1() {
 ```
 {% endchallenge %}
 
+
 So, let's assume that you have cooked up a tree using the mini-code above, or you have a tree of your own. Below is a snippet of Python code that will read info from the branches of your tree and prints some extracted information to the screen. If you are interested, you can try to visualize the data in histograms. 
 
 ```python
@@ -257,7 +262,7 @@ for jentry in xrange(entries):
 
 ## Writing a tree
 
-Writing a ROOT TTree in a Python session is a little convoluted, if only because you will need a C++ class to make sure that data members can be mapped, unless you are working with built-in types. Here is an example for working with the latter only:
+Writing a ROOT TTree in a Python session is, like reading it, a little convoluted, if only **because you will need a C++ class to make sure that data members can be mapped, unless you are working with built-in types**. Here is an example for working with the latter only:
 
 ```python
 from ROOT import TFile, TTree
@@ -281,11 +286,17 @@ for i in range(25):
 f.Write()
 f.Close()
 ```
-The use of arrays is needed, because the pointer to the address of the object that is used for filling must be given to the TTree::Branch() call, even though the formal argument is declared a ’void\*'. In the case of ROOT objects, similar pointer manipulation is unnecessary, because the full type information is available, and TTree::Branch() has been Pythonized to take care of the call details. However, data members of such objects that are of built-in types, still require something extra since they are normally translated to Python primitive types on access and hence their address cannot be taken.
+The use of **arrays** is needed, because the pointer to the address of the object that is used for filling must be given to the TTree::Branch() call, even though the formal argument is declared a ’void\*'. 
+
+In the case of ROOT objects, similar pointer manipulation is unnecessary, because the full type information is available, and TTree::Branch() has been Pythonized to take care of the call details. 
+
+However, data members of such objects that are of built-in types, still require something extra since they are normally translated to Python primitive types on access and hence their address cannot be taken.
 
 ## Creating your own classes
 
-A user’s own classes can be accessed after loading, either directly or indirectly, the library that contains the dictionary. One easy way of obtaining such a library, is by using ACLiC. Let's first make up a very small class, by putting in a file `MyClass.C` the following code
+A user’s own classes can be accessed **after loading the library that contains the dictionary**. 
+
+Let's first make up a very small class, by putting in a file `MyClass.C` the following code
 
 ```cpp
 class MyClass {
@@ -341,12 +352,12 @@ from ROOT import MyClass
 m = MyClass(42)
 print(m.GetValue())
 ```
-You can also load a macro directly, but if you do not use ACLiC, you will be restricted to use the default constructor of your class, which is otherwise fully functional. For example:
+You can also load a macro directly, but then you will be restricted to use the default constructor of your class, which is otherwise fully functional. For example:
 
 ```python
 from ROOT import gROOT
 
-# load MyClass definition macro (append '+' to use ACLiC)
+# load MyClass definition macro (append '+' to compile)
 gROOT.LoadMacro('MyClass.C')
 
 # get MyClass from ROOT
@@ -365,6 +376,8 @@ With the advent of ROOT6, an attractive feature of PyROOT can be *speed*
 * CLING will compile your macro's line-by-line, which can sometimes lead to sluggish execution
 * PyROOT is interpreted 
 
-Python code is often ran as an interpreted language, it *can* be compiled, but you do don't *need* to compile it. Interpretation of macros is often much faster than compilation plus execution, unless the performance gain gained by compiling out-weighs the time the compiler spends on compiling the code. Since macro's are often intended to do only simple things (or call optimized libraries to carry out the heavy work, such as fitting), interpretation often suffices. 
+Python code is often ran as an **interpreted language**, it *can* be compiled, but you do don't *need* to compile it. Interpretation of macros is often much **faster** than compilation plus execution, unless the performance gain gained by compiling out-weighs the time the compiler spends on compiling the code. 
+
+Since macro's are often intended to do only simple things (or call optimized libraries to carry out the heavy work, such as fitting), interpretation often suffices. 
 
 {% endcallout %}
