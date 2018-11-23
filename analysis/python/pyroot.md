@@ -322,17 +322,17 @@ private:
 Create the shared library using ACLiC:
 
 ```
-root -e 'gInterpreter->LoadMacro("MyClass.C++o");' -q
+root -e 'gInterpreter->LoadMacro("MyClass.C+");' -q
 ```
 
 {% challenge "Optimization or debug symbols ?" %}
 Anyone have any idea what the difference is between 
 ```
-root -e 'gInterpreter->LoadMacro("MyClass.C++o");' -q
+root -e 'gInterpreter->LoadMacro("MyClass.C+");' -q
 ```
 and
 ```
-root -e 'gInterpreter->LoadMacro("MyClass.C++g");' -q
+root -e 'gInterpreter->LoadMacro("MyClass.C+g");' -q
 ```
 {% solution "Drum roll" %}
 Using `o`, we specify to the compiler to use optimization for speed. Using `g`, we specify to the compiler that we want to enable debug symbols. Confused by this? Check out Part 9 of this tutorial, 'Best Practices', where there is a lot of information about this!

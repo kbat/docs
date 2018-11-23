@@ -42,3 +42,4 @@
   * [Some general programming tips](analysis/bestprac/general.md)
   * [Where does my code crash](analysis/bestprac/crash.md)
   * [Finding memory leaks](analysis/bestprac/memory.md)
+* [Part 10 - Unresolved issues](analysis/issues.md)

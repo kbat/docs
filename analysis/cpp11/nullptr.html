@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Part 7 - Declarative analysis · PEP root6 workshop</title>
+        <title>nullptr · PEP root6 workshop</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="concept.html" />
+    <link rel="next" href="enums.html" />
     
     
-    <link rel="prev" href="../vectorization.html" />
+    <link rel="prev" href="../cpp11.html" />
     
 
     </head>
@@ -178,9 +178,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../cpp11/nullptr.html">
+        <li class="chapter active" data-level="1.4.1" data-path="nullptr.html">
             
-                <a href="../cpp11/nullptr.html">
+                <a href="nullptr.html">
             
                     
                     nullptr
@@ -191,9 +191,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../cpp11/enums.html">
+        <li class="chapter " data-level="1.4.2" data-path="enums.html">
             
-                <a href="../cpp11/enums.html">
+                <a href="enums.html">
             
                     
                     Strongly typed enums
@@ -204,9 +204,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="../cpp11/initlists.html">
+        <li class="chapter " data-level="1.4.3" data-path="initlists.html">
             
-                <a href="../cpp11/initlists.html">
+                <a href="initlists.html">
             
                     
                     Initializer lists
@@ -217,9 +217,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="../cpp11/auto.html">
+        <li class="chapter " data-level="1.4.4" data-path="auto.html">
             
-                <a href="../cpp11/auto.html">
+                <a href="auto.html">
             
                     
                     Implicit typing
@@ -230,9 +230,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.5" data-path="../cpp11/rangebasediterators.html">
+        <li class="chapter " data-level="1.4.5" data-path="rangebasediterators.html">
             
-                <a href="../cpp11/rangebasediterators.html">
+                <a href="rangebasediterators.html">
             
                     
                     Range-based iterations
@@ -243,9 +243,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.6" data-path="../cpp11/stl.html">
+        <li class="chapter " data-level="1.4.6" data-path="stl.html">
             
-                <a href="../cpp11/stl.html">
+                <a href="stl.html">
             
                     
                     Standard library
@@ -256,9 +256,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.7" data-path="../cpp11/lambda.html">
+        <li class="chapter " data-level="1.4.7" data-path="lambda.html">
             
-                <a href="../cpp11/lambda.html">
+                <a href="lambda.html">
             
                     
                     lambda expressions
@@ -269,9 +269,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.8" data-path="../cpp11/variadic.html">
+        <li class="chapter " data-level="1.4.8" data-path="variadic.html">
             
-                <a href="../cpp11/variadic.html">
+                <a href="variadic.html">
             
                     
                     Variadic templates
@@ -282,9 +282,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.9" data-path="../cpp11/move.html">
+        <li class="chapter " data-level="1.4.9" data-path="move.html">
             
-                <a href="../cpp11/move.html">
+                <a href="move.html">
             
                     
                     Move semantics
@@ -384,9 +384,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.8" data-path="declarative.html">
+        <li class="chapter " data-level="1.8" data-path="../tdf/declarative.html">
             
-                <a href="declarative.html">
+                <a href="../tdf/declarative.html">
             
                     
                     Part 7 - Declarative analysis
@@ -398,9 +398,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.8.1" data-path="concept.html">
+        <li class="chapter " data-level="1.8.1" data-path="../tdf/concept.html">
             
-                <a href="concept.html">
+                <a href="../tdf/concept.html">
             
                     
                     Declarative programming
@@ -411,9 +411,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.2" data-path="TDataFrame.html">
+        <li class="chapter " data-level="1.8.2" data-path="../tdf/TDataFrame.html">
             
-                <a href="TDataFrame.html">
+                <a href="../tdf/TDataFrame.html">
             
                     
                     TDataFrame
@@ -424,9 +424,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.3" data-path="more.html">
+        <li class="chapter " data-level="1.8.3" data-path="../tdf/more.html">
             
-                <a href="more.html">
+                <a href="../tdf/more.html">
             
                     
                     Additional material
@@ -731,7 +731,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >Part 7 - Declarative analysis</a>
+        <a href="../.." >nullptr</a>
     </h1>
 </div>
 
@@ -746,8 +746,23 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="declarative-programming">Declarative programming</h1>
-<p>In this chapter we want to give a short introduction to the idea of declarative programming and its implementation in ROOT, that comes as the TDataFrame.</p>
+                                <h1 id="nullptr">nullptr</h1>
+<p>The <code>nullptr</code> is a new literal of type <code>std::nullptr_t</code> introduced in C++11.
+It provides a specific expression for null pointers.
+Before C++11, it was common to use <code>0</code>, <code>0x0</code> or the preprocessor macro <code>NULL</code> to indicate a pointer to nothing.
+This is not type save as the following example illustrates:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printMe</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>{ <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;I am an integer: &quot;</span> &lt;&lt; i &lt;&lt; <span class="hljs-built_in">endl</span>; }
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printMe</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *i)</span> </span>{ <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;I am a pointer to an integer: &quot;</span> &lt;&lt; i &lt;&lt; <span class="hljs-built_in">endl</span>; }
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+  printMe(<span class="hljs-number">0</span>);
+  printMe(<span class="hljs-literal">NULL</span>);      <span class="hljs-comment">// error: call to &apos;printMe&apos; is ambiguous</span>
+  printMe(<span class="hljs-literal">nullptr</span>);   <span class="hljs-comment">// works fine</span>
+}
+</code></pre>
+<p>To be backward compatible, you can:
+<code>#define nullptr NULL</code>
+(ROOT already does this for you).</p>
 
                                 
                                 </section>
@@ -775,12 +790,12 @@
 
             
                 
-                <a href="../vectorization.html" class="navigation navigation-prev " aria-label="Previous page: Part 6 - Vectorization">
+                <a href="../cpp11.html" class="navigation navigation-prev " aria-label="Previous page: Part 3 - New C++11 features">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="concept.html" class="navigation navigation-next " aria-label="Next page: Declarative programming">
+                <a href="enums.html" class="navigation navigation-next " aria-label="Next page: Strongly typed enums">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -791,7 +806,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Part 7 - Declarative analysis","level":"1.8","depth":1,"next":{"title":"Declarative programming","level":"1.8.1","depth":2,"path":"analysis/tdf/concept.md","ref":"analysis/tdf/concept.md","articles":[]},"previous":{"title":"Part 6 - Vectorization","level":"1.7","depth":1,"path":"analysis/vectorization.md","ref":"analysis/vectorization.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/tdf/declarative.md","mtime":"2018-11-23T07:40:56.286Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-23T12:10:50.309Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"nullptr","level":"1.4.1","depth":2,"next":{"title":"Strongly typed enums","level":"1.4.2","depth":2,"path":"analysis/cpp11/enums.md","ref":"analysis/cpp11/enums.md","articles":[]},"previous":{"title":"Part 3 - New C++11 features","level":"1.4","depth":1,"path":"analysis/cpp11.md","ref":"analysis/cpp11.md","articles":[{"title":"nullptr","level":"1.4.1","depth":2,"path":"analysis/cpp11/nullptr.md","ref":"analysis/cpp11/nullptr.md","articles":[]},{"title":"Strongly typed enums","level":"1.4.2","depth":2,"path":"analysis/cpp11/enums.md","ref":"analysis/cpp11/enums.md","articles":[]},{"title":"Initializer lists","level":"1.4.3","depth":2,"path":"analysis/cpp11/initlists.md","ref":"analysis/cpp11/initlists.md","articles":[]},{"title":"Implicit typing","level":"1.4.4","depth":2,"path":"analysis/cpp11/auto.md","ref":"analysis/cpp11/auto.md","articles":[]},{"title":"Range-based iterations","level":"1.4.5","depth":2,"path":"analysis/cpp11/rangebasediterators.md","ref":"analysis/cpp11/rangebasediterators.md","articles":[]},{"title":"Standard library","level":"1.4.6","depth":2,"path":"analysis/cpp11/stl.md","ref":"analysis/cpp11/stl.md","articles":[]},{"title":"lambda expressions","level":"1.4.7","depth":2,"path":"analysis/cpp11/lambda.md","ref":"analysis/cpp11/lambda.md","articles":[]},{"title":"Variadic templates","level":"1.4.8","depth":2,"path":"analysis/cpp11/variadic.md","ref":"analysis/cpp11/variadic.md","articles":[]},{"title":"Move semantics","level":"1.4.9","depth":2,"path":"analysis/cpp11/move.md","ref":"analysis/cpp11/move.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/cpp11/nullptr.md","mtime":"2018-11-23T07:40:56.257Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-23T12:10:50.309Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
