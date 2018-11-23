@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Part 6 - Vectorization · PEP root6 workshop</title>
+        <title>Part 10 - Unresolved issues · PEP root6 workshop</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="tdf/declarative.html" />
     
-    
-    <link rel="prev" href="changes.html" />
+    <link rel="prev" href="bestprac/memory.html" />
     
 
     </head>
@@ -371,7 +369,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.7" data-path="vectorization.html">
+        <li class="chapter " data-level="1.7" data-path="vectorization.html">
             
                 <a href="vectorization.html">
             
@@ -688,7 +686,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.11" data-path="issues.html">
+        <li class="chapter active" data-level="1.11" data-path="issues.html">
             
                 <a href="issues.html">
             
@@ -731,7 +729,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Part 6 - Vectorization</a>
+        <a href=".." >Part 10 - Unresolved issues</a>
     </h1>
 </div>
 
@@ -746,113 +744,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="vectorization">Vectorization</h1>
-<p>Vectorization is a topic that we will cover only very briefly, mostly to make you aware of its existence. Before we head into details, let&apos;s take a look at this picture</p>
-<p><img src="simd.png" alt="simd"></p>
-<p>This picture summarizes what is known as &apos;Flynn&apos;s taxonomy&apos;, which is a classification of computer architectures in terms of data pools and instruction pools, based on the number of concurrent instruction streams and data streams. In the picture above, we see</p>
-<ul>
-<li>SISD: single instruction stream single data stream</li>
-<li>SIMD: single instruction stream, multiple data streams</li>
-<li>MISD: multiple instruction streams, single data stream</li>
-<li>MIMD: multiple instruction streams, multiple data streams (basically a distributed system)</li>
-</ul>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(5943907810);" id="-misd-"><i class="fa fa-info-circle"></i>  MISD? <span id="heading-5943907810"></span></h3></div><div class="panel-body" id="panel-5943907810"><p>The MISD architecture might seem very strange, but is used in application where fault tolerance is extremely important, such as the flight control computer of the Space Shuttle program. </p>
-</div></div></p>
-<p>Vectorization relies on the properties of SIMD: single instruction stream, multiple data streams. </p>
-<h2 id="what-is-vectorization">What is vectorization?</h2>
-<p>Vectorization is a special case of automatic parallelization, where a computer program is converted from a</p>
-<ul>
-<li>scalar implementation, which processes a single pair of operands at a time, to a </li>
-<li>vector implementation, which processes one operation on multiple pairs of operands at once. </li>
-</ul>
-<p><strong>Conventional computers typically can perform SIMD tasks</strong>. How does this work? Say we want to multiply two vectors of numeric data. A scalar approach would be something like: </p>
-<pre><code class="lang-cpp"> <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1024</span>; i++)
-    C[i] = A[i]*B[i];
-</code></pre>
-<p>The loop is executed 1024 times. Not only that, but <strong>for each iteration, and new and independent data pool and instruction pool</strong> are required. </p>
-<p>This could be <strong>vectorized</strong> to look something like: </p>
-<pre><code class="lang-cpp">  <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1024</span>; i+=<span class="hljs-number">4</span>)
-     C[i:i+<span class="hljs-number">3</span>] = A[i:i+<span class="hljs-number">3</span>]*B[i:i+<span class="hljs-number">3</span>];
-</code></pre>
-<p>Here, </p>
-<ul>
-<li>C[i:i+3] represents the four array elements from C[i] to C[i+3] and </li>
-<li>the vector processor can perform four operations for a single vector instruction</li>
-<li>the loop is <strong>only evaluated 256 times</strong>, and </li>
-<li>since the four vector operations complete in roughly the same time as one scalar instruction (for each iteration, one data pool and one instruction pool are required), the vector approach can <strong>run up to four times faster</strong> than the original code.</li>
-</ul>
-<h2 id="how-is-this-helpful-">How is this helpful ?</h2>
-<p>Vectorization uses <strong>data level parallelism</strong> but not concurrency: </p>
-<ul>
-<li>there are simultaneous (parallel) computations, but </li>
-<li>only a single process (instruction) at a given moment. </li>
-</ul>
-<p>So vectorization can be very useful, but for very specific problems, e.g. when the same value is being added to (or subtracted from) a large number of data points. </p>
-<ul>
-<li>This is an often used application of SIMD: for example when changing the brightness of an image where each pixel of an image consists of three values for the brightness of the red (R), green (G) and blue (B) portions of the color and a common value is added to (or subtracted from) them</li>
-</ul>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(6860896548);" id="why-not-vectorize-everything---"><i class="fa fa-info-circle"></i> Why not vectorize everything .. ? <span id="heading-6860896548"></span></h3></div><div class="panel-body" id="panel-6860896548"><p>Not all algorithms can be vectorized easily! Additionally, vectorization is labor-intensive: implementing an algorithm with SIMD instructions usually requires human intervention as most compilers do not generate SIMD instructions from a typical C/C++/etc program. </p>
-<p>Automatic vectorization in compilers is an active area of computer science research, as e.g. modern graphics processing units (GPUs) are often wide SIMD implementations, capable performing tasks on 128 or 256 bits at a time. </p>
-</div></div></p>
-<h1 id="vectorization-support-in-root">Vectorization support in ROOT</h1>
-<p>We would not talk about vectorization if it would not have a direct connection to ROOT. Also in physics, some problems might benefit from vectorization. </p>
-<p>ROOT6 has introduced built-in vector types: <code>Float_v</code> and <code>Double_v</code>, which look like normal types (<code>float</code> and <code>double</code>), <strong>but the suffix <code>_v</code> tells us that they are vector types</strong>. </p>
-<p>Vectorization support in ROOT comprises the following:</p>
-<ul>
-<li>Definition of new ROOT SIMD types: ROOT::Double_v, ROOT::Float_v (via the VecCore library)</li>
-<li>Adaptation of TF1 to evaluate functions evaluating over vector types.</li>
-<li>Adaptation of the fitting classes and interfaces in ROOT to accept the new</li>
-<li>Parallelization of the fitting objective functions (Max. Likelihood, Least
-Squares)</li>
-</ul>
-<p>TFormula supports vectorization. </p>
-<ul>
-<li>All the TF1 objected created with a formula expression can have a vectorized signature using <code>ROOT::Double_v: TF1::EvalPar( ROOT::Double_v * x, double * p).</code> </li>
-<li>The vectorization can then be used to speed-up fitting</li>
-</ul>
-<pre><code class="lang-cpp"><span class="hljs-comment">//Higgs Fit: Implementation of the scalar function</span>
-<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> *data, <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> *params)</span> </span>{
-   <span class="hljs-keyword">return</span> params[<span class="hljs-number">0</span>] * <span class="hljs-built_in">exp</span>(-(*data + (<span class="hljs-number">-130.</span>)) * (*data + (<span class="hljs-number">-130.</span>)) / <span class="hljs-number">2</span>) +
-       params[<span class="hljs-number">1</span>] * <span class="hljs-built_in">exp</span>(-(params[<span class="hljs-number">2</span>] * (*data * (<span class="hljs-number">0.01</span>)) - params[<span class="hljs-number">3</span>] *
-       ((*data) * (<span class="hljs-number">0.01</span>)) * ((*data) * (<span class="hljs-number">0.01</span>))));
-}
-
-TF1 *f = <span class="hljs-keyword">new</span> TF1(&#x201D;fScalar&#x201D;, func, <span class="hljs-number">100</span>, <span class="hljs-number">200</span>, <span class="hljs-number">4</span>);
-f-&gt;SetParameters(<span class="hljs-number">1</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">7.5</span>, <span class="hljs-number">1.5</span>);
-<span class="hljs-function">TH1D <span class="hljs-title">h1f</span><span class="hljs-params">(&#x201D;h1f&#x201D;, &#x201D;Test random numbers&#x201D;, <span class="hljs-number">12800</span>, <span class="hljs-number">100</span>, <span class="hljs-number">200</span>)</span></span>;
-h1f.FillRandom(&#x201D;fvScalar&#x201D;, <span class="hljs-number">1000000</span>);
-h1f.Fit(f);
-</code></pre>
-<p>in the vectorized approach, we change the built-in types</p>
-<pre><code class="lang-cpp"><span class="hljs-comment">//Higgs Fit: Implementation of the vectorized function</span>
-ROOT::<span class="hljs-function">Double_v <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">const</span> ROOT::Double_v *data, <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> *params)</span> </span>{
-    <span class="hljs-keyword">return</span> params[<span class="hljs-number">0</span>] * <span class="hljs-built_in">exp</span>(-(*data + (<span class="hljs-number">-130.</span>)) * (*data + (<span class="hljs-number">-130.</span>)) / <span class="hljs-number">2</span>) +
-       params[<span class="hljs-number">1</span>] * <span class="hljs-built_in">exp</span>(-(params[<span class="hljs-number">2</span>] * (*data * (<span class="hljs-number">0.01</span>)) - params[<span class="hljs-number">3</span>] *
-       ((*data) * (<span class="hljs-number">0.01</span>)) * ((*data) * (<span class="hljs-number">0.01</span>))));
-}
-
-<span class="hljs-comment">//This code is totally backwards compatible</span>
-TF1 *f = <span class="hljs-keyword">new</span> TF1(&#x201D;fvCore&#x201D;, func, <span class="hljs-number">100</span>, <span class="hljs-number">200</span>, <span class="hljs-number">4</span>);
-f-&gt;SetParameters(<span class="hljs-number">1</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">7.5</span>, <span class="hljs-number">1.5</span>);
-<span class="hljs-function">TH1D <span class="hljs-title">h1f</span><span class="hljs-params">(&#x201D;h1f&#x201D;, &#x201D;Test random numbers&#x201D;, <span class="hljs-number">12800</span>, <span class="hljs-number">100</span>, <span class="hljs-number">200</span>)</span></span>;
-h1f.FillRandom(&#x201D;fvCore&#x201D;, <span class="hljs-number">1000000</span>);
-<span class="hljs-comment">//Added multithreaded fit option</span>
-h1f.Fit(f, &#x201D;MULTITHREAD&#x201D;);
-</code></pre>
-<p>As you see, the changes to user code are minimal. However, behind the scenes, the fitting operation exploits SIMD principles to speed up the execution of your code. </p>
-<p><div class="panel panel-primary"><div class="panel-heading"><h3 class="panel-title" onclick="javascript:toggle(2811548925);" id="support-for-vector-types-in-c"><i class="fa fa-info-circle"></i> Support for vector types in C++<span id="heading-2811548925"></span></h3></div><div class="panel-body" id="panel-2811548925"><p>C++ supports vector types through e.g. <code>Vc</code></p>
-<pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Vc/Vc&gt;</span></span>
-<span class="hljs-keyword">using</span> float_v = Vc::float_v;
-...
-<span class="hljs-keyword">for</span> (; i &lt; ksize - K; i += S) {
-    <span class="hljs-comment">// interpret data as vector and do some operations</span>
-   sum += float_v(&amp;a[i]) * float_v(&amp;b[i]);
-}
-</code></pre>
-<p>see [<a href="https://github.com/VcDevel/Vc]" target="_blank">https://github.com/VcDevel/Vc]</a> for more information. </p>
-</div></div></p>
-<h1 id="exercises">Exercises</h1>
-<p>This section in principle has no exercises, but you are encouraged to try run the above examples using both the scalar and vectorized implementation of the fitting routine, and see if there is indeed a speed benefit. </p>
+                                <h1 id="unresolved-issues">Unresolved issues</h1>
+<p>At this page, we collect unresolved issues that have surfaced during the course of the workshop. As soon as a solution to a particular problem has been found, we will try to update this webpage. </p>
 
                                 
                                 </section>
@@ -880,14 +773,10 @@ h1f.Fit(f, &#x201D;MULTITHREAD&#x201D;);
 
             
                 
-                <a href="changes.html" class="navigation navigation-prev " aria-label="Previous page: Part 5 - 5 to 6: changes to user code">
+                <a href="bestprac/memory.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Finding memory leaks">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="tdf/declarative.html" class="navigation navigation-next " aria-label="Next page: Part 7 - Declarative analysis">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -896,7 +785,7 @@ h1f.Fit(f, &#x201D;MULTITHREAD&#x201D;);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Part 6 - Vectorization","level":"1.7","depth":1,"next":{"title":"Part 7 - Declarative analysis","level":"1.8","depth":1,"path":"analysis/tdf/declarative.md","ref":"analysis/tdf/declarative.md","articles":[{"title":"Declarative programming","level":"1.8.1","depth":2,"path":"analysis/tdf/concept.md","ref":"analysis/tdf/concept.md","articles":[]},{"title":"TDataFrame","level":"1.8.2","depth":2,"path":"analysis/tdf/TDataFrame.md","ref":"analysis/tdf/TDataFrame.md","articles":[]},{"title":"Additional material","level":"1.8.3","depth":2,"path":"analysis/tdf/more.md","ref":"analysis/tdf/more.md","articles":[]}]},"previous":{"title":"Part 5 - 5 to 6: changes to user code","level":"1.6","depth":1,"path":"analysis/changes.md","ref":"analysis/changes.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/vectorization.md","mtime":"2018-11-23T07:40:56.286Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-23T12:11:57.235Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Part 10 - Unresolved issues","level":"1.11","depth":1,"previous":{"title":"Finding memory leaks","level":"1.10.4","depth":2,"path":"analysis/bestprac/memory.md","ref":"analysis/bestprac/memory.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex","panels@git+https://github.com/lhcb/gitbook-plugin-panels.git#117012fdc18c96831cb88196980c0ea73b0c87b8","collapsible-menu","block-align"],"styles":{"website":"css/website.css"},"pluginsConfig":{"collapsible-menu":{},"block-align":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"panels":{},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"PEP root6 workshop","gitbook":"*","description":"PEP root6 introduction material"},"file":{"path":"analysis/issues.md","mtime":"2018-11-23T10:51:42.416Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-23T12:11:57.235Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
